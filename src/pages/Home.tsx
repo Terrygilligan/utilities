@@ -1,8 +1,12 @@
 import {
   ArrowRightLeft,
   Braces,
+  Clapperboard,
+  FileCheck2,
+  FileCode2,
   FileSpreadsheet,
   FileText,
+  GitCompareArrows,
   ImageDown,
   KeyRound,
   Mic,
@@ -84,6 +88,30 @@ export default function Home() {
           title="Color Tools"
           description="Color picker, tint and shade palette generator, and WCAG contrast checking."
           icon={Palette}
+        />
+        <ToolCard
+          to="/media"
+          title="Media Compressor"
+          description="Trim and re-encode video and audio locally to WebM — no uploads, no ffmpeg server."
+          icon={Clapperboard}
+        />
+        <ToolCard
+          to="/checksum"
+          title="Checksum Calculator"
+          description="SHA-256, SHA-1, and MD5 file hashes computed in-memory, with hash comparison."
+          icon={FileCheck2}
+        />
+        <ToolCard
+          to="/svg"
+          title="SVG Optimizer"
+          description="Strip comments, editor metadata, and empty attributes from SVG markup."
+          icon={FileCode2}
+        />
+        <ToolCard
+          to="/diff"
+          title="Text Diff Checker"
+          description="Side-by-side line-by-line diff with red/green highlighting, computed locally."
+          icon={GitCompareArrows}
         />
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
           <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />

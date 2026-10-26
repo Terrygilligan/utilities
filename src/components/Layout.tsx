@@ -5,9 +5,13 @@ import InstallButton from './InstallButton'
 import {
   ArrowRightLeft,
   Braces,
+  Clapperboard,
   Coffee,
+  FileCheck2,
+  FileCode2,
   FileSpreadsheet,
   FileText,
+  GitCompareArrows,
   ImageDown,
   KeyRound,
   LayoutGrid,
@@ -32,6 +36,10 @@ const navItems = [
   { to: '/playground', label: 'Regex & JSON', icon: Braces, end: false },
   { to: '/convert', label: 'Unit Converter', icon: ArrowRightLeft, end: false },
   { to: '/colors', label: 'Color Tools', icon: Palette, end: false },
+  { to: '/media', label: 'Media Tools', icon: Clapperboard, end: false },
+  { to: '/checksum', label: 'Checksums', icon: FileCheck2, end: false },
+  { to: '/svg', label: 'SVG Optimizer', icon: FileCode2, end: false },
+  { to: '/diff', label: 'Diff Checker', icon: GitCompareArrows, end: false },
 ]
 
 function Brand() {

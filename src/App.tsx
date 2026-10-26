@@ -13,6 +13,10 @@ const ImageOptimizer = lazy(() => import('./pages/ImageOptimizer'))
 const CodePlayground = lazy(() => import('./pages/CodePlayground'))
 const UnitConverter = lazy(() => import('./pages/UnitConverter'))
 const ColorTools = lazy(() => import('./pages/ColorTools'))
+const MediaTools = lazy(() => import('./pages/MediaTools'))
+const ChecksumTool = lazy(() => import('./pages/ChecksumTool'))
+const SvgOptimizer = lazy(() => import('./pages/SvgOptimizer'))
+const DiffChecker = lazy(() => import('./pages/DiffChecker'))
 
 function Loading() {
   return (
@@ -106,6 +110,38 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <ColorTools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="media"
+            element={
+              <Suspense fallback={<Loading />}>
+                <MediaTools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="checksum"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ChecksumTool />
+              </Suspense>
+            }
+          />
+          <Route
+            path="svg"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SvgOptimizer />
+              </Suspense>
+            }
+          />
+          <Route
+            path="diff"
+            element={
+              <Suspense fallback={<Loading />}>
+                <DiffChecker />
               </Suspense>
             }
           />
