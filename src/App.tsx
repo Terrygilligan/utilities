@@ -20,6 +20,16 @@ const DiffChecker = lazy(() => import('./pages/DiffChecker'))
 const ExpenseTracker = lazy(() => import('./pages/ExpenseTracker'))
 const TextTools = lazy(() => import('./pages/TextTools'))
 const CalcTools = lazy(() => import('./pages/CalcTools'))
+const TimerTools = lazy(() => import('./pages/TimerTools'))
+const Base64Tools = lazy(() => import('./pages/Base64Tools'))
+const UuidGenerator = lazy(() => import('./pages/UuidGenerator'))
+const CronExplainer = lazy(() => import('./pages/CronExplainer'))
+const WatermarkTool = lazy(() => import('./pages/WatermarkTool'))
+const ScreenRecorder = lazy(() => import('./pages/ScreenRecorder'))
+const QrGenerator = lazy(() => import('./pages/QrGenerator'))
+const BarcodeGenerator = lazy(() => import('./pages/BarcodeGenerator'))
+const TotpAuthenticator = lazy(() => import('./pages/TotpAuthenticator'))
+const BarcodeScanner = lazy(() => import('./pages/BarcodeScanner'))
 
 function Loading() {
   return (
@@ -169,6 +179,86 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <CalcTools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="timer"
+            element={
+              <Suspense fallback={<Loading />}>
+                <TimerTools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="codec"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Base64Tools />
+              </Suspense>
+            }
+          />
+          <Route
+            path="uuid"
+            element={
+              <Suspense fallback={<Loading />}>
+                <UuidGenerator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="cron"
+            element={
+              <Suspense fallback={<Loading />}>
+                <CronExplainer />
+              </Suspense>
+            }
+          />
+          <Route
+            path="watermark"
+            element={
+              <Suspense fallback={<Loading />}>
+                <WatermarkTool />
+              </Suspense>
+            }
+          />
+          <Route
+            path="screen-recorder"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ScreenRecorder />
+              </Suspense>
+            }
+          />
+          <Route
+            path="qr-generator"
+            element={
+              <Suspense fallback={<Loading />}>
+                <QrGenerator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="barcode"
+            element={
+              <Suspense fallback={<Loading />}>
+                <BarcodeGenerator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="totp"
+            element={
+              <Suspense fallback={<Loading />}>
+                <TotpAuthenticator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="barcode-scanner"
+            element={
+              <Suspense fallback={<Loading />}>
+                <BarcodeScanner />
               </Suspense>
             }
           />

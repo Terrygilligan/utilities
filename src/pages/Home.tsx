@@ -1,21 +1,30 @@
 import {
   ArrowRightLeft,
+  Barcode,
+  CalendarClock,
   Braces,
   Calculator,
   Clapperboard,
+  Code2,
   FileCheck2,
   FileCode2,
   FileSpreadsheet,
   FileText,
   GitCompareArrows,
+  Hash,
   ImageDown,
   KeyRound,
   Mic,
+  MonitorPlay,
   NotebookPen,
   Palette,
   QrCode,
   Receipt,
+  ScanBarcode,
+  ShieldCheck,
   Sparkles,
+  Stamp,
+  Timer,
   Type,
 } from 'lucide-react'
 import ToolCard from '../components/ToolCard'
@@ -133,6 +142,66 @@ export default function Home() {
           title={t('Calc & Time Converter')}
           description={t('Percentages, VAT, and timezone conversion — formatted for your device locale.')}
           icon={Calculator}
+        />
+        <ToolCard
+          to="/timer"
+          title={t('Timer & Pomodoro')}
+          description={t('Stopwatch, countdown presets, and focus/break cycles with notification alerts.')}
+          icon={Timer}
+        />
+        <ToolCard
+          to="/codec"
+          title={t('Base64 & URL Codec')}
+          description={t('Encode and decode Base64 and percent-encoded URLs — Unicode-safe, fully offline.')}
+          icon={Code2}
+        />
+        <ToolCard
+          to="/uuid"
+          title={t('UUID & Random Generator')}
+          description={t('Bulk UUID v4s, hex tokens, and random integers — cryptographically secure.')}
+          icon={Hash}
+        />
+        <ToolCard
+          to="/cron"
+          title={t('Cron Explainer')}
+          description={t('Decode 5-field cron expressions into plain language plus the next run times.')}
+          icon={CalendarClock}
+        />
+        <ToolCard
+          to="/watermark"
+          title={t('Image Watermarker')}
+          description={t('Overlay text on photos with position, size, and opacity controls — EXIF stripped.')}
+          icon={Stamp}
+        />
+        <ToolCard
+          to="/screen-recorder"
+          title={t('Screen Recorder')}
+          description={t('Record screen, window, or tab with optional audio to WebM — saved locally.')}
+          icon={MonitorPlay}
+        />
+        <ToolCard
+          to="/qr-generator"
+          title={t('QR Code Generator')}
+          description={t('Create QR codes for links, text, or Wi-Fi with color and size options — PNG or SVG.')}
+          icon={QrCode}
+        />
+        <ToolCard
+          to="/barcode"
+          title={t('Barcode Generator')}
+          description={t('Code 128, EAN-13, UPC, and Code 39 barcodes — download as PNG or SVG.')}
+          icon={Barcode}
+        />
+        <ToolCard
+          to="/totp"
+          title={t('TOTP Authenticator')}
+          description={t('Generate 2FA codes from otpauth URIs or Base32 secrets — fully client-side.')}
+          icon={ShieldCheck}
+        />
+        <ToolCard
+          to="/barcode-scanner"
+          title={t('Barcode Scanner')}
+          description={t('Read EAN, UPC, Code 39/128, ITF and more via camera or image — decoded locally.')}
+          icon={ScanBarcode}
         />
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
           <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />
