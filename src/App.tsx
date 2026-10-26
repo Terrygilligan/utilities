@@ -17,6 +17,7 @@ const MediaTools = lazy(() => import('./pages/MediaTools'))
 const ChecksumTool = lazy(() => import('./pages/ChecksumTool'))
 const SvgOptimizer = lazy(() => import('./pages/SvgOptimizer'))
 const DiffChecker = lazy(() => import('./pages/DiffChecker'))
+const ExpenseTracker = lazy(() => import('./pages/ExpenseTracker'))
 
 function Loading() {
   return (
@@ -142,6 +143,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <DiffChecker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="expenses"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ExpenseTracker />
               </Suspense>
             }
           />

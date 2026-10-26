@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 import InstallButton from './InstallButton'
+import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
   Braces,
@@ -20,6 +21,7 @@ import {
   NotebookPen,
   Palette,
   QrCode,
+  Receipt,
   Wrench,
   X,
 } from 'lucide-react'
@@ -40,6 +42,7 @@ const navItems = [
   { to: '/checksum', label: 'Checksums', icon: FileCheck2, end: false },
   { to: '/svg', label: 'SVG Optimizer', icon: FileCode2, end: false },
   { to: '/diff', label: 'Diff Checker', icon: GitCompareArrows, end: false },
+  { to: '/expenses', label: 'Expenses', icon: Receipt, end: false },
 ]
 
 function Brand() {
@@ -71,7 +74,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           }
         >
           <Icon size={18} />
-          {label}
+          {t(label)}
         </NavLink>
       ))}
     </>
@@ -113,7 +116,7 @@ export default function Layout() {
             <InstallButton />
           </div>
           <p className="mt-2 text-xs text-slate-500">
-            Installable PWA — works offline
+            {t('Installable PWA — works offline')}
           </p>
         </aside>
 
@@ -129,12 +132,11 @@ export default function Layout() {
               className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400/15 px-3 py-2 font-medium text-amber-700 transition hover:bg-amber-400/25 dark:text-amber-400"
             >
               <Coffee size={14} />
-              Buy me a coffee
+              {t('Buy me a coffee')}
             </a>
             <InstallButton />
             <p className="mt-3">
-              100% Client-Side &amp; Private · Zero Server Tracking · TOG
-              Utilities
+              {t('100% Client-Side & Private · Zero Server Tracking · TOG Utilities')}
             </p>
           </footer>
         </div>

@@ -5,6 +5,7 @@ import { FileDown, FileSpreadsheet, FileUp, Loader2, TriangleAlert, Upload } fro
 import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { saveBlob, baseName } from '../../lib/download'
+import { fmtBytes } from '../../utils/locale'
 import {
   SPREADSHEET_ACCEPT,
   isSpreadsheet,
@@ -195,7 +196,7 @@ export default function SheetPreview() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
-                {(file.size / 1024).toFixed(1)} KB · {sheetNames.length} sheet
+                {fmtBytes(file.size)} · {sheetNames.length} sheet
                 {sheetNames.length === 1 ? '' : 's'}
               </p>
             </div>

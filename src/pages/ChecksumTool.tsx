@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Check, Copy, FileCheck2, Loader2, TriangleAlert } from 'lucide-react'
 import FilePicker from '../components/FilePicker'
+import { fmtBytes } from '../utils/locale'
 
 // Minimal MD5 — WebCrypto has no MD5.
 function md5(buf: ArrayBuffer): string {
@@ -88,7 +89,7 @@ export default function ChecksumTool() {
 
       {hashes && file && (
         <div className="mt-4 space-y-3 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <p className="text-sm font-medium">{file.name} <span className="text-slate-500">({(file.size / 1024).toFixed(1)} KB)</span></p>
+          <p className="text-sm font-medium">{file.name} <span className="text-slate-500">({fmtBytes(file.size)})</span></p>
           {Object.entries(hashes).map(([name, hash]) => (
             <div key={name} className="flex items-center gap-2">
               <span className="w-16 shrink-0 text-xs font-semibold text-slate-500">{name}</span>

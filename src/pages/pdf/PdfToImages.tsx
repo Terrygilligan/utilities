@@ -12,6 +12,7 @@ import {
 import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { pdfjs, saveBlob, baseName } from './shared'
+import { fmtBytes } from '../../utils/locale'
 
 const EXPORT_SCALE = 2
 const THUMB_TARGET_WIDTH = 360
@@ -203,7 +204,7 @@ export default function PdfToImages() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
-                {(file.size / 1024).toFixed(1)} KB
+                {fmtBytes(file.size)}
                 {numPages > 0 && ` · ${numPages} pages`}
               </p>
             </div>

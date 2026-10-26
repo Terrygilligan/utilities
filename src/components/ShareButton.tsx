@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Check, Share2 } from 'lucide-react'
 import { saveBlob } from '../lib/download'
+import { t } from '../utils/i18n'
 
 export type SharePayload =
   | { kind: 'text'; text: string; title?: string }
@@ -31,24 +32,24 @@ export default function ShareButton({
         if (typeof navigator.share === 'function' && navigator.canShare?.(shareData)) {
           try {
             await navigator.share(shareData)
-            flash('Shared')
+            flash(t('Shared'))
           } catch {
             // user dismissed the share sheet
           }
         } else {
           saveBlob(data.file, data.file.name)
-          flash('Saved')
+          flash(t('Saved'))
         }
       } else if (typeof navigator.share === 'function') {
         try {
           await navigator.share({ text: data.text, title: data.title })
-          flash('Shared')
+          flash(t('Shared'))
         } catch {
           // user dismissed the share sheet
         }
       } else {
         await navigator.clipboard.writeText(data.text)
-        flash('Copied!')
+        flash(t('Copied!'))
       }
     } finally {
       setBusy(false)
@@ -67,7 +68,7 @@ export default function ShareButton({
       ) : (
         <Share2 size={16} />
       )}
-      {feedback ?? 'Share'}
+      {feedback ?? t('Share')}
     </button>
   )
 }

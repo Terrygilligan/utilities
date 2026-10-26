@@ -3,6 +3,7 @@ import { FileDown, FileSpreadsheet, Loader2, Plus, Trash2, TriangleAlert, Upload
 import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { saveBlob, baseName } from '../../lib/download'
+import { fmtBytes } from '../../utils/locale'
 import { loadXlsx } from './shared'
 
 const CSV_ACCEPT = '.csv,text/csv'
@@ -131,7 +132,7 @@ export default function CsvToXlsx() {
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium">{file.name}</p>
                   <p className="text-xs text-slate-500">
-                    {(file.size / 1024).toFixed(1)} KB → sheet “
+                    {fmtBytes(file.size)} → sheet “
                     {baseName(file.name).replace(/[[\]:*?/\\]/g, '').slice(0, 31)}”
                   </p>
                 </div>

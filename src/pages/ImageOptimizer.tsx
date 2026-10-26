@@ -3,6 +3,7 @@ import { Download, ImageDown, Loader2 } from 'lucide-react'
 import FilePicker from '../components/FilePicker'
 import ShareButton from '../components/ShareButton'
 import { saveBlob, baseName } from '../lib/download'
+import { fmtBytes } from '../utils/locale'
 
 type Format = 'image/webp' | 'image/jpeg' | 'image/png'
 
@@ -139,7 +140,7 @@ export default function ImageOptimizer() {
               <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
                 <div className="flex items-center justify-between text-xs text-slate-500">
                   <span className="font-medium uppercase tracking-wide">{label}</span>
-                  <span>{d} · {size ? `${(size / 1024).toFixed(0)} KB` : '…'}</span>
+                  <span>{d} · {size ? fmtBytes(size) : '…'}</span>
                 </div>
                 <div className="mt-3 flex h-56 items-center justify-center overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-950/60">
                   {url ? <img src={url} alt={label} className="max-h-full max-w-full object-contain" /> : <Loader2 size={22} className="animate-spin text-slate-400" />}

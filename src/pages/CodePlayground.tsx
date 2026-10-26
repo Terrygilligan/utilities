@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Braces, Check, Copy, Regex } from 'lucide-react'
+import { fmtNumber } from '../utils/locale'
 
 type Tab = 'regex' | 'json'
 
@@ -58,7 +59,7 @@ function RegexPanel() {
       </div>
       <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950/40">
         <div className="flex items-center justify-between text-xs text-slate-500">
-          <span>{count} match{count === 1 ? '' : 'es'}</span>
+          <span>{fmtNumber(count)} match{count === 1 ? '' : 'es'}</span>
           <CopyBtn text={test} />
         </div>
         {error && <p className="mt-2 text-xs text-red-600 dark:text-red-400">{error}</p>}

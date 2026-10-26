@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { ArrowRightLeft, Scale, Thermometer, Ruler, HardDrive } from 'lucide-react'
+import { fmtNumber } from '../utils/locale'
 
 type Cat = 'length' | 'weight' | 'temp' | 'data'
 
@@ -30,7 +31,7 @@ function fmt(n: number): string {
   if (!isFinite(n)) return '—'
   const abs = Math.abs(n)
   if (abs !== 0 && (abs >= 1e12 || abs < 1e-6)) return n.toExponential(4)
-  return parseFloat(n.toPrecision(10)).toLocaleString(undefined, { maximumFractionDigits: 8 })
+  return fmtNumber(parseFloat(n.toPrecision(10)), { maximumFractionDigits: 8 })
 }
 
 export default function UnitConverter() {

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { t } from '../utils/i18n'
 
 interface ToolCardProps {
   to: string
@@ -23,7 +24,7 @@ export default function ToolCard({ to, title, description, icon: Icon }: ToolCar
         {description}
       </p>
       <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sky-600 dark:text-sky-400">
-        Open tool
+        {t('Open tool')}
         <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
       </span>
     </Link>

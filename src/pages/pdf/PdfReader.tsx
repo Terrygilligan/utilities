@@ -18,6 +18,7 @@ import {
 import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { saveBlob, baseName, IconButton, LoadingNote } from './shared'
+import { fmtBytes } from '../../utils/locale'
 
 const MIN_ZOOM = 0.5
 const MAX_ZOOM = 3
@@ -116,7 +117,7 @@ export default function PdfReader() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
-                {(file.size / 1024).toFixed(1)} KB
+                {fmtBytes(file.size)}
                 {numPages > 0 && ` · ${numPages} pages`}
               </p>
             </div>
