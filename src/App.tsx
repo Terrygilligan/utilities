@@ -9,6 +9,10 @@ const ExcelTools = lazy(() => import('./pages/ExcelTools'))
 const Notebook = lazy(() => import('./pages/Notebook'))
 const VoiceTools = lazy(() => import('./pages/VoiceTools'))
 const PasswordGenerator = lazy(() => import('./pages/PasswordGenerator'))
+const ImageOptimizer = lazy(() => import('./pages/ImageOptimizer'))
+const CodePlayground = lazy(() => import('./pages/CodePlayground'))
+const UnitConverter = lazy(() => import('./pages/UnitConverter'))
+const ColorTools = lazy(() => import('./pages/ColorTools'))
 
 function Loading() {
   return (
@@ -70,6 +74,38 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <PasswordGenerator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="image-optimizer"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ImageOptimizer />
+              </Suspense>
+            }
+          />
+          <Route
+            path="playground"
+            element={
+              <Suspense fallback={<Loading />}>
+                <CodePlayground />
+              </Suspense>
+            }
+          />
+          <Route
+            path="convert"
+            element={
+              <Suspense fallback={<Loading />}>
+                <UnitConverter />
+              </Suspense>
+            }
+          />
+          <Route
+            path="colors"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ColorTools />
               </Suspense>
             }
           />

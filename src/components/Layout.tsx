@@ -3,14 +3,18 @@ import { NavLink, Outlet } from 'react-router-dom'
 import ThemeToggle from './ThemeToggle'
 import InstallButton from './InstallButton'
 import {
+  ArrowRightLeft,
+  Braces,
   Coffee,
   FileSpreadsheet,
   FileText,
+  ImageDown,
   KeyRound,
   LayoutGrid,
   Menu,
   Mic,
   NotebookPen,
+  Palette,
   QrCode,
   Wrench,
   X,
@@ -24,6 +28,10 @@ const navItems = [
   { to: '/notebook', label: 'Notebook', icon: NotebookPen, end: false },
   { to: '/voice', label: 'Voice Tools', icon: Mic, end: false },
   { to: '/passwords', label: 'Passwords', icon: KeyRound, end: false },
+  { to: '/image-optimizer', label: 'Image Optimizer', icon: ImageDown, end: false },
+  { to: '/playground', label: 'Regex & JSON', icon: Braces, end: false },
+  { to: '/convert', label: 'Unit Converter', icon: ArrowRightLeft, end: false },
+  { to: '/colors', label: 'Color Tools', icon: Palette, end: false },
 ]
 
 function Brand() {

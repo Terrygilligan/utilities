@@ -1,9 +1,13 @@
 import {
+  ArrowRightLeft,
+  Braces,
   FileSpreadsheet,
   FileText,
+  ImageDown,
   KeyRound,
   Mic,
   NotebookPen,
+  Palette,
   QrCode,
   Sparkles,
 } from 'lucide-react'
@@ -56,6 +60,30 @@ export default function Home() {
           title="Password Generator"
           description="Cryptographically random passphrases and complex passwords with a live entropy meter."
           icon={KeyRound}
+        />
+        <ToolCard
+          to="/image-optimizer"
+          title="Image Optimizer"
+          description="Resize, compress, and convert images to WebP or JPEG — EXIF data stripped automatically."
+          icon={ImageDown}
+        />
+        <ToolCard
+          to="/playground"
+          title="Regex & JSON Playground"
+          description="Test regular expressions with live match highlighting, plus a JSON formatter and validator."
+          icon={Braces}
+        />
+        <ToolCard
+          to="/convert"
+          title="Unit Converter"
+          description="Instant offline conversions for length, weight, temperature, and data storage."
+          icon={ArrowRightLeft}
+        />
+        <ToolCard
+          to="/colors"
+          title="Color Tools"
+          description="Color picker, tint and shade palette generator, and WCAG contrast checking."
+          icon={Palette}
         />
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
           <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />
