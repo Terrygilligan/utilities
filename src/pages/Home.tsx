@@ -1,6 +1,7 @@
 import {
   ArrowRightLeft,
   Braces,
+  Calculator,
   Clapperboard,
   FileCheck2,
   FileCode2,
@@ -15,6 +16,7 @@ import {
   QrCode,
   Receipt,
   Sparkles,
+  Type,
 } from 'lucide-react'
 import ToolCard from '../components/ToolCard'
 import { t } from '../utils/i18n'
@@ -119,6 +121,18 @@ export default function Home() {
           title={t('Expense Tracker')}
           description={t('Snap receipts, log vendor/date/amount in your local currency, export an Excel workbook.')}
           icon={Receipt}
+        />
+        <ToolCard
+          to="/text-tools"
+          title={t('Text Workbench')}
+          description={t('Case conversion, line sorting and dedupe, word counts, and lorem ipsum generation.')}
+          icon={Type}
+        />
+        <ToolCard
+          to="/calc-tools"
+          title={t('Calc & Time Converter')}
+          description={t('Percentages, VAT, and timezone conversion — formatted for your device locale.')}
+          icon={Calculator}
         />
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
           <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />

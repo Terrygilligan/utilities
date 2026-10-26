@@ -6,6 +6,7 @@ import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
   Braces,
+  Calculator,
   Clapperboard,
   Coffee,
   FileCheck2,
@@ -22,6 +23,7 @@ import {
   Palette,
   QrCode,
   Receipt,
+  Type,
   Wrench,
   X,
 } from 'lucide-react'
@@ -43,6 +45,8 @@ const navItems = [
   { to: '/svg', label: 'SVG Optimizer', icon: FileCode2, end: false },
   { to: '/diff', label: 'Diff Checker', icon: GitCompareArrows, end: false },
   { to: '/expenses', label: 'Expenses', icon: Receipt, end: false },
+  { to: '/text-tools', label: 'Text Tools', icon: Type, end: false },
+  { to: '/calc-tools', label: 'Calc & Time', icon: Calculator, end: false },
 ]
 
 function Brand() {
