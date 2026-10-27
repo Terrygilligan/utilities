@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Camera, Download, Loader2, Pencil, Receipt, ScanText, Trash2, X } from 'lucide-react'
+import { Camera, Download, FileText, Loader2, Pencil, Printer, Receipt, ScanText, Trash2, X } from 'lucide-react'
 import FilePicker from '../components/FilePicker'
 import ShareButton from '../components/ShareButton'
 import { saveBlob } from '../lib/download'
 import { loadXlsx } from './excel/shared'
-import { CURRENCIES, fmtDate, fmtMoney, getCurrency } from '../utils/locale'
+import { CURRENCIES, fmtDate, fmtDateTime, fmtMoney, getCurrency } from '../utils/locale'
 import { CategoryDonut, CurrencyToggle, MonthlyBarChart } from './expenses/ExpenseCharts'
 
 const CATEGORIES = [
@@ -368,6 +368,28 @@ export default function ExpenseTracker() {
     return XLSX.write(wb, { type: 'array', bookType: 'xlsx' }) as Uint8Array
   }, [entries])
 
+  const exportCsv = () => {
+    const esc = (v: string | number) => {
+      const s = String(v)
+      return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
+    }
+    const rows: (string | number)[][] = [
+      ['Date', 'Vendor', 'Amount', 'Currency', 'Category', 'Entity', 'VAT', 'Notes'],
+      ...entries.map((e) => [
+        e.date,
+        e.vendor,
+        e.amount,
+        e.currency,
+        e.category,
+        e.entity ?? '',
+        e.vatRate ? Math.round(vatAmount(e) * 100) / 100 : '',
+        e.notes ?? '',
+      ]),
+    ]
+    const csv = String.fromCharCode(0xfeff) + rows.map((r) => r.map(esc).join(',')).join('\r\n')
+    saveBlob(new Blob([csv], { type: 'text/csv;charset=utf-8' }), 'expenses.csv')
+  }
+
   const exportXlsx = async () => {
     setExporting(true)
     try {
@@ -413,8 +435,8 @@ export default function ExpenseTracker() {
         Each entry keeps its own currency; totals stay grouped per currency (no fake exchange rates).
       </p>
 
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <div className="mt-6 grid gap-4 lg:grid-cols-2 print:grid-cols-1">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 print:hidden">
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => void openCam()}
               className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400">
@@ -514,12 +536,20 @@ export default function ExpenseTracker() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <div className="print-sheet rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 print:border-0 print:p-0">
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold">
               {entries.length} entr{entries.length === 1 ? 'y' : 'ies'}
             </p>
-            <span className="flex gap-1">
+            <span className="flex gap-1 print:hidden">
+              <button type="button" onClick={() => window.print()} disabled={!entries.length}
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800">
+                <Printer size={14} /> Print / PDF
+              </button>
+              <button type="button" onClick={exportCsv} disabled={!entries.length}
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800">
+                <FileText size={14} /> CSV
+              </button>
               <button type="button" onClick={() => void exportXlsx()} disabled={!entries.length || exporting}
                 className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800">
                 {exporting ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />} Excel
@@ -550,7 +580,7 @@ export default function ExpenseTracker() {
                 </span>
               </div>
               {chartCur && (
-                <div className="border-t border-slate-200 pt-3 dark:border-slate-800">
+                <div className="border-t border-slate-200 pt-3 dark:border-slate-800 print:hidden">
                   <CurrencyToggle
                     currencies={chartCurs}
                     available={new Set(curTotals.keys())}
@@ -578,7 +608,7 @@ export default function ExpenseTracker() {
             </div>
           )}
 
-          <div className="mt-3 max-h-80 overflow-auto">
+          <div className="mt-3 max-h-80 overflow-auto print:hidden">
             {entries.length === 0 && (
               <p className="py-8 text-center text-sm text-slate-500">No expenses yet — scan or add your first bill.</p>
             )}
@@ -607,6 +637,39 @@ export default function ExpenseTracker() {
                 </button>
               </div>
             ))}
+          </div>
+
+          <div className="hidden print:block">
+            <p className="mt-4 text-xs text-slate-500">Generated {fmtDateTime(new Date())}</p>
+            <table className="mt-2 w-full border-collapse text-xs">
+              <thead>
+                <tr>
+                  {['Date', 'Vendor', 'Amount', 'Currency', 'Category', 'Entity', 'VAT', 'Notes'].map((h) => (
+                    <th key={h} className="border-b-2 border-slate-400 py-1 pr-2 text-left font-semibold">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {sorted.map((e) => (
+                  <tr key={e.id}>
+                    <td className="border-b border-slate-200 py-1 pr-2 whitespace-nowrap">{e.date}</td>
+                    <td className="border-b border-slate-200 py-1 pr-2">{e.vendor}</td>
+                    <td className="border-b border-slate-200 py-1 pr-2 text-right tabular-nums">{e.amount.toFixed(2)}</td>
+                    <td className="border-b border-slate-200 py-1 pr-2">{e.currency}</td>
+                    <td className="border-b border-slate-200 py-1 pr-2">{e.category}</td>
+                    <td className="border-b border-slate-200 py-1 pr-2">{e.entity ?? ''}</td>
+                    <td className="border-b border-slate-200 py-1 pr-2 text-right tabular-nums">
+                      {e.vatRate ? vatAmount(e).toFixed(2) : ''}
+                    </td>
+                    <td className="border-b border-slate-200 py-1 pr-2">{e.notes ?? ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="mt-3 text-xs font-semibold">
+              Totals: {[...curTotals].map(([c, t]) => fmtMoney(t, c)).join(' · ')}
+              {' — '}monthly avg {[...curTotals].map(([c, t]) => fmtMoney(t / monthCount, c)).join(' · ')}
+            </p>
           </div>
         </div>
       </div>

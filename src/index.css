@@ -2,6 +2,20 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@media print {
+  body {
+    background: #fff !important;
+    color: #0f172a !important;
+  }
+  .print-sheet,
+  .print-sheet * {
+    color: #0f172a !important;
+    background: transparent !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+}
+
 .md-preview {
   line-height: 1.65;
   color: #334155;

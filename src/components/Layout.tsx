@@ -33,6 +33,7 @@ import {
   Palette,
   QrCode,
   Receipt,
+  RefreshCw,
   ScanBarcode,
   ShieldCheck,
   Stamp,
@@ -59,6 +60,7 @@ const navGroups: { label: string; items: NavItem[] }[] = [
       { to: '/excel', label: 'Excel & CSV', icon: FileSpreadsheet },
       { to: '/notebook', label: 'Notebook', icon: NotebookPen },
       { to: '/text-tools', label: 'Text Tools', icon: Type },
+      { to: '/sync', label: 'Sync Hub', icon: RefreshCw },
     ],
   },
   {
@@ -221,7 +223,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 px-4 py-3 backdrop-blur md:hidden">
+      <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 px-4 py-3 backdrop-blur md:hidden print:hidden">
         <Brand />
         <CurrencySelect />
         <ThemeToggle />
@@ -236,13 +238,13 @@ export default function Layout() {
       </header>
 
       {menuOpen && (
-        <nav className="max-h-[75vh] space-y-1 overflow-y-auto border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:hidden">
+        <nav className="max-h-[75vh] space-y-1 overflow-y-auto border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:hidden print:hidden">
           <NavLinks onNavigate={() => setMenuOpen(false)} />
         </nav>
       )}
 
       <div className="mx-auto flex w-full max-w-6xl">
-        <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-slate-200 dark:border-slate-800 px-4 py-6 md:flex">
+        <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-slate-200 dark:border-slate-800 px-4 py-6 md:flex print:hidden">
           <Brand />
           <nav className="mt-8 flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto pr-1">
             <NavLinks />
@@ -261,7 +263,7 @@ export default function Layout() {
           <main className="px-4 py-8 sm:px-8">
             <Outlet />
           </main>
-          <footer className="border-t border-slate-200 px-4 pb-8 pt-6 text-center text-xs text-slate-500 dark:border-slate-800 sm:px-8">
+          <footer className="border-t border-slate-200 px-4 pb-8 pt-6 text-center text-xs text-slate-500 dark:border-slate-800 sm:px-8 print:hidden">
             <a
               href="https://buymeacoffee.com"
               target="_blank"

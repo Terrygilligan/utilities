@@ -31,6 +31,7 @@ const BarcodeGenerator = lazy(() => import('./pages/BarcodeGenerator'))
 const TotpAuthenticator = lazy(() => import('./pages/TotpAuthenticator'))
 const BarcodeScanner = lazy(() => import('./pages/BarcodeScanner'))
 const DatabaseSandbox = lazy(() => import('./pages/DatabaseSandbox'))
+const SyncHub = lazy(() => import('./pages/SyncHub'))
 
 function Loading() {
   return (
@@ -268,6 +269,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <DatabaseSandbox />
+              </Suspense>
+            }
+          />
+          <Route
+            path="sync"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SyncHub />
               </Suspense>
             }
           />

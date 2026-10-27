@@ -42,5 +42,6 @@ The summary card shows per-currency totals and a monthly average, plus:
 
 ### Export
 
+- **CSV** downloads `expenses.csv` — UTF-8 with BOM, `Date, Vendor, Amount, Currency, Category, Entity, VAT, Notes` headers; opens cleanly in Excel/LibreOffice (Cyrillic-safe).
 - **Excel** downloads `expenses.xlsx`: an `Expenses` sheet (one row per entry, incl. VAT breakdown) and a `Summary` sheet (totals, per-month and per-category tables with one column per currency used).
 - **Share** sends the same workbook via the system share sheet (or downloads it where sharing isn't available).

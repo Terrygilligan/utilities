@@ -21,6 +21,7 @@ import {
   Palette,
   QrCode,
   Receipt,
+  RefreshCw,
   ScanBarcode,
   ShieldCheck,
   Sparkles,
@@ -209,6 +210,12 @@ export default function Home() {
           title={t('SQL Sandbox')}
           description={t('Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.')}
           icon={Database}
+        />
+        <ToolCard
+          to="/sync"
+          title={t('Sync Hub')}
+          description={t('Move all app data between devices via QR code or JSON file — merge safely or overwrite with a warning gate.')}
+          icon={RefreshCw}
         />
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
           <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />

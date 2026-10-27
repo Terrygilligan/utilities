@@ -11,7 +11,7 @@ export interface BackupFile {
   data: Record<string, string>
 }
 
-function dataKeys(): string[] {
+export function dataKeys(): string[] {
   const keys: string[] = []
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i)
@@ -20,7 +20,7 @@ function dataKeys(): string[] {
   return keys
 }
 
-function snapshot(): Record<string, string> {
+export function snapshot(): Record<string, string> {
   const data: Record<string, string> = {}
   for (const key of dataKeys()) {
     data[key] = localStorage.getItem(key) ?? ''
@@ -28,7 +28,7 @@ function snapshot(): Record<string, string> {
   return data
 }
 
-function restore(data: Record<string, string>) {
+export function restore(data: Record<string, string>) {
   for (const key of dataKeys()) localStorage.removeItem(key)
   for (const [key, value] of Object.entries(data)) {
     localStorage.setItem(key, value)
