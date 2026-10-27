@@ -5,7 +5,6 @@ import ShareButton from '../components/ShareButton'
 import { saveBlob } from '../lib/download'
 import { loadXlsx } from './excel/shared'
 import { CURRENCIES, fmtDate, fmtMoney, getCurrency } from '../utils/locale'
-import type { CurrencyCode } from '../utils/locale'
 import { CategoryDonut, CurrencyToggle, MonthlyBarChart } from './expenses/ExpenseCharts'
 
 const CATEGORIES = [
@@ -20,7 +19,7 @@ interface Entry {
   vendor: string
   date: string
   amount: number
-  currency: CurrencyCode
+  currency: string
   category: string
   entity?: string
   notes?: string
@@ -29,7 +28,7 @@ interface Entry {
 }
 
 interface RawEntry extends Omit<Entry, 'currency'> {
-  currency?: CurrencyCode
+  currency?: string
 }
 
 const load = (): Entry[] => {
@@ -44,6 +43,16 @@ const load = (): Entry[] => {
 
 const vatAmount = (e: Entry) =>
   e.vatRate ? e.amount - e.amount / (1 + e.vatRate / 100) : 0
+
+const detectCurrency = (text: string): string | null => {
+  if (/лв\.?|лева|\bbgn\b/i.test(text)) return 'EUR'
+  const code = text.match(/\b(EUR|GBP|USD|CHF|RON|TRY|PLN|CZK|RSD|MKD|JPY|CAD|AUD)\b/i)
+  if (code) return code[1].toUpperCase()
+  if (text.includes('€')) return 'EUR'
+  if (text.includes('£')) return 'GBP'
+  if (text.includes('$')) return 'USD'
+  return null
+}
 
 const preprocess = (file: File): Promise<HTMLCanvasElement> =>
   new Promise((resolve, reject) => {
@@ -82,7 +91,7 @@ const emptyForm = () => ({
   vendor: '',
   date: new Date().toISOString().slice(0, 10),
   amount: '',
-  currency: getCurrency(),
+  currency: getCurrency() as string,
   category: CATEGORIES[0] as string,
   customCategory: '',
   entity: '',
@@ -200,14 +209,26 @@ export default function ExpenseTracker() {
       )
       amount = String(Math.max(...nums))
     } else {
-      const all = [...text.matchAll(/\d+[.,]\d{2}/g)]
-        .map((m) => parseFloat(m[0].replace(',', '.')))
+      const marked = [
+        ...text.matchAll(/(\d+[.,]\d{2})\s*(?:лв\.?|лева|bgn|eur|gbp|usd|chf|€|£|\$)/gi),
+      ]
+        .map((m) => parseFloat(m[1].replace(',', '.')))
         .filter((n) => n > 0 && n < 1_000_000)
+      const all = marked.length
+        ? marked
+        : [...text.matchAll(/\d+[.,]\d{2}/g)]
+            .map((m) => parseFloat(m[0].replace(',', '.')))
+            .filter((n) => n > 0 && n < 1_000_000)
       if (all.length) amount = String(Math.max(...all))
     }
     if (amount && !form.amount) {
       set({ amount })
       found.push('amount')
+    }
+    const cur = detectCurrency(text)
+    if (cur && cur !== form.currency) {
+      set({ currency: cur })
+      found.push(`currency ${cur}`)
     }
     return found
   }
@@ -225,6 +246,7 @@ export default function ExpenseTracker() {
         corePath: '/tess-worker/tesseract-core-simd-lstm.wasm.js',
         langPath: '/tessdata',
       })
+      await worker.setParameters({ tessedit_pageseg_mode: api.PSM.SPARSE_TEXT })
       const { data } = await worker.recognize(await preprocess(file))
       await worker.terminate()
       setOcrText(data.text)
@@ -331,16 +353,17 @@ export default function ExpenseTracker() {
     for (const [cur, total] of totalsByCurrency(entries)) {
       summaryRows.push(['Total', cur, Math.round(total * 100) / 100])
     }
-    summaryRows.push([], ['Month', ...CURRENCIES])
+    const allCurs = [...new Set([...CURRENCIES, ...entries.map((e) => e.currency)])]
+    summaryRows.push([], ['Month', ...allCurs])
     for (const [month, map] of totalsByMonth(entries)) {
-      summaryRows.push([month, ...CURRENCIES.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
+      summaryRows.push([month, ...allCurs.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
     }
-    summaryRows.push([], ['Category', ...CURRENCIES])
+    summaryRows.push([], ['Category', ...allCurs])
     for (const [cat, map] of totalsByCategory(entries)) {
-      summaryRows.push([cat, ...CURRENCIES.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
+      summaryRows.push([cat, ...allCurs.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
     }
     const sws = XLSX.utils.aoa_to_sheet(summaryRows)
-    sws['!cols'] = [{ wch: 20 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }]
+    sws['!cols'] = [{ wch: 20 }, ...allCurs.map(() => ({ wch: 10 }))]
     XLSX.utils.book_append_sheet(wb, sws, 'Summary')
     return XLSX.write(wb, { type: 'array', bookType: 'xlsx' }) as Uint8Array
   }, [entries])
@@ -456,7 +479,7 @@ export default function ExpenseTracker() {
             <input type="date" value={form.date} onChange={(e) => set({ date: e.target.value })} className={input} />
             <div className="flex gap-2">
               <input value={form.amount} onChange={(e) => set({ amount: e.target.value })} inputMode="decimal" placeholder="Amount" className={input} />
-              <select value={form.currency} onChange={(e) => set({ currency: e.target.value as CurrencyCode })}
+              <select value={form.currency} onChange={(e) => set({ currency: e.target.value })}
                 className="w-24 rounded-lg border border-slate-300 bg-white px-2 py-2 text-sm dark:border-slate-700 dark:bg-slate-950/60">
                 {CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 {!(CURRENCIES as readonly string[]).includes(form.currency) && (
