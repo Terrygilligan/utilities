@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Calculator, Globe2, Percent } from 'lucide-react'
-import { CURRENCY, fmtDateTime, fmtMoney, fmtNumber } from '../utils/locale'
+import { fmtDateTime, fmtMoney, fmtNumber, useCurrency } from '../utils/locale'
 
 const ZONES = [
   'Europe/Dublin', 'Europe/London', 'Europe/Sofia', 'Europe/Amsterdam', 'Europe/Berlin',
@@ -67,6 +67,7 @@ function TimeZonePanel() {
 }
 
 function PercentPanel() {
+  const [currency] = useCurrency()
   const [a, setA] = useState('20')
   const [b, setB] = useState('100')
   const [from, setFrom] = useState('80')
@@ -106,7 +107,7 @@ function PercentPanel() {
         </p>
       </div>
       <div className={box}>
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">VAT / tax ({CURRENCY})</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">VAT / tax ({currency})</h3>
         <div className="mt-3 flex items-center gap-2">
           <input value={net} onChange={(e) => setNet(e.target.value)} inputMode="decimal" className={input} />
           <select value={vat} onChange={(e) => setVat(+e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-2 text-sm dark:border-slate-700 dark:bg-slate-950/60">

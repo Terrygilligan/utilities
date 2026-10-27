@@ -95,6 +95,32 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Shared': 'Споделено',
     'Saved': 'Запазено',
     'Copied!': 'Копирано!',
+    'Export backup': 'Експорт на копие',
+    'Restore backup': 'Възстанови копие',
+    'Clear data': 'Изчисти данните',
+    'Last backup': 'Последно копие',
+    'never': 'никога',
+    'Storage': 'Хранилище',
+    'Backup files contain authenticator secrets — store them safely':
+      'Файлът с копие съдържа кодове за автентикация — пазете го на сигурно място',
+    'Restore this backup? It replaces ALL current app data (notes, expenses, authenticator accounts, theme) with the file contents.':
+      'Да се възстанови ли това копие? То заменя ВСИЧКИ текущи данни на приложението (бележки, разходи, акаунти за автентикация, тема) със съдържанието на файла.',
+    'Backup restored. The app will now reload.': 'Копието е възстановено. Приложението ще се презареди.',
+    'Clear all app data on this device? This cannot be undone.':
+      'Да се изчистят ли всички данни на приложението на това устройство? Това не може да бъде отменено.',
+    'Really clear everything? Export a backup first if you need one.':
+      'Наистина ли да се изчисти всичко? Първо експортирайте копие, ако ви трябва.',
+    'Documents & Data': 'Документи и данни',
+    'Developer & Code': 'Разработка и код',
+    'Media & Design': 'Медия и дизайн',
+    'Math, Time & Conversion': 'Математика, време и конверсии',
+    'Scanners & Codes': 'Скенери и кодове',
+    'Security & Finance': 'Сигурност и финанси',
+    'Audio & Misc': 'Аудио и разни',
+    'SQL Sandbox': 'SQL пясъчник',
+    'Currency': 'Валута',
+    'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
+      'Изпълнявайте SQL заявки в реална SQLite машина чрез WebAssembly — инспектирайте схемата, импортирайте и експортирайте .sqlite файлове.',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -175,6 +201,32 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Shared': 'Compartido',
     'Saved': 'Guardado',
     'Copied!': '¡Copiado!',
+    'Export backup': 'Exportar copia',
+    'Restore backup': 'Restaurar copia',
+    'Clear data': 'Borrar datos',
+    'Last backup': 'Última copia',
+    'never': 'nunca',
+    'Storage': 'Almacenamiento',
+    'Backup files contain authenticator secrets — store them safely':
+      'Los archivos de copia contienen secretos del autenticador — guárdalos en un lugar seguro',
+    'Restore this backup? It replaces ALL current app data (notes, expenses, authenticator accounts, theme) with the file contents.':
+      '¿Restaurar esta copia? Reemplaza TODOS los datos actuales de la app (notas, gastos, cuentas de autenticación, tema) con el contenido del archivo.',
+    'Backup restored. The app will now reload.': 'Copia restaurada. La app se recargará ahora.',
+    'Clear all app data on this device? This cannot be undone.':
+      '¿Borrar todos los datos de la app en este dispositivo? Esto no se puede deshacer.',
+    'Really clear everything? Export a backup first if you need one.':
+      '¿Borrar todo de verdad? Exporta primero una copia si la necesitas.',
+    'Documents & Data': 'Documentos y datos',
+    'Developer & Code': 'Desarrollo y código',
+    'Media & Design': 'Multimedia y diseño',
+    'Math, Time & Conversion': 'Matemáticas, tiempo y conversión',
+    'Scanners & Codes': 'Escáneres y códigos',
+    'Security & Finance': 'Seguridad y finanzas',
+    'Audio & Misc': 'Audio y varios',
+    'SQL Sandbox': 'SQL Sandbox',
+    'Currency': 'Moneda',
+    'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
+      'Ejecuta consultas SQL en un motor SQLite real mediante WebAssembly: inspecciona el esquema, importa y exporta archivos .sqlite.',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -255,6 +307,32 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Shared': 'Partagé',
     'Saved': 'Enregistré',
     'Copied!': 'Copié !',
+    'Export backup': 'Exporter une sauvegarde',
+    'Restore backup': 'Restaurer une sauvegarde',
+    'Clear data': 'Effacer les données',
+    'Last backup': 'Dernière sauvegarde',
+    'never': 'jamais',
+    'Storage': 'Stockage',
+    'Backup files contain authenticator secrets — store them safely':
+      'Les fichiers de sauvegarde contiennent vos secrets d’authentification — conservez-les en lieu sûr',
+    'Restore this backup? It replaces ALL current app data (notes, expenses, authenticator accounts, theme) with the file contents.':
+      'Restaurer cette sauvegarde ? Elle remplace TOUTES les données actuelles (notes, dépenses, comptes d’authentification, thème) par le contenu du fichier.',
+    'Backup restored. The app will now reload.': 'Sauvegarde restaurée. L’app va se recharger.',
+    'Clear all app data on this device? This cannot be undone.':
+      'Effacer toutes les données de l’app sur cet appareil ? Action irréversible.',
+    'Really clear everything? Export a backup first if you need one.':
+      'Vraiment tout effacer ? Exportez d’abord une sauvegarde si besoin.',
+    'Documents & Data': 'Documents et données',
+    'Developer & Code': 'Développement et code',
+    'Media & Design': 'Médias et design',
+    'Math, Time & Conversion': 'Maths, temps et conversion',
+    'Scanners & Codes': 'Scanners et codes',
+    'Security & Finance': 'Sécurité et finances',
+    'Audio & Misc': 'Audio et divers',
+    'SQL Sandbox': 'Bac à sable SQL',
+    'Currency': 'Devise',
+    'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
+      'Exécutez des requêtes SQL dans un vrai moteur SQLite via WebAssembly — inspectez le schéma, importez et exportez des fichiers .sqlite.',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -335,6 +413,32 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Shared': 'Geteilt',
     'Saved': 'Gespeichert',
     'Copied!': 'Kopiert!',
+    'Export backup': 'Backup exportieren',
+    'Restore backup': 'Backup wiederherstellen',
+    'Clear data': 'Daten löschen',
+    'Last backup': 'Letztes Backup',
+    'never': 'nie',
+    'Storage': 'Speicher',
+    'Backup files contain authenticator secrets — store them safely':
+      'Backup-Dateien enthalten deine Authenticator-Geheimnisse — bewahre sie sicher auf',
+    'Restore this backup? It replaces ALL current app data (notes, expenses, authenticator accounts, theme) with the file contents.':
+      'Dieses Backup wiederherstellen? Es ersetzt ALLE aktuellen App-Daten (Notizen, Ausgaben, Authenticator-Konten, Theme) durch den Dateiinhalt.',
+    'Backup restored. The app will now reload.': 'Backup wiederhergestellt. Die App wird jetzt neu geladen.',
+    'Clear all app data on this device? This cannot be undone.':
+      'Alle App-Daten auf diesem Gerät löschen? Das kann nicht rückgängig gemacht werden.',
+    'Really clear everything? Export a backup first if you need one.':
+      'Wirklich alles löschen? Exportiere vorher ein Backup, falls du eines brauchst.',
+    'Documents & Data': 'Dokumente & Daten',
+    'Developer & Code': 'Entwicklung & Code',
+    'Media & Design': 'Medien & Design',
+    'Math, Time & Conversion': 'Mathe, Zeit & Umrechnung',
+    'Scanners & Codes': 'Scanner & Codes',
+    'Security & Finance': 'Sicherheit & Finanzen',
+    'Audio & Misc': 'Audio & Sonstiges',
+    'SQL Sandbox': 'SQL-Sandbox',
+    'Currency': 'Währung',
+    'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
+      'SQL-Abfragen in einer echten SQLite-Engine per WebAssembly ausführen — Schema ansehen, .sqlite-Dateien im- und exportieren.',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -415,6 +519,32 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Shared': 'Gedeeld',
     'Saved': 'Opgeslagen',
     'Copied!': 'Gekopieerd!',
+    'Export backup': 'Back-up exporteren',
+    'Restore backup': 'Back-up herstellen',
+    'Clear data': 'Gegevens wissen',
+    'Last backup': 'Laatste back-up',
+    'never': 'nooit',
+    'Storage': 'Opslag',
+    'Backup files contain authenticator secrets — store them safely':
+      'Back-upbestanden bevatten je authenticator-geheimen — bewaar ze veilig',
+    'Restore this backup? It replaces ALL current app data (notes, expenses, authenticator accounts, theme) with the file contents.':
+      'Deze back-up herstellen? Dit vervangt ALLE huidige app-gegevens (notities, uitgaven, authenticator-accounts, thema) door de inhoud van het bestand.',
+    'Backup restored. The app will now reload.': 'Back-up hersteld. De app wordt nu herladen.',
+    'Clear all app data on this device? This cannot be undone.':
+      'Alle app-gegevens op dit apparaat wissen? Dit kan niet ongedaan worden gemaakt.',
+    'Really clear everything? Export a backup first if you need one.':
+      'Echt alles wissen? Exporteer eerst een back-up als je er een nodig hebt.',
+    'Documents & Data': 'Documenten & data',
+    'Developer & Code': 'Ontwikkeling & code',
+    'Media & Design': 'Media & ontwerp',
+    'Math, Time & Conversion': 'Wiskunde, tijd & conversie',
+    'Scanners & Codes': 'Scanners & codes',
+    'Security & Finance': 'Beveiliging & financiën',
+    'Audio & Misc': 'Audio & diversen',
+    'SQL Sandbox': 'SQL-sandbox',
+    'Currency': 'Valuta',
+    'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
+      'Voer SQL-query’s uit in een echte SQLite-engine via WebAssembly — inspecteer het schema, importeer en exporteer .sqlite-bestanden.',
   },
 }
 

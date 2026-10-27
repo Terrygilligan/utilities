@@ -27,23 +27,29 @@ export default function BarcodeScanner() {
   const fileRef = useRef<Html5Qrcode | null>(null)
   const uploadRef = useRef<HTMLInputElement>(null)
 
+  const [camVisible, setCamVisible] = useState(false)
+
   const stop = useCallback(async () => {
     try { if (camRef.current?.isScanning) await camRef.current.stop(); camRef.current?.clear() } catch { /* noop */ }
     setScanning(false)
+    setCamVisible(false)
   }, [])
 
   const start = useCallback(async () => {
     setError(''); setResult(null)
+    setCamVisible(true)
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
     try {
       const s = camRef.current ?? new Html5Qrcode(CAM_ID, { formatsToSupport: FORMATS, verbose: false })
       camRef.current = s
       await s.start({ facingMode: 'environment' },
-        { fps: 10 },
+        { fps: 10, qrbox: (w, h) => ({ width: Math.floor(w * 0.9), height: Math.floor(h * 0.4) }) },
         (text) => { setResult(text); void stop() },
         () => {})
       setScanning(true)
     } catch (e) {
       setScanning(false)
+      setCamVisible(false)
       const n = e instanceof Error ? e.name : ''
       setError(n.includes('NotAllowed') ? 'Camera permission denied — allow camera access and retry.'
         : !window.isSecureContext ? 'Camera scanning needs HTTPS.'
@@ -73,7 +79,10 @@ export default function BarcodeScanner() {
         Read EAN, UPC, Code 39/93/128, ITF, and Codabar with your camera or from a photo — on-device.
       </p>
 
-      <div id={CAM_ID} className={`mt-6 overflow-hidden rounded-xl ${scanning ? '' : 'hidden'}`} />
+      <div className={camVisible ? 'mt-6' : 'hidden'}>
+        <div id={CAM_ID} className="aspect-video w-full overflow-hidden rounded-xl bg-slate-950" />
+        {!scanning && !error && <p className="mt-2 text-center text-xs text-slate-500">Starting camera…</p>}
+      </div>
       {error && (
         <div className="mt-4 flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">
           <TriangleAlert size={18} className="shrink-0" /> {error}

@@ -6,6 +6,7 @@ import {
   Calculator,
   Clapperboard,
   Code2,
+  Database,
   FileCheck2,
   FileCode2,
   FileSpreadsheet,
@@ -202,6 +203,12 @@ export default function Home() {
           title={t('Barcode Scanner')}
           description={t('Read EAN, UPC, Code 39/128, ITF and more via camera or image — decoded locally.')}
           icon={ScanBarcode}
+        />
+        <ToolCard
+          to="/sql"
+          title={t('SQL Sandbox')}
+          description={t('Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.')}
+          icon={Database}
         />
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
           <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />

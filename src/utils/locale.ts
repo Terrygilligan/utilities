@@ -1,4 +1,6 @@
 // Centralized device-locale formatting (navigator.language + Intl).
+import { useEffect, useState } from 'react'
+
 export const LOCALE = navigator.language || 'en-US'
 
 const REGION_CURRENCY: Record<string, string> = {
@@ -13,10 +15,59 @@ export const REGION = (() => {
     return 'IE'
   }
 })()
-export const CURRENCY = REGION_CURRENCY[REGION] ?? 'EUR'
+export const CURRENCIES = ['EUR', 'GBP', 'USD'] as const
+export type CurrencyCode = (typeof CURRENCIES)[number]
+export const CURRENCY_KEY = 'utility-hub.currency'
+const CURRENCY_EVENT = 'utility-hub:currency'
 
-const moneyFmt = new Intl.NumberFormat(LOCALE, { style: 'currency', currency: CURRENCY })
-export const fmtMoney = (n: number) => moneyFmt.format(n)
+const regionCurrency = REGION_CURRENCY[REGION]
+
+export function getCurrency(): CurrencyCode {
+  try {
+    const stored = localStorage.getItem(CURRENCY_KEY)
+    if ((CURRENCIES as readonly string[]).includes(stored ?? '')) {
+      return stored as CurrencyCode
+    }
+  } catch {
+    // storage unavailable
+  }
+  return (CURRENCIES as readonly string[]).includes(regionCurrency ?? '')
+    ? (regionCurrency as CurrencyCode)
+    : 'EUR'
+}
+
+export function setCurrency(code: CurrencyCode) {
+  try {
+    localStorage.setItem(CURRENCY_KEY, code)
+  } catch {
+    // storage unavailable — still notify listeners for this session
+  }
+  window.dispatchEvent(new Event(CURRENCY_EVENT))
+}
+
+export function useCurrency(): [CurrencyCode, (code: CurrencyCode) => void] {
+  const [currency, set] = useState<CurrencyCode>(getCurrency)
+  useEffect(() => {
+    const update = () => set(getCurrency())
+    window.addEventListener(CURRENCY_EVENT, update)
+    window.addEventListener('storage', update)
+    return () => {
+      window.removeEventListener(CURRENCY_EVENT, update)
+      window.removeEventListener('storage', update)
+    }
+  }, [])
+  return [currency, setCurrency]
+}
+
+const moneyFmts = new Map<string, Intl.NumberFormat>()
+export const fmtMoney = (n: number, currency: string = getCurrency()) => {
+  let fmt = moneyFmts.get(currency)
+  if (!fmt) {
+    fmt = new Intl.NumberFormat(LOCALE, { style: 'currency', currency })
+    moneyFmts.set(currency, fmt)
+  }
+  return fmt.format(n)
+}
 
 export const fmtNumber = (n: number, opts?: Intl.NumberFormatOptions) =>
   new Intl.NumberFormat(LOCALE, opts).format(n)

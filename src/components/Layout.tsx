@@ -1,7 +1,10 @@
-import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import type { LucideIcon } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import InstallButton from './InstallButton'
+import BackupPanel from './BackupPanel'
+import CurrencySelect from './CurrencySelect'
 import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
@@ -9,9 +12,11 @@ import {
   Braces,
   Calculator,
   CalendarClock,
+  ChevronDown,
   Clapperboard,
   Coffee,
   Code2,
+  Database,
   FileCheck2,
   FileCode2,
   FileSpreadsheet,
@@ -37,36 +42,89 @@ import {
   X,
 } from 'lucide-react'
 
-const navItems = [
-  { to: '/', label: 'All Tools', icon: LayoutGrid, end: true },
-  { to: '/pdf', label: 'PDF Tools', icon: FileText, end: false },
-  { to: '/qr-scanner', label: 'QR Scanner', icon: QrCode, end: false },
-  { to: '/excel', label: 'Excel & CSV', icon: FileSpreadsheet, end: false },
-  { to: '/notebook', label: 'Notebook', icon: NotebookPen, end: false },
-  { to: '/voice', label: 'Voice Tools', icon: Mic, end: false },
-  { to: '/passwords', label: 'Passwords', icon: KeyRound, end: false },
-  { to: '/image-optimizer', label: 'Image Optimizer', icon: ImageDown, end: false },
-  { to: '/playground', label: 'Regex & JSON', icon: Braces, end: false },
-  { to: '/convert', label: 'Unit Converter', icon: ArrowRightLeft, end: false },
-  { to: '/colors', label: 'Color Tools', icon: Palette, end: false },
-  { to: '/media', label: 'Media Tools', icon: Clapperboard, end: false },
-  { to: '/checksum', label: 'Checksums', icon: FileCheck2, end: false },
-  { to: '/svg', label: 'SVG Optimizer', icon: FileCode2, end: false },
-  { to: '/diff', label: 'Diff Checker', icon: GitCompareArrows, end: false },
-  { to: '/expenses', label: 'Expenses', icon: Receipt, end: false },
-  { to: '/text-tools', label: 'Text Tools', icon: Type, end: false },
-  { to: '/calc-tools', label: 'Calc & Time', icon: Calculator, end: false },
-  { to: '/timer', label: 'Timer & Pomodoro', icon: Timer, end: false },
-  { to: '/codec', label: 'Base64 & URL', icon: Code2, end: false },
-  { to: '/uuid', label: 'UUID & Random', icon: Hash, end: false },
-  { to: '/cron', label: 'Cron Explainer', icon: CalendarClock, end: false },
-  { to: '/watermark', label: 'Watermark', icon: Stamp, end: false },
-  { to: '/screen-recorder', label: 'Screen Recorder', icon: MonitorPlay, end: false },
-  { to: '/qr-generator', label: 'QR Generator', icon: QrCode, end: false },
-  { to: '/barcode', label: 'Barcode', icon: Barcode, end: false },
-  { to: '/totp', label: 'Authenticator', icon: ShieldCheck, end: false },
-  { to: '/barcode-scanner', label: 'Barcode Scanner', icon: ScanBarcode, end: false },
+interface NavItem {
+  to: string
+  label: string
+  icon: LucideIcon
+  end?: boolean
+}
+
+const allToolsItem: NavItem = { to: '/', label: 'All Tools', icon: LayoutGrid, end: true }
+
+const navGroups: { label: string; items: NavItem[] }[] = [
+  {
+    label: 'Documents & Data',
+    items: [
+      { to: '/pdf', label: 'PDF Tools', icon: FileText },
+      { to: '/excel', label: 'Excel & CSV', icon: FileSpreadsheet },
+      { to: '/notebook', label: 'Notebook', icon: NotebookPen },
+      { to: '/text-tools', label: 'Text Tools', icon: Type },
+    ],
+  },
+  {
+    label: 'Developer & Code',
+    items: [
+      { to: '/playground', label: 'Regex & JSON', icon: Braces },
+      { to: '/checksum', label: 'Checksums', icon: FileCheck2 },
+      { to: '/svg', label: 'SVG Optimizer', icon: FileCode2 },
+      { to: '/diff', label: 'Diff Checker', icon: GitCompareArrows },
+      { to: '/codec', label: 'Base64 & URL', icon: Code2 },
+      { to: '/uuid', label: 'UUID & Random', icon: Hash },
+      { to: '/cron', label: 'Cron Explainer', icon: CalendarClock },
+      { to: '/sql', label: 'SQL Sandbox', icon: Database },
+    ],
+  },
+  {
+    label: 'Media & Design',
+    items: [
+      { to: '/image-optimizer', label: 'Image Optimizer', icon: ImageDown },
+      { to: '/colors', label: 'Color Tools', icon: Palette },
+      { to: '/media', label: 'Media Tools', icon: Clapperboard },
+      { to: '/watermark', label: 'Watermark', icon: Stamp },
+      { to: '/screen-recorder', label: 'Screen Recorder', icon: MonitorPlay },
+    ],
+  },
+  {
+    label: 'Math, Time & Conversion',
+    items: [
+      { to: '/convert', label: 'Unit Converter', icon: ArrowRightLeft },
+      { to: '/calc-tools', label: 'Calc & Time', icon: Calculator },
+      { to: '/timer', label: 'Timer & Pomodoro', icon: Timer },
+    ],
+  },
+  {
+    label: 'Scanners & Codes',
+    items: [
+      { to: '/qr-scanner', label: 'QR Scanner', icon: QrCode },
+      { to: '/qr-generator', label: 'QR Generator', icon: QrCode },
+      { to: '/barcode', label: 'Barcode', icon: Barcode },
+      { to: '/barcode-scanner', label: 'Barcode Scanner', icon: ScanBarcode },
+    ],
+  },
+  {
+    label: 'Security & Finance',
+    items: [
+      { to: '/passwords', label: 'Passwords', icon: KeyRound },
+      { to: '/totp', label: 'Authenticator', icon: ShieldCheck },
+      { to: '/expenses', label: 'Expenses', icon: Receipt },
+    ],
+  },
+  {
+    label: 'Audio & Misc',
+    items: [{ to: '/voice', label: 'Voice Tools', icon: Mic }],
+  },
 ]
+
+const COLLAPSE_KEY = 'utility-hub.nav.collapsed'
+
+function readCollapsed(): Record<string, boolean> {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(COLLAPSE_KEY) ?? '{}')
+    return typeof parsed === 'object' && parsed !== null ? (parsed as Record<string, boolean>) : {}
+  } catch {
+    return {}
+  }
+}
 
 function Brand() {
   return (
@@ -79,27 +137,81 @@ function Brand() {
   )
 }
 
+function NavItemLink({ to, label, icon: Icon, end, onNavigate }: NavItem & { onNavigate?: () => void }) {
+  return (
+    <NavLink
+      to={to}
+      end={end}
+      onClick={onNavigate}
+      className={({ isActive }) =>
+        `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+          isActive
+            ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
+        }`
+      }
+    >
+      <Icon size={18} />
+      {t(label)}
+    </NavLink>
+  )
+}
+
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+  const { pathname } = useLocation()
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>(readCollapsed)
+
+  const persist = (next: Record<string, boolean>) => {
+    try {
+      localStorage.setItem(COLLAPSE_KEY, JSON.stringify(next))
+    } catch {
+      // storage unavailable — collapse state just won't persist
+    }
+  }
+
+  useEffect(() => {
+    const active = navGroups.find((g) => g.items.some((item) => item.to === pathname))
+    if (!active) return
+    setCollapsed((current) => {
+      if (!current[active.label]) return current
+      const next = { ...current, [active.label]: false }
+      persist(next)
+      return next
+    })
+  }, [pathname])
+
+  const toggle = (label: string) =>
+    setCollapsed((current) => {
+      const next = { ...current, [label]: !current[label] }
+      persist(next)
+      return next
+    })
+
   return (
     <>
-      {navItems.map(({ to, label, icon: Icon, end }) => (
-        <NavLink
-          key={to}
-          to={to}
-          end={end}
-          onClick={onNavigate}
-          className={({ isActive }) =>
-            `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-              isActive
-                ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white'
-                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
-            }`
-          }
-        >
-          <Icon size={18} />
-          {t(label)}
-        </NavLink>
-      ))}
+      <NavItemLink {...allToolsItem} onNavigate={onNavigate} />
+      {navGroups.map((group) => {
+        const isCollapsed = !!collapsed[group.label]
+        return (
+          <div key={group.label} className="mt-3">
+            <button
+              type="button"
+              onClick={() => toggle(group.label)}
+              className="flex w-full items-center justify-between px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 transition-colors hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+            >
+              {t(group.label)}
+              <ChevronDown
+                size={13}
+                className={`transition-transform ${isCollapsed ? '-rotate-90' : ''}`}
+              />
+            </button>
+            {!isCollapsed &&
+              group.items.map((item) => (
+                <NavItemLink key={item.to} {...item} onNavigate={onNavigate} />
+              ))}
+          </div>
+        )
+      })}
     </>
   )
 }
@@ -111,6 +223,7 @@ export default function Layout() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 px-4 py-3 backdrop-blur md:hidden">
         <Brand />
+        <CurrencySelect />
         <ThemeToggle />
         <button
           type="button"
@@ -123,7 +236,7 @@ export default function Layout() {
       </header>
 
       {menuOpen && (
-        <nav className="space-y-1 border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:hidden">
+        <nav className="max-h-[75vh] space-y-1 overflow-y-auto border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:hidden">
           <NavLinks onNavigate={() => setMenuOpen(false)} />
         </nav>
       )}
@@ -131,10 +244,11 @@ export default function Layout() {
       <div className="mx-auto flex w-full max-w-6xl">
         <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-slate-200 dark:border-slate-800 px-4 py-6 md:flex">
           <Brand />
-          <nav className="mt-8 flex flex-col gap-1">
+          <nav className="mt-8 flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto pr-1">
             <NavLinks />
           </nav>
-          <div className="mt-auto flex items-center gap-2">
+          <div className="mt-auto flex flex-wrap items-center gap-2">
+            <CurrencySelect />
             <ThemeToggle />
             <InstallButton />
           </div>
@@ -158,6 +272,7 @@ export default function Layout() {
               {t('Buy me a coffee')}
             </a>
             <InstallButton />
+            <BackupPanel />
             <p className="mt-3">
               {t('100% Client-Side & Private · Zero Server Tracking · TOG Utilities')}
             </p>

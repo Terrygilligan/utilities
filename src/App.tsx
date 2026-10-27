@@ -30,6 +30,7 @@ const QrGenerator = lazy(() => import('./pages/QrGenerator'))
 const BarcodeGenerator = lazy(() => import('./pages/BarcodeGenerator'))
 const TotpAuthenticator = lazy(() => import('./pages/TotpAuthenticator'))
 const BarcodeScanner = lazy(() => import('./pages/BarcodeScanner'))
+const DatabaseSandbox = lazy(() => import('./pages/DatabaseSandbox'))
 
 function Loading() {
   return (
@@ -259,6 +260,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <BarcodeScanner />
+              </Suspense>
+            }
+          />
+          <Route
+            path="sql"
+            element={
+              <Suspense fallback={<Loading />}>
+                <DatabaseSandbox />
               </Suspense>
             }
           />
