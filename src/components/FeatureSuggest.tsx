@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Check, Copy, ExternalLink, Lightbulb, X } from 'lucide-react'
 import { t } from '../utils/i18n'
 
-const ISSUES_URL = 'https://github.com/Terrygilligan/utilities/issues'
+const ISSUES_URL =
+  'https://github.com/Terrygilligan/utilities/issues/new?template=feature_request.yml'
 
 export default function FeatureSuggest() {
   const [open, setOpen] = useState(false)

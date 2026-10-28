@@ -3,7 +3,8 @@ import { Bug, Check, Copy, ExternalLink, X } from 'lucide-react'
 import { dataKeys, storageEstimate } from '../lib/backup'
 import { t } from '../utils/i18n'
 
-const ISSUES_URL = 'https://github.com/Terrygilligan/utilities/issues'
+const ISSUES_URL =
+  'https://github.com/Terrygilligan/utilities/issues/new?template=bug_report.yml'
 
 export default function BugReport() {
   const [open, setOpen] = useState(false)
