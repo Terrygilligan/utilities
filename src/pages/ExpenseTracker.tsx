@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Camera, Download, FileText, Loader2, Pencil, Printer, Receipt, ScanText, Trash2, X } from 'lucide-react'
+import { Camera, Check, Download, FileText, Loader2, Pencil, Printer, Receipt, ScanText, Trash2, X } from 'lucide-react'
 import FilePicker from '../components/FilePicker'
 import ShareButton from '../components/ShareButton'
 import { saveBlob } from '../lib/download'
@@ -115,9 +115,13 @@ export default function ExpenseTracker() {
   const [ocrNote, setOcrNote] = useState('')
   const [ocrText, setOcrText] = useState('')
   const [chartCurrency, setChartCurrency] = useState<string>(getCurrency)
+  const [saveState, setSaveState] = useState<'saving' | 'saved'>('saved')
 
   useEffect(() => {
+    setSaveState('saving')
     localStorage.setItem(KEY, JSON.stringify(entries))
+    const timer = setTimeout(() => setSaveState('saved'), 800)
+    return () => clearTimeout(timer)
   }, [entries])
 
   useEffect(() => {
@@ -429,7 +433,20 @@ export default function ExpenseTracker() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Receipt &amp; Expense Tracker</h1>
+      <div className="flex flex-wrap items-center gap-3">
+        <h1 className="text-2xl font-bold tracking-tight">Receipt &amp; Expense Tracker</h1>
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400 print:hidden">
+          {saveState === 'saving' ? (
+            <>
+              <Loader2 size={12} className="animate-spin" /> Saving…
+            </>
+          ) : (
+            <>
+              <Check size={12} className="text-emerald-500" /> Saved locally
+            </>
+          )}
+        </span>
+      </div>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
         Snap or upload bills, log the details, and export a running Excel workbook — all on-device.
         Each entry keeps its own currency; totals stay grouped per currency (no fake exchange rates).

@@ -4,7 +4,10 @@ import type { LucideIcon } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 import InstallButton from './InstallButton'
 import BackupPanel from './BackupPanel'
+import BugReport from './BugReport'
+import FeatureSuggest from './FeatureSuggest'
 import CurrencySelect from './CurrencySelect'
+import LangSelect from './LangSelect'
 import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
@@ -226,6 +229,7 @@ export default function Layout() {
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 px-4 py-3 backdrop-blur md:hidden print:hidden">
         <Brand />
         <CurrencySelect />
+        <LangSelect />
         <ThemeToggle />
         <button
           type="button"
@@ -251,6 +255,7 @@ export default function Layout() {
           </nav>
           <div className="mt-auto flex flex-wrap items-center gap-2">
             <CurrencySelect />
+            <LangSelect />
             <ThemeToggle />
             <InstallButton />
           </div>
@@ -278,6 +283,10 @@ export default function Layout() {
             <p className="mt-3">
               {t('100% Client-Side & Private · Zero Server Tracking · TOG Utilities')}
             </p>
+            <div className="mt-3 flex items-center justify-center gap-4">
+              <BugReport />
+              <FeatureSuggest />
+            </div>
           </footer>
         </div>
       </div>

@@ -277,6 +277,7 @@ export default function SyncHub() {
             <p className="mt-3 text-sm font-semibold uppercase leading-relaxed text-red-600 dark:text-red-300">
               This will permanently erase all existing Utility Suite data (expenses, notes,
               settings) on this device and replace it with the incoming backup. This cannot be undone.
+              Are you absolutely sure?
             </p>
             <div className="mt-5 space-y-2">
               <button type="button" onClick={doOverwrite}

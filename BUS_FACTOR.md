@@ -23,7 +23,7 @@ If `npm install` fails with an `ERESOLVE`/peer error → you forgot `--legacy-pe
 
 ## Firebase Hosting
 
-- The site is (or will be) hosted on **Firebase Hosting** under a project owned by the owner's Google account. Check which project: `firebase projects:list` after `firebase login`, or look at `.firebaserc` once created (see `HANDOVER.md` roadmap — if no project is linked yet, none has been deployed).
+- The site is hosted on **Firebase Hosting**, project **`farmfresh-5e95e`** (linked via `.firebaserc`), owned by the owner's Google account. Live at `https://online-utilities.com` (also `farmfresh-5e95e.web.app`).
 - Console: `https://console.firebase.google.com` → project → **Hosting** shows the live URL, release history, and rollback button.
 - Deploy: `firebase deploy --only hosting` (config in `firebase.json`: serves `dist/` with an SPA rewrite — do not remove it).
 - If tooling isn't installed: `npm install -g firebase-tools`, then `firebase login`.

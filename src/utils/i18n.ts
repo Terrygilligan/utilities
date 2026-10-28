@@ -1,17 +1,47 @@
 // Lightweight i18n: English source strings act as keys; per-language
 // dictionaries override. Missing keys fall back to English automatically.
-// Detection: first supported prefix in navigator.languages.
+// Detection: first supported prefix in navigator.languages, unless an
+// explicit preference is stored in utility-hub.lang.
 export type Lang = 'en' | 'bg' | 'es' | 'fr' | 'de' | 'nl'
+export type LangPref = Lang | 'auto'
 
+export const LANGS: Lang[] = ['en', 'bg', 'es', 'fr', 'de', 'nl']
 const SUPPORTED: Lang[] = ['bg', 'es', 'fr', 'de', 'nl']
+const LANG_KEY = 'utility-hub.lang'
 
-export const LANG: Lang = (() => {
+export function getLangPref(): LangPref {
+  try {
+    const stored = localStorage.getItem(LANG_KEY)
+    if (stored === 'auto' || (LANGS as string[]).includes(stored ?? '')) {
+      return stored as LangPref
+    }
+  } catch {
+    // storage unavailable — fall through to auto
+  }
+  return 'auto'
+}
+
+export function setLang(pref: LangPref) {
+  try {
+    localStorage.setItem(LANG_KEY, pref)
+  } catch {
+    // storage unavailable — reload applies nothing new, still harmless
+  }
+  window.location.reload()
+}
+
+const detect = (): Lang => {
   const prefs = navigator.languages ?? [navigator.language]
   for (const p of prefs) {
     const short = p.slice(0, 2).toLowerCase() as Lang
     if (SUPPORTED.includes(short)) return short
   }
   return 'en'
+}
+
+export const LANG: Lang = (() => {
+  const pref = getLangPref()
+  return pref === 'auto' ? detect() : pref
 })()
 
 type Dict = Record<string, string>
@@ -121,6 +151,36 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Currency': 'Валута',
     'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
       'Изпълнявайте SQL заявки в реална SQLite машина чрез WebAssembly — инспектирайте схемата, импортирайте и експортирайте .sqlite файлове.',
+    'Reorder tools': 'Подреди инструментите',
+    'Done': 'Готово',
+    'Favorites': 'Любими',
+    'Add to favorites': 'Добави в любими',
+    'Remove from favorites': 'Премахни от любими',
+    'Move up': 'Премести нагоре',
+    'Move down': 'Премести надолу',
+    'Report a Bug': 'Докладвай грешка',
+    'Found a Bug?': 'Намери грешка?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
+      'Този набор от инструменти е създаден и се поддържа изцяло от 76-годишен независим разработчик, живеещ в къща на село. Няма корпоративен отдел за поддръжка и нямам времето и силите да отговарям на отделни имейли за поддръжка.',
+    'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
+      'Но ако забележите грешка или неработеща функция, все пак ми пишете! Редовно актуализирам и поправям приложението, така че докладите за грешки отиват направо в опашката за поправки към следващата актуализация.',
+    'Copy diagnostics': 'Копирай диагностика',
+    'Copies anonymous technical details (browser, storage usage) — no personal data.':
+      'Копира анонимни технически данни (браузър, използвано хранилище) — без лични данни.',
+    'Open GitHub issues': 'Отвори GitHub проблеми',
+    'Close': 'Затвори',
+    'Language': 'Език',
+    'Auto': 'Авто',
+    'Suggest a Feature': 'Предложи функция',
+    'Have a Feature Idea?': 'Имате идея за функция?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can\'t promise to build every suggestion.':
+      'Този набор от инструменти е създаден и се поддържа изцяло от 76-годишен независим разработчик, живеещ в къща на село. Създавам само инструменти, които самият аз намирам за полезни или ми е удоволствие да правя, така че не мога да обещая да реализирам всяко предложение.',
+    'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
+      'Но ако имате блестяща идея за лек, офлайн инструмент, все пак я споделете! Ако събуди любопитството ми, може просто да се появи в следваща актуализация.',
+    'Describe your idea…': 'Опишете идеята си…',
+    'Copy idea details': 'Копирай идеята',
+    'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
+      'Идеята е копирана — поставете я в GitHub проблем или където ви е удобно.',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -227,6 +287,36 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Currency': 'Moneda',
     'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
       'Ejecuta consultas SQL en un motor SQLite real mediante WebAssembly: inspecciona el esquema, importa y exporta archivos .sqlite.',
+    'Reorder tools': 'Reordenar herramientas',
+    'Done': 'Hecho',
+    'Favorites': 'Favoritos',
+    'Add to favorites': 'Añadir a favoritos',
+    'Remove from favorites': 'Quitar de favoritos',
+    'Move up': 'Subir',
+    'Move down': 'Bajar',
+    'Report a Bug': 'Informar de un error',
+    'Found a Bug?': '¿Encontraste un error?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
+      'Este conjunto de utilidades está creado y mantenido en su totalidad por un desarrollador independiente de 76 años que vive en una granja. No hay un servicio de soporte corporativo y no tengo tiempo ni energía para responder correos de soporte individuales.',
+    'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
+      'Sin embargo, si detectas un error o una función rota, ¡avísame de todos modos! Actualizo y corrijo la aplicación con regularidad, así que tus informes de errores van directamente a la cola de correcciones de la próxima actualización.',
+    'Copy diagnostics': 'Copiar diagnóstico',
+    'Copies anonymous technical details (browser, storage usage) — no personal data.':
+      'Copia detalles técnicos anónimos (navegador, uso de almacenamiento): sin datos personales.',
+    'Open GitHub issues': 'Abrir issues en GitHub',
+    'Close': 'Cerrar',
+    'Language': 'Idioma',
+    'Auto': 'Auto',
+    'Suggest a Feature': 'Sugerir una función',
+    'Have a Feature Idea?': '¿Tienes una idea para una función?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can\'t promise to build every suggestion.':
+      'Este conjunto de utilidades está creado y mantenido en su totalidad por un desarrollador independiente de 76 años que vive en una granja. Solo construyo herramientas que personalmente me resultan útiles o disfruto creando, así que no puedo prometer construir cada sugerencia.',
+    'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
+      'Sin embargo, si tienes una idea brillante para una herramienta ligera que funcione sin conexión, ¡compártela de todos modos! Si despierta mi curiosidad, podría aparecer en una futura actualización.',
+    'Describe your idea…': 'Describe tu idea…',
+    'Copy idea details': 'Copiar la idea',
+    'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
+      'Tu idea está copiada — pégala en un issue de GitHub o donde prefieras.',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -333,6 +423,36 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Currency': 'Devise',
     'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
       'Exécutez des requêtes SQL dans un vrai moteur SQLite via WebAssembly — inspectez le schéma, importez et exportez des fichiers .sqlite.',
+    'Reorder tools': 'Réorganiser les outils',
+    'Done': 'Terminé',
+    'Favorites': 'Favoris',
+    'Add to favorites': 'Ajouter aux favoris',
+    'Remove from favorites': 'Retirer des favoris',
+    'Move up': 'Monter',
+    'Move down': 'Descendre',
+    'Report a Bug': 'Signaler un bug',
+    'Found a Bug?': 'Un bug ?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
+      'Cette suite d’utilitaires est entièrement créée et maintenue par un développeur indépendant de 76 ans vivant dans une ferme. Il n’y a pas de support technique d’entreprise et je n’ai ni le temps ni l’énergie de répondre à des e-mails d’assistance individuels.',
+    'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
+      'Mais si vous repérez un bug ou une fonctionnalité défectueuse, faites-le-moi savoir quand même ! Je mets régulièrement à jour et corrige l’application, donc vos rapports de bugs vont directement dans la file de correction de la prochaine mise à jour.',
+    'Copy diagnostics': 'Copier le diagnostic',
+    'Copies anonymous technical details (browser, storage usage) — no personal data.':
+      'Copie des informations techniques anonymes (navigateur, utilisation du stockage) — aucune donnée personnelle.',
+    'Open GitHub issues': 'Ouvrir les tickets GitHub',
+    'Close': 'Fermer',
+    'Language': 'Langue',
+    'Auto': 'Auto',
+    'Suggest a Feature': 'Suggérer une fonctionnalité',
+    'Have a Feature Idea?': 'Une idée de fonctionnalité ?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can\'t promise to build every suggestion.':
+      'Cette suite d’utilitaires est entièrement créée et maintenue par un développeur indépendant de 76 ans vivant dans une ferme. Je ne construis que des outils que je trouve personnellement utiles ou que j’ai plaisir à fabriquer, je ne peux donc pas promettre de réaliser chaque suggestion.',
+    'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
+      'Mais si vous avez une idée brillante pour un outil léger et hors-ligne, partagez-la quand même ! Si elle pique ma curiosité, elle pourrait bien apparaître dans une prochaine mise à jour.',
+    'Describe your idea…': 'Décrivez votre idée…',
+    'Copy idea details': 'Copier l’idée',
+    'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
+      'Votre idée est copiée — collez-la dans un ticket GitHub ou où vous voulez.',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -439,6 +559,36 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Currency': 'Währung',
     'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
       'SQL-Abfragen in einer echten SQLite-Engine per WebAssembly ausführen — Schema ansehen, .sqlite-Dateien im- und exportieren.',
+    'Reorder tools': 'Werkzeuge neu anordnen',
+    'Done': 'Fertig',
+    'Favorites': 'Favoriten',
+    'Add to favorites': 'Zu Favoriten hinzufügen',
+    'Remove from favorites': 'Aus Favoriten entfernen',
+    'Move up': 'Nach oben',
+    'Move down': 'Nach unten',
+    'Report a Bug': 'Fehler melden',
+    'Found a Bug?': 'Einen Fehler gefunden?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
+      'Diese Werkzeugsammlung wird vollständig von einem 76-jährigen unabhängigen Entwickler entwickelt und gepflegt, der auf einem Gehöft lebt. Es gibt keinen Firmen-Support, und ich habe weder Zeit noch Energie, einzelne Support-E-Mails zu beantworten.',
+    'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
+      'Wenn Sie aber einen Fehler oder eine defekte Funktion entdecken, lassen Sie es mich trotzdem wissen! Ich aktualisiere und verbessere die App regelmäßig, sodass Ihre Fehlermeldungen direkt in der Fehlerbehebungsliste für das nächste Update landen.',
+    'Copy diagnostics': 'Diagnose kopieren',
+    'Copies anonymous technical details (browser, storage usage) — no personal data.':
+      'Kopiert anonyme technische Details (Browser, Speichernutzung) — keine persönlichen Daten.',
+    'Open GitHub issues': 'GitHub-Issues öffnen',
+    'Close': 'Schließen',
+    'Language': 'Sprache',
+    'Auto': 'Auto',
+    'Suggest a Feature': 'Funktion vorschlagen',
+    'Have a Feature Idea?': 'Eine Idee für eine Funktion?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can\'t promise to build every suggestion.':
+      'Diese Werkzeugsammlung wird vollständig von einem 76-jährigen unabhängigen Entwickler entwickelt und gepflegt, der auf einem Gehöft lebt. Ich baue nur Werkzeuge, die ich persönlich nützlich finde oder gerne entwickle — ich kann also nicht versprechen, jeden Vorschlag umzusetzen.',
+    'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
+      'Wenn Sie aber eine brillante Idee für ein leichtgewichtiges Offline-Werkzeug haben, teilen Sie sie trotzdem! Wenn sie meine Neugier weckt, taucht sie vielleicht in einem nächsten Update auf.',
+    'Describe your idea…': 'Beschreiben Sie Ihre Idee…',
+    'Copy idea details': 'Idee kopieren',
+    'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
+      'Ihre Idee ist kopiert — fügen Sie sie in ein GitHub-Issue ein oder wo immer es passt.',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -545,6 +695,36 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Currency': 'Valuta',
     'Run SQL queries in a real SQLite engine via WebAssembly — inspect the schema, import and export .sqlite files.':
       'Voer SQL-query’s uit in een echte SQLite-engine via WebAssembly — inspecteer het schema, importeer en exporteer .sqlite-bestanden.',
+    'Reorder tools': 'Tools herschikken',
+    'Done': 'Klaar',
+    'Favorites': 'Favorieten',
+    'Add to favorites': 'Aan favorieten toevoegen',
+    'Remove from favorites': 'Uit favorieten verwijderen',
+    'Move up': 'Omhoog',
+    'Move down': 'Omlaag',
+    'Report a Bug': 'Meld een bug',
+    'Found a Bug?': 'Een bug gevonden?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
+      'Deze utilities-suite is volledig gebouwd en wordt onderhouden door een 76-jarige onafhankelijke ontwikkelaar die op een hoeve woont. Er is geen zakelijke helpdesk en ik heb geen tijd of energie om individuele supportmails te beantwoorden.',
+    'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
+      'Maar als je een bug of een kapotte functie ziet, laat het me toch weten! Ik werk de app regelmatig bij en repareer problemen, dus je bugrapporten komen direct in de fixlijst voor de volgende update.',
+    'Copy diagnostics': 'Diagnose kopiëren',
+    'Copies anonymous technical details (browser, storage usage) — no personal data.':
+      'Kopieert anonieme technische gegevens (browser, opslaggebruik) — geen persoonlijke data.',
+    'Open GitHub issues': 'GitHub-issues openen',
+    'Close': 'Sluiten',
+    'Language': 'Taal',
+    'Auto': 'Auto',
+    'Suggest a Feature': 'Stel een functie voor',
+    'Have a Feature Idea?': 'Een idee voor een functie?',
+    'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can\'t promise to build every suggestion.':
+      'Deze utilities-suite is volledig gebouwd en wordt onderhouden door een 76-jarige onafhankelijke ontwikkelaar die op een hoeve woont. Ik bouw alleen tools die ik zelf nuttig vind of leuk vind om te maken, dus ik kan niet beloven elke suggestie te bouwen.',
+    'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
+      'Maar als je een briljant idee hebt voor een lichtgewicht, offline-first tool, deel het toch! Als het mijn nieuwsgierigheid prikkelt, verschijnt het misschien in een toekomstige update.',
+    'Describe your idea…': 'Beschrijf je idee…',
+    'Copy idea details': 'Kopieer het idee',
+    'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
+      'Je idee is gekopieerd — plak het in een GitHub-issue of waar je maar wilt.',
   },
 }
 
