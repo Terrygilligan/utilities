@@ -34,6 +34,7 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import ToolCard from '../components/ToolCard'
+import UpdateBanner from '../components/UpdateBanner'
 import { readFavorites, readOrder, resolveOrder, writeFavorites, writeOrder } from '../lib/dashboard'
 import { t } from '../utils/i18n'
 
@@ -310,6 +311,8 @@ export default function Home() {
           {reordering ? t('Done') : t('Reorder tools')}
         </button>
       </div>
+
+      <UpdateBanner />
 
       {favTools.length > 0 && (
         <section className="mt-8">

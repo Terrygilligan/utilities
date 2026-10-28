@@ -6,6 +6,7 @@ import InstallButton from './InstallButton'
 import BackupPanel from './BackupPanel'
 import BugReport from './BugReport'
 import FeatureSuggest from './FeatureSuggest'
+import SettingsMenu from './SettingsMenu'
 import CurrencySelect from './CurrencySelect'
 import LangSelect from './LangSelect'
 import { t } from '../utils/i18n'
@@ -286,6 +287,7 @@ export default function Layout() {
             <div className="mt-3 flex items-center justify-center gap-4">
               <BugReport />
               <FeatureSuggest />
+              <SettingsMenu />
             </div>
           </footer>
         </div>

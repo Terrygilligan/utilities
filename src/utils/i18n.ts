@@ -181,6 +181,25 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Copy idea details': 'Копирай идеята',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Идеята е копирана — поставете я в GitHub проблем или където ви е удобно.',
+    'What\'s new in': 'Новото в',
+    'What\'s new': 'Новото',
+    'Take Tour': 'Разгледай',
+    'Dismiss': 'Скрий',
+    'Dashboard Customization': 'Персонализация на таблото',
+    'Pin your favorite tools and reorder the dashboard cards — your layout is saved on this device.':
+      'Закачи любимите си инструменти и пренареди картите на таблото — подредбата се пази на това устройство.',
+    'Global Feedback': 'Обратна връзка навсякъде',
+    'Report a bug or suggest a feature from the footer links on any page — they go straight to the fix queue.':
+      'Докладвай грешка или предложи функция от връзките в долния колонтитул на всяка страница — отиват направо в опашката за поправки.',
+    'Private by design': 'Поверително по дизайн',
+    'Look for the "Saved locally" badge — everything you enter stays on this device, in your browser.':
+      'Гледай за значката „Saved locally" — всичко, което въвеждаш, остава на това устройство, в браузъра ти.',
+    'Don\'t show update announcements in the future': 'Не показвай известия за новини в бъдеще',
+    'Next': 'Напред',
+    'Back': 'Назад',
+    'Settings': 'Настройки',
+    'Preferences': 'Предпочитания',
+    'Show feature update announcements': 'Показвай известия за нови функции',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -317,6 +336,25 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Copy idea details': 'Copiar la idea',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Tu idea está copiada — pégala en un issue de GitHub o donde prefieras.',
+    'What\'s new in': 'Novedades en',
+    'What\'s new': 'Novedades',
+    'Take Tour': 'Ver el tour',
+    'Dismiss': 'Descartar',
+    'Dashboard Customization': 'Personalización del panel',
+    'Pin your favorite tools and reorder the dashboard cards — your layout is saved on this device.':
+      'Fija tus herramientas favoritas y reordena las tarjetas del panel — tu disposición se guarda en este dispositivo.',
+    'Global Feedback': 'Comentarios globales',
+    'Report a bug or suggest a feature from the footer links on any page — they go straight to the fix queue.':
+      'Informa de un error o sugiere una función desde los enlaces del pie en cualquier página — van directamente a la cola de correcciones.',
+    'Private by design': 'Privado por diseño',
+    'Look for the "Saved locally" badge — everything you enter stays on this device, in your browser.':
+      'Busca la insignia "Saved locally" — todo lo que introduces se queda en este dispositivo, en tu navegador.',
+    'Don\'t show update announcements in the future': 'No mostrar anuncios de novedades en el futuro',
+    'Next': 'Siguiente',
+    'Back': 'Atrás',
+    'Settings': 'Ajustes',
+    'Preferences': 'Preferencias',
+    'Show feature update announcements': 'Mostrar anuncios de nuevas funciones',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -453,6 +491,25 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Copy idea details': 'Copier l’idée',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Votre idée est copiée — collez-la dans un ticket GitHub ou où vous voulez.',
+    'What\'s new in': 'Nouveautés de',
+    'What\'s new': 'Nouveautés',
+    'Take Tour': 'Faire le tour',
+    'Dismiss': 'Ignorer',
+    'Dashboard Customization': 'Personnalisation du tableau de bord',
+    'Pin your favorite tools and reorder the dashboard cards — your layout is saved on this device.':
+      'Épinglez vos outils favoris et réorganisez les cartes du tableau — votre disposition est enregistrée sur cet appareil.',
+    'Global Feedback': 'Retour global',
+    'Report a bug or suggest a feature from the footer links on any page — they go straight to the fix queue.':
+      'Signalez un bug ou suggérez une fonctionnalité depuis les liens du pied de page, sur n’importe quelle page — ils vont directement dans la file de correction.',
+    'Private by design': 'Privé par conception',
+    'Look for the "Saved locally" badge — everything you enter stays on this device, in your browser.':
+      'Repérez le badge « Saved locally » — tout ce que vous saisissez reste sur cet appareil, dans votre navigateur.',
+    'Don\'t show update announcements in the future': 'Ne plus afficher les annonces de nouveautés',
+    'Next': 'Suivant',
+    'Back': 'Retour',
+    'Settings': 'Paramètres',
+    'Preferences': 'Préférences',
+    'Show feature update announcements': 'Afficher les annonces de nouvelles fonctionnalités',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -589,6 +646,25 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Copy idea details': 'Idee kopieren',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Ihre Idee ist kopiert — fügen Sie sie in ein GitHub-Issue ein oder wo immer es passt.',
+    'What\'s new in': 'Neu in',
+    'What\'s new': 'Neu',
+    'Take Tour': 'Tour starten',
+    'Dismiss': 'Ausblenden',
+    'Dashboard Customization': 'Dashboard-Anpassung',
+    'Pin your favorite tools and reorder the dashboard cards — your layout is saved on this device.':
+      'Heften Sie Lieblingstools an und ordnen Sie die Dashboard-Karten neu — Ihre Anordnung wird auf diesem Gerät gespeichert.',
+    'Global Feedback': 'Feedback überall',
+    'Report a bug or suggest a feature from the footer links on any page — they go straight to the fix queue.':
+      'Melden Sie einen Fehler oder schlagen Sie eine Funktion über die Fußzeilen-Links auf jeder Seite vor — sie landen direkt in der Fehlerbehebungsliste.',
+    'Private by design': 'Privat per Design',
+    'Look for the "Saved locally" badge — everything you enter stays on this device, in your browser.':
+      'Achten Sie auf das „Saved locally"-Abzeichen — alles, was Sie eingeben, bleibt auf diesem Gerät, in Ihrem Browser.',
+    'Don\'t show update announcements in the future': 'Ankündigungen zu neuen Funktionen künftig nicht anzeigen',
+    'Next': 'Weiter',
+    'Back': 'Zurück',
+    'Settings': 'Einstellungen',
+    'Preferences': 'Präferenzen',
+    'Show feature update announcements': 'Ankündigungen zu neuen Funktionen anzeigen',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -725,6 +801,25 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Copy idea details': 'Kopieer het idee',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Je idee is gekopieerd — plak het in een GitHub-issue of waar je maar wilt.',
+    'What\'s new in': 'Nieuw in',
+    'What\'s new': 'Nieuw',
+    'Take Tour': 'Rondleiding',
+    'Dismiss': 'Verbergen',
+    'Dashboard Customization': 'Dashboard aanpassen',
+    'Pin your favorite tools and reorder the dashboard cards — your layout is saved on this device.':
+      'Pin favoriete tools en herschik de dashboardkaarten — je indeling wordt op dit apparaat bewaard.',
+    'Global Feedback': 'Feedback overal',
+    'Report a bug or suggest a feature from the footer links on any page — they go straight to the fix queue.':
+      'Meld een bug of stel een functie voor via de links in de voettekst op elke pagina — ze komen direct in de fixlijst terecht.',
+    'Private by design': 'Privé by design',
+    'Look for the "Saved locally" badge — everything you enter stays on this device, in your browser.':
+      'Let op de "Saved locally"-badge — alles wat je invoert blijft op dit apparaat, in je browser.',
+    'Don\'t show update announcements in the future': 'Toon geen update-aankondigingen meer in de toekomst',
+    'Next': 'Volgende',
+    'Back': 'Terug',
+    'Settings': 'Instellingen',
+    'Preferences': 'Voorkeuren',
+    'Show feature update announcements': 'Toon aankondigingen van nieuwe functies',
   },
 }
 
