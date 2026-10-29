@@ -36,6 +36,9 @@ const SolarAutonomy = lazy(() => import('./pages/SolarAutonomy'))
 const RainwaterEstimator = lazy(() => import('./pages/RainwaterEstimator'))
 const MortarConcreteEstimator = lazy(() => import('./pages/MortarConcreteEstimator'))
 const SwaleGradient = lazy(() => import('./pages/SwaleGradient'))
+const PhotoToText = lazy(() => import('./pages/PhotoToText'))
+const DateAge = lazy(() => import('./pages/DateAge'))
+const InvoiceMaker = lazy(() => import('./pages/InvoiceMaker'))
 
 function Loading() {
   return (
@@ -313,6 +316,30 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <SwaleGradient />
+              </Suspense>
+            }
+          />
+          <Route
+            path="photo-text"
+            element={
+              <Suspense fallback={<Loading />}>
+                <PhotoToText />
+              </Suspense>
+            }
+          />
+          <Route
+            path="dates"
+            element={
+              <Suspense fallback={<Loading />}>
+                <DateAge />
+              </Suspense>
+            }
+          />
+          <Route
+            path="invoice"
+            element={
+              <Suspense fallback={<Loading />}>
+                <InvoiceMaker />
               </Suspense>
             }
           />
