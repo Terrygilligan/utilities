@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { GitCompareArrows } from 'lucide-react'
+import { t } from '../utils/i18n'
 
 type Row = { type: 'same' | 'del' | 'add'; left?: string; right?: string }
 
@@ -48,18 +49,18 @@ export default function DiffChecker() {
   const area = 'w-full rounded-lg border border-slate-300 bg-white p-3 font-mono text-xs leading-relaxed dark:border-slate-700 dark:bg-slate-950/60'
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Text &amp; Code Diff</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Text & Code Diff')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Paste two versions of a file — lines are compared locally with a real LCS diff. Nothing is sent anywhere.
+        {t('Paste two versions of a file — lines are compared locally with a real LCS diff. Nothing is sent anywhere.')}
       </p>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <div>
-          <label className="text-xs font-medium text-slate-500">Original</label>
+          <label className="text-xs font-medium text-slate-500">{t('Original')}</label>
           <textarea value={left} onChange={(e) => setLeft(e.target.value)} rows={10} spellCheck={false} className={`${area} mt-1`} />
         </div>
         <div>
-          <label className="text-xs font-medium text-slate-500">Modified</label>
+          <label className="text-xs font-medium text-slate-500">{t('Modified')}</label>
           <textarea value={right} onChange={(e) => setRight(e.target.value)} rows={10} spellCheck={false} className={`${area} mt-1`} />
         </div>
       </div>
@@ -68,10 +69,10 @@ export default function DiffChecker() {
         <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-2 border-b border-slate-200 bg-white px-4 py-2.5 text-xs text-slate-500 dark:border-slate-800 dark:bg-slate-900">
             <GitCompareArrows size={14} />
-            {changed === 0 ? 'Identical — no differences' : `${changed} changed line${changed === 1 ? '' : 's'}`}
+            {changed === 0 ? t('Identical — no differences') : `${changed} ${changed === 1 ? t('changed line') : t('changed lines')}`}
             <span className="ml-auto flex gap-3">
-              <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-red-400/60" /> removed</span>
-              <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-emerald-400/60" /> added</span>
+              <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-red-400/60" /> {t('removed')}</span>
+              <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-emerald-400/60" /> {t('added')}</span>
             </span>
           </div>
           <div className="max-h-[28rem] overflow-auto bg-white font-mono text-xs leading-6 dark:bg-slate-900">

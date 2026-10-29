@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Check, Copy, RefreshCw, ShieldCheck, TriangleAlert } from 'lucide-react'
 import ShareButton from '../components/ShareButton'
+import { t } from '../utils/i18n'
 
 const WORDLIST = [
   'apple','arrow','baker','beach','berry','birch','bloom','brave','brick','brook',
@@ -104,7 +105,7 @@ export default function PasswordGenerator() {
       return
     }
     if (!charset.length) {
-      setError('Enable at least one character class.')
+      setError(t('Enable at least one character class.'))
       setOutput('')
       return
     }
@@ -132,7 +133,7 @@ export default function PasswordGenerator() {
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
-      setError('Copy failed — select the text manually.')
+      setError(t('Copy failed — select the text manually.'))
     }
   }, [output])
 
@@ -143,15 +144,15 @@ export default function PasswordGenerator() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Passphrase &amp; Password Generator</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Passphrase & Password Generator')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Cryptographically random via <code className="rounded bg-slate-200 dark:bg-slate-800 px-1">crypto.getRandomValues()</code>.
-        Generated entirely on-device — nothing is logged, stored, or sent.
+        {t('Cryptographically random via')} <code className="rounded bg-slate-200 dark:bg-slate-800 px-1">crypto.getRandomValues()</code>.{' '}
+        {t('Generated entirely on-device — nothing is logged, stored, or sent.')}
       </p>
 
       <div
         role="tablist"
-        aria-label="Generator mode"
+        aria-label={t('Generator mode')}
         className="mt-6 flex rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1"
       >
         {(
@@ -170,7 +171,7 @@ export default function PasswordGenerator() {
               mode === id ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white shadow' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            {label}
+            {t(label)}
           </button>
         ))}
       </div>
@@ -180,7 +181,7 @@ export default function PasswordGenerator() {
           <>
             <div>
               <div className="flex items-center justify-between text-sm">
-                <label htmlFor="len" className="font-medium text-slate-700 dark:text-slate-300">Length</label>
+                <label htmlFor="len" className="font-medium text-slate-700 dark:text-slate-300">{t('Length')}</label>
                 <span className="tabular-nums text-sky-600 dark:text-sky-400">{length}</span>
               </div>
               <input
@@ -224,7 +225,7 @@ export default function PasswordGenerator() {
           <>
             <div>
               <div className="flex items-center justify-between text-sm">
-                <label htmlFor="wc" className="font-medium text-slate-700 dark:text-slate-300">Words</label>
+                <label htmlFor="wc" className="font-medium text-slate-700 dark:text-slate-300">{t('Words')}</label>
                 <span className="tabular-nums text-sky-600 dark:text-sky-400">{wordCount}</span>
               </div>
               <input
@@ -242,7 +243,7 @@ export default function PasswordGenerator() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-                Separator
+                {t('Separator')}
                 <select
                   value={separator}
                   onChange={(e) => setSeparator(e.target.value as Separator)}
@@ -250,7 +251,7 @@ export default function PasswordGenerator() {
                 >
                   {SEPARATORS.map(({ value, label }) => (
                     <option key={label} value={value}>
-                      {label}
+                      {t(label)}
                     </option>
                   ))}
                 </select>
@@ -264,7 +265,7 @@ export default function PasswordGenerator() {
                 <span className={toggleCls(capitalize)}>
                   <span className={knobCls(capitalize)} />
                 </span>
-                Capitalize words
+                {t('Capitalize words')}
               </button>
             </div>
           </>
@@ -274,7 +275,7 @@ export default function PasswordGenerator() {
       <div className="mt-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
         <div className="flex items-start justify-between gap-3">
           <p className="min-w-0 flex-1 break-all rounded-xl bg-slate-100 dark:bg-slate-950/60 p-4 font-mono text-sm leading-relaxed text-slate-900 dark:text-slate-100">
-            {output || <span className="text-slate-500">Press generate…</span>}
+            {output || <span className="text-slate-500">{t('Press generate…')}</span>}
           </p>
         </div>
         <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -284,7 +285,7 @@ export default function PasswordGenerator() {
             className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
           >
             <RefreshCw size={16} />
-            Generate
+            {t('Generate')}
           </button>
           <button
             type="button"
@@ -293,28 +294,28 @@ export default function PasswordGenerator() {
             className="inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             {copied ? <Check size={16} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={16} />}
-            {copied ? 'Copied!' : 'Copy'}
+            {copied ? t('Copied!') : t('Copy')}
           </button>
           <ShareButton
             disabled={!output}
             payload={() =>
               output
-                ? { kind: 'text', text: output, title: 'Generated password' }
+                ? { kind: 'text', text: output, title: t('Generated password') }
                 : null
             }
           />
           {output && (
             <span className="ml-auto inline-flex items-center gap-1.5 text-xs text-slate-500">
               <ShieldCheck size={14} className="text-sky-600 dark:text-sky-400" />
-              {entropy.toFixed(0)} bits
+              {t('{bits} bits', { bits: entropy.toFixed(0) })}
             </span>
           )}
         </div>
         {output && (
           <div className="mt-3">
             <div className="flex items-center justify-between text-[11px] text-slate-500">
-              <span>Strength: {strength.label}</span>
-              <span>{entropy.toFixed(0)} bits of entropy</span>
+              <span>{t('Strength: {level}', { level: t(strength.label) })}</span>
+              <span>{t('{bits} bits of entropy', { bits: entropy.toFixed(0) })}</span>
             </div>
             <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
               <div

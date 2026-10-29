@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { Check, Copy, FileCheck2, Loader2, TriangleAlert } from 'lucide-react'
 import FilePicker from '../components/FilePicker'
 import { fmtBytes } from '../utils/locale'
+import { t } from '../utils/i18n'
 
 // Minimal MD5 — WebCrypto has no MD5.
 function md5(buf: ArrayBuffer): string {
@@ -66,16 +67,16 @@ export default function ChecksumTool() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Checksum Calculator</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Checksum Calculator')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Verify file integrity locally — SHA-256, SHA-1, and MD5 computed in-memory. Files never upload.
+        {t('Verify file integrity locally — SHA-256, SHA-1, and MD5 computed in-memory. Files never upload.')}
       </p>
 
       <div className="mt-6">
         <FilePicker
           accept="*/*"
-          title="Drop any file to hash it"
-          subtitle="Read into memory, hashed, discarded — nothing leaves the browser"
+          title={t('Drop any file to hash it')}
+          subtitle={t('Read into memory, hashed, discarded — nothing leaves the browser')}
           icon={FileCheck2}
           onFiles={(files) => files[0] && void compute(files[0])}
         />
@@ -83,7 +84,7 @@ export default function ChecksumTool() {
 
       {busy && (
         <p className="mt-4 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-          <Loader2 size={15} className="animate-spin" /> Hashing {file?.name}…
+          <Loader2 size={15} className="animate-spin" /> {t('Hashing')} {file?.name}…
         </p>
       )}
 
@@ -94,7 +95,7 @@ export default function ChecksumTool() {
             <div key={name} className="flex items-center gap-2">
               <span className="w-16 shrink-0 text-xs font-semibold text-slate-500">{name}</span>
               <code className="min-w-0 flex-1 break-all rounded-lg bg-slate-100 px-2 py-1.5 font-mono text-xs dark:bg-slate-950/60">{hash}</code>
-              <button type="button" aria-label={`Copy ${name}`}
+              <button type="button" aria-label={`${t('Copy')} ${name}`}
                 onClick={async () => { await navigator.clipboard.writeText(hash); setCopied(name); setTimeout(() => setCopied(''), 1200) }}
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-200 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-white">
                 {copied === name ? <Check size={14} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={14} />}
@@ -102,15 +103,15 @@ export default function ChecksumTool() {
             </div>
           ))}
           <label className="block pt-2 text-sm">
-            <span className="text-xs text-slate-500">Compare against expected hash</span>
+            <span className="text-xs text-slate-500">{t('Compare against expected hash')}</span>
             <input value={expected} onChange={(e) => setExpected(e.target.value)} spellCheck={false}
-              placeholder="Paste the hash you were given…"
+              placeholder={t('Paste the hash you were given…')}
               className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-xs dark:border-slate-700 dark:bg-slate-950/60" />
           </label>
           {match !== null && (
             <p className={`flex items-center gap-2 text-sm font-medium ${match ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}>
               {match ? <Check size={15} /> : <TriangleAlert size={15} />}
-              {match ? 'Match — file is intact.' : 'No match — file differs from the expected hash.'}
+              {match ? t('Match — file is intact.') : t('No match — file differs from the expected hash.')}
             </p>
           )}
         </div>

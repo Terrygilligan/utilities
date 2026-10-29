@@ -15,6 +15,7 @@ import initSqlJs from 'sql.js'
 import type { Database as SqlDatabase, QueryExecResult, SqlJsStatic } from 'sql.js'
 import wasmUrl from 'sql.js/dist/sql-wasm.wasm?url'
 import { saveBlob } from '../lib/download'
+import { t } from '../utils/i18n'
 
 const DB_KEY = 'utility-hub.sandboxDb'
 const PERSIST_LIMIT = 2 * 1024 * 1024
@@ -142,7 +143,7 @@ export default function DatabaseSandbox() {
         refreshSchema()
         setReady(true)
       })
-      .catch(() => setError('Failed to load the SQLite engine.'))
+      .catch(() => setError(t('Failed to load the SQLite engine.')))
     return () => {
       cancelled = true
       window.clearTimeout(persistTimer.current)
@@ -195,7 +196,7 @@ export default function DatabaseSandbox() {
   }
 
   const clearDb = () => {
-    if (!window.confirm('Drop every table and clear the saved database?')) return
+    if (!window.confirm(t('Drop every table and clear the saved database?'))) return
     dropAll()
     localStorage.removeItem(DB_KEY)
     setResults(null)
@@ -224,7 +225,7 @@ export default function DatabaseSandbox() {
       refreshSchema()
       schedulePersist()
     } catch {
-      setError('Could not open that file as a SQLite database.')
+      setError(t('Could not open that file as a SQLite database.'))
     }
   }
 
@@ -235,16 +236,15 @@ export default function DatabaseSandbox() {
     <div>
       <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight">
         <Database size={22} className="text-sky-600 dark:text-sky-400" />
-        SQL Sandbox
+        {t('SQL Sandbox')}
       </h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        A full SQLite engine running in your browser via WebAssembly — write queries, inspect the
-        schema, import and export .sqlite files. Nothing leaves your device.
+        {t('A full SQLite engine running in your browser via WebAssembly — write queries, inspect the schema, import and export .sqlite files. Nothing leaves your device.')}
       </p>
 
       {!ready && !error && (
         <p className="mt-8 flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-          <Loader2 size={15} className="animate-spin" /> Loading the SQLite engine…
+          <Loader2 size={15} className="animate-spin" /> {t('Loading the SQLite engine…')}
         </p>
       )}
 
@@ -256,23 +256,23 @@ export default function DatabaseSandbox() {
               onClick={run}
               className="inline-flex items-center gap-1.5 rounded-lg bg-sky-600 px-3 py-2 text-xs font-medium text-white transition hover:bg-sky-500"
             >
-              <Play size={13} /> Run query <span className="hidden opacity-70 sm:inline">(Ctrl+Enter)</span>
+              <Play size={13} /> {t('Run query')} <span className="hidden opacity-70 sm:inline">(Ctrl+Enter)</span>
             </button>
-            <button type="button" onClick={resetSample} className={chip} title="Reset to sample data">
-              <RefreshCw size={14} /> Sample data
+            <button type="button" onClick={resetSample} className={chip} title={t('Reset to sample data')}>
+              <RefreshCw size={14} /> {t('Sample data')}
             </button>
             <button type="button" onClick={() => fileRef.current?.click()} className={chip}>
-              <Upload size={14} /> Import .sqlite
+              <Upload size={14} /> {t('Import .sqlite')}
             </button>
             <button type="button" onClick={exportDb} className={chip}>
-              <Download size={14} /> Export .sqlite
+              <Download size={14} /> {t('Export .sqlite')}
             </button>
             <button
               type="button"
               onClick={clearDb}
               className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-400 transition hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400"
             >
-              <Trash2 size={14} /> Clear
+              <Trash2 size={14} /> {t('db.clear')}
             </button>
             <input
               ref={fileRef}
@@ -290,10 +290,10 @@ export default function DatabaseSandbox() {
           <div className="mt-5 grid gap-4 lg:grid-cols-4">
             <div className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
               <h2 className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                <Table2 size={13} /> Tables ({schema.length})
+                <Table2 size={13} /> {t('Tables ({count})', { count: schema.length })}
               </h2>
               {schema.length === 0 ? (
-                <p className="mt-3 text-xs italic text-slate-400">No tables — run some DDL.</p>
+                <p className="mt-3 text-xs italic text-slate-400">{t('No tables — run some DDL.')}</p>
               ) : (
                 <ul className="mt-3 space-y-1">
                   {schema.map((tbl) => (
@@ -340,7 +340,7 @@ export default function DatabaseSandbox() {
                 }}
                 rows={7}
                 spellCheck={false}
-                placeholder="Write SQL here — Ctrl+Enter to run"
+                placeholder={t('Write SQL here — Ctrl+Enter to run')}
                 className="w-full rounded-xl border border-slate-300 bg-white p-3 font-mono text-xs leading-relaxed dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-200"
               />
 
@@ -352,8 +352,7 @@ export default function DatabaseSandbox() {
 
               {tooBig && !error && (
                 <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-400">
-                  Database exceeds 2 MB — it keeps working this session but won’t be saved across
-                  reloads. Export a .sqlite file to keep it.
+                  {t('Database exceeds 2 MB — it keeps working this session but won’t be saved across reloads. Export a .sqlite file to keep it.')}
                 </p>
               )}
 
@@ -361,7 +360,7 @@ export default function DatabaseSandbox() {
                 <div className="space-y-4">
                   {results.length === 0 && (
                     <p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-emerald-700 dark:text-emerald-400">
-                      Statement executed successfully — no rows returned. ({elapsed.toFixed(1)} ms)
+                      {t('Statement executed successfully — no rows returned. ({ms} ms)', { ms: elapsed.toFixed(1) })}
                     </p>
                   )}
                   {results.map((res, i) => (
@@ -370,7 +369,7 @@ export default function DatabaseSandbox() {
                       className="overflow-x-auto rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900"
                     >
                       <p className="border-b border-slate-200 px-4 py-2 text-[11px] font-medium text-slate-500 dark:border-slate-800">
-                        {res.values.length} row{res.values.length === 1 ? '' : 's'} ·{' '}
+                        {res.values.length} {res.values.length === 1 ? t('row') : t('rows')} ·{' '}
                         {elapsed.toFixed(1)} ms
                       </p>
                       <table className="w-full text-left font-mono text-xs">
@@ -404,7 +403,7 @@ export default function DatabaseSandbox() {
                       </table>
                       {res.values.length > MAX_ROWS && (
                         <p className="border-t border-slate-200 px-4 py-2 text-[11px] text-slate-500 dark:border-slate-800">
-                          Showing first {MAX_ROWS} of {res.values.length} rows
+                          {t('Showing first {shown} of {total} rows', { shown: MAX_ROWS, total: res.values.length })}
                         </p>
                       )}
                     </div>

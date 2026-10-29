@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Calculator, Globe2, Percent } from 'lucide-react'
 import { fmtDateTime, fmtMoney, fmtNumber, useCurrency } from '../utils/locale'
+import { t } from '../utils/i18n'
 
 const ZONES = [
   'Europe/Dublin', 'Europe/London', 'Europe/Sofia', 'Europe/Amsterdam', 'Europe/Berlin',
@@ -40,15 +41,15 @@ function TimeZonePanel() {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-3">
-        <label className="text-xs text-slate-500">Date &amp; time
+        <label className="text-xs text-slate-500">{t('Date & time')}
           <input type="datetime-local" value={iso} onChange={(e) => setIso(e.target.value)} className={`${sel} mt-1`} />
         </label>
-        <label className="text-xs text-slate-500">From zone
+        <label className="text-xs text-slate-500">{t('From zone')}
           <select value={from} onChange={(e) => setFrom(e.target.value)} className={`${sel} mt-1`}>
             {[local, ...ZONES.filter((z) => z !== local)].map((z) => <option key={z}>{z.replace(/_/g, ' ')}</option>)}
           </select>
         </label>
-        <label className="text-xs text-slate-500">To zone
+        <label className="text-xs text-slate-500">{t('To zone')}
           <select value={to} onChange={(e) => setTo(e.target.value)} className={`${sel} mt-1`}>
             {ZONES.map((z) => <option key={z} value={z}>{z.replace(/_/g, ' ')}</option>)}
           </select>
@@ -58,7 +59,7 @@ function TimeZonePanel() {
         <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950/40">
           <p className="text-lg font-semibold text-sky-600 dark:text-sky-400">{result.target}</p>
           <p className="mt-1 text-xs text-slate-500">
-            Right now: {result.nowHere} here · {result.nowThere} in {to.replace(/_/g, ' ')}
+            {t('Right now: {here} here · {there} in {zone}', { here: result.nowHere, there: result.nowThere, zone: to.replace(/_/g, ' ') })}
           </p>
         </div>
       )}
@@ -83,10 +84,10 @@ function PercentPanel() {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       <div className={box}>
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">X% of Y</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('X% of Y')}</h3>
         <div className="mt-3 flex items-center gap-2">
           <input value={a} onChange={(e) => setA(e.target.value)} inputMode="decimal" className={input} />
-          <span className="text-xs text-slate-500">% of</span>
+          <span className="text-xs text-slate-500">{t('% of')}</span>
           <input value={b} onChange={(e) => setB(e.target.value)} inputMode="decimal" className={input} />
         </div>
         <p className="mt-3 font-mono text-xl text-sky-600 dark:text-sky-400">
@@ -94,7 +95,7 @@ function PercentPanel() {
         </p>
       </div>
       <div className={box}>
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">% change</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('% change')}</h3>
         <div className="mt-3 flex items-center gap-2">
           <input value={from} onChange={(e) => setFrom(e.target.value)} inputMode="decimal" className={input} />
           <span className="text-xs text-slate-500">→</span>
@@ -107,7 +108,7 @@ function PercentPanel() {
         </p>
       </div>
       <div className={box}>
-        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">VAT / tax ({currency})</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t('VAT / tax ({currency})', { currency })}</h3>
         <div className="mt-3 flex items-center gap-2">
           <input value={net} onChange={(e) => setNet(e.target.value)} inputMode="decimal" className={input} />
           <select value={vat} onChange={(e) => setVat(+e.target.value)} className="rounded-lg border border-slate-300 bg-white px-2 py-2 text-sm dark:border-slate-700 dark:bg-slate-950/60">
@@ -116,9 +117,9 @@ function PercentPanel() {
         </div>
         {N !== null && (
           <div className="mt-3 space-y-1 font-mono text-sm">
-            <p className="text-slate-700 dark:text-slate-300">Gross: <b className="text-sky-600 dark:text-sky-400">{fmtMoney(N * (1 + vat / 100))}</b></p>
-            <p className="text-slate-700 dark:text-slate-300">From gross: <b className="text-sky-600 dark:text-sky-400">{fmtMoney(N / (1 + vat / 100))}</b></p>
-            <p className="text-xs text-slate-500">Tax portion: {fmtMoney(N * (vat / 100))}</p>
+            <p className="text-slate-700 dark:text-slate-300">{t('Gross:')} <b className="text-sky-600 dark:text-sky-400">{fmtMoney(N * (1 + vat / 100))}</b></p>
+            <p className="text-slate-700 dark:text-slate-300">{t('From gross:')} <b className="text-sky-600 dark:text-sky-400">{fmtMoney(N / (1 + vat / 100))}</b></p>
+            <p className="text-xs text-slate-500">{t('Tax portion: {amount}', { amount: fmtMoney(N * (vat / 100)) })}</p>
           </div>
         )}
       </div>
@@ -130,15 +131,15 @@ export default function CalcTools() {
   const [tab, setTab] = useState<Tab>('percent')
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Calc &amp; Time Converter</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Calc & Time Converter')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Percentages, VAT/tax, and time zones — formatted for your region, computed offline.
+        {t('Percentages, VAT/tax, and time zones — formatted for your region, computed offline.')}
       </p>
       <div role="tablist" className="mt-6 flex rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-800 dark:bg-slate-900">
         {([{ id: 'percent', label: 'Percent & VAT', icon: Percent }, { id: 'time', label: 'Time zones', icon: Globe2 }] as const).map(({ id, label, icon: Icon }) => (
           <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}
             className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-medium transition sm:text-sm ${tab === id ? 'bg-slate-200 text-slate-900 shadow dark:bg-slate-800 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'}`}>
-            <Icon size={15} /> {label}
+            <Icon size={15} /> {t(label)}
           </button>
         ))}
       </div>
@@ -146,7 +147,7 @@ export default function CalcTools() {
         {tab === 'time' ? <TimeZonePanel /> : <PercentPanel />}
       </div>
       <p className="mt-4 flex items-center gap-1.5 text-xs text-slate-500">
-        <Calculator size={13} /> Results format automatically to your device locale.
+        <Calculator size={13} /> {t('Results format automatically to your device locale.')}
       </p>
     </div>
   )

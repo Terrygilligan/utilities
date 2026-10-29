@@ -74,10 +74,10 @@ export default function BugReport() {
                 className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400"
               >
                 {copied ? <Check size={15} /> : <Copy size={15} />}
-                {copied ? t('Copied!') : t('Copy diagnostics')}
+                {copied ? t('Copied!') : t('Copy app info')}
               </button>
               <p className="text-[11px] leading-relaxed text-slate-500">
-                {t('Copies anonymous technical details (browser, storage usage) — no personal data.')}
+                {t('Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.')}
               </p>
               <a
                 href={ISSUES_URL}

@@ -12,6 +12,7 @@ import {
   TriangleAlert,
 } from 'lucide-react'
 import ShareButton from '../components/ShareButton'
+import { t } from '../utils/i18n'
 
 const CAMERA_ELEMENT_ID = 'qr-camera-view'
 const FILE_ELEMENT_ID = 'qr-file-reader'
@@ -21,14 +22,14 @@ type Phase = 'idle' | 'starting' | 'scanning' | 'stopping'
 function describeCameraError(error: unknown): string {
   const name = error instanceof Error ? error.name : String(error)
   if (!window.isSecureContext)
-    return 'Camera scanning needs a secure context — use the hosted site or localhost over HTTPS.'
+    return t('Camera scanning needs a secure context — use the hosted site or localhost over HTTPS.')
   if (name.includes('NotAllowedError'))
-    return 'Camera permission denied — allow camera access in the browser and try again.'
+    return t('Camera permission denied — allow camera access in the browser and try again.')
   if (name.includes('NotFoundError') || name.includes('OverconstrainedError'))
-    return 'No rear camera found on this device.'
+    return t('No rear camera found on this device.')
   if (name.includes('NotReadableError'))
-    return 'The camera is already in use by another app.'
-  return 'Could not start the camera.'
+    return t('The camera is already in use by another app.')
+  return t('Could not start the camera.')
 }
 
 export default function QrScanner() {
@@ -94,7 +95,7 @@ export default function QrScanner() {
         setResult(text)
         setCopied(false)
       } catch {
-        setError('No QR code could be found in that image.')
+        setError(t('No QR code could be found in that image.'))
       }
     },
     [stopCamera],
@@ -118,7 +119,7 @@ export default function QrScanner() {
       await navigator.clipboard.writeText(result)
       setCopied(true)
     } catch {
-      setError('Copy failed — long-press the result text to copy it manually.')
+      setError(t('Copy failed — long-press the result text to copy it manually.'))
     }
   }, [result])
 
@@ -126,10 +127,9 @@ export default function QrScanner() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">QR Code Scanner</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('QR Code Scanner')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Scan with your camera or decode a saved image. Everything happens
-        on-device — nothing is uploaded.
+        {t('Scan with your camera or decode a saved image. Everything happens on-device — nothing is uploaded.')}
       </p>
 
       {error && (
@@ -148,15 +148,14 @@ export default function QrScanner() {
             </span>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
               {phase === 'starting'
-                ? 'Starting camera…'
+                ? t('Starting camera…')
                 : phase === 'stopping'
-                  ? 'Stopping camera…'
-                  : 'Camera is off'}
+                  ? t('Stopping camera…')
+                  : t('Camera is off')}
             </p>
             {phase === 'idle' && (
               <p className="max-w-xs px-4 text-xs leading-relaxed text-slate-500">
-                You&apos;ll be asked for camera permission the first time. The
-                camera turns off automatically after a successful scan.
+                {t('You\'ll be asked for camera permission the first time. The camera turns off automatically after a successful scan.')}
               </p>
             )}
           </div>
@@ -172,7 +171,7 @@ export default function QrScanner() {
             className="inline-flex h-10 items-center gap-2 rounded-lg bg-red-500/15 px-4 text-sm font-medium text-red-600 dark:text-red-300 transition hover:bg-red-500/25"
           >
             <CameraOff size={16} />
-            Stop camera
+            {t('Stop camera')}
           </button>
         ) : (
           <button
@@ -187,10 +186,10 @@ export default function QrScanner() {
               <Loader2 size={16} className="animate-spin" />
             )}
             {phase === 'starting'
-              ? 'Starting…'
+              ? t('Starting…')
               : phase === 'stopping'
-                ? 'Stopping…'
-                : 'Start scanning'}
+                ? t('Stopping…')
+                : t('Start scanning')}
           </button>
         )}
 
@@ -201,7 +200,7 @@ export default function QrScanner() {
           className="inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg px-4 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
         >
           <ImageUp size={16} />
-          Scan image file
+          {t('Scan image file')}
           <input
             id={uploadId}
             type="file"
@@ -218,7 +217,7 @@ export default function QrScanner() {
       {result !== null && (
         <div className="mt-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5">
           <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Scanned result
+            {t('Scanned result')}
           </p>
           <p className="mt-2 break-all font-mono text-sm leading-relaxed text-slate-900 dark:text-slate-100">
             {result}
@@ -230,7 +229,7 @@ export default function QrScanner() {
               className="inline-flex h-10 items-center gap-2 rounded-lg bg-slate-200 dark:bg-slate-800 px-4 text-sm font-medium text-slate-800 dark:text-slate-200 transition hover:bg-slate-300 dark:hover:bg-slate-700"
             >
               {copied ? <Check size={16} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={16} />}
-              {copied ? 'Copied' : 'Copy text'}
+              {copied ? t('Copied!') : t('Copy text')}
             </button>
             {isLink && (
               <a
@@ -240,12 +239,12 @@ export default function QrScanner() {
                 className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
               >
                 <ExternalLink size={16} />
-                Open link
+                {t('Open link')}
               </a>
             )}
             <ShareButton
               payload={() =>
-                result ? { kind: 'text', text: result, title: 'QR scan result' } : null
+                result ? { kind: 'text', text: result, title: t('QR scan result') } : null
               }
             />
           </div>

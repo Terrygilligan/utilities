@@ -13,11 +13,14 @@ import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
   Barcode,
+  BatteryCharging,
   Braces,
+  BrickWall,
   Calculator,
   CalendarClock,
   ChevronDown,
   Clapperboard,
+  CloudRain,
   Coffee,
   Code2,
   Database,
@@ -43,6 +46,7 @@ import {
   Stamp,
   Timer,
   Type,
+  Waves,
   Wrench,
   X,
 } from 'lucide-react'
@@ -113,6 +117,15 @@ const navGroups: { label: string; items: NavItem[] }[] = [
       { to: '/passwords', label: 'Passwords', icon: KeyRound },
       { to: '/totp', label: 'Authenticator', icon: ShieldCheck },
       { to: '/expenses', label: 'Expenses', icon: Receipt },
+    ],
+  },
+  {
+    label: 'Homestead & Workshop',
+    items: [
+      { to: '/solar', label: 'Solar Autonomy', icon: BatteryCharging },
+      { to: '/rainwater', label: 'Rainwater', icon: CloudRain },
+      { to: '/mix', label: 'Mix Estimator', icon: BrickWall },
+      { to: '/swale', label: 'Swale & Slope', icon: Waves },
     ],
   },
   {

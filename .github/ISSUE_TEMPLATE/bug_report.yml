@@ -12,7 +12,7 @@ body:
 
         However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.
 
-        *No account details or personal data are needed — just tell me what broke and paste the anonymous diagnostics blob from the app (footer → Report a Bug → Copy diagnostics).*
+        *No account details or personal data are needed — just tell me what broke. The optional app info below is a small anonymous helper, not a requirement.*
   - type: textarea
     id: what-went-wrong
     attributes:
@@ -24,9 +24,9 @@ body:
   - type: textarea
     id: diagnostics
     attributes:
-      label: App Diagnostics
-      description: Paste the JSON payload copied from the app (footer → Report a Bug → Copy diagnostics). It's anonymous — browser, URL, and storage usage only.
-      placeholder: '{"app": "utility-hub", "timestamp": "...", "url": "...", "userAgent": "...", ...}'
+      label: App info (optional)
+      description: If you tapped "Copy app info" in the app (footer → Report a Bug), paste it here — it's anonymous and helps me find the problem faster. Totally fine to leave blank.
+      placeholder: "Optional: paste any copied app info here — or just leave this blank."
       render: json
     validations:
-      required: true
+      required: false

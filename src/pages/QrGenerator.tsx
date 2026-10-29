@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Download, QrCode } from 'lucide-react'
 import ShareButton from '../components/ShareButton'
 import { saveBlob } from '../lib/download'
+import { t } from '../utils/i18n'
 
 export default function QrGenerator() {
   const [text, setText] = useState('https://online-utilities.com')
@@ -25,7 +26,7 @@ export default function QrGenerator() {
         setSvgText(await QR.toString(text, { ...opts, type: 'svg' }))
         setError('')
       } catch {
-        setError('Input too long for a QR code — try fewer characters or a lower error-correction level.')
+        setError(t('Input too long for a QR code — try fewer characters or a lower error-correction level.'))
       }
     }
     void render()
@@ -35,38 +36,38 @@ export default function QrGenerator() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">QR Code Generator</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('QR Code Generator')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Turn any text, link, or Wi-Fi string into a scannable QR code — generated entirely offline.
+        {t('Turn any text, link, or Wi-Fi string into a scannable QR code — generated entirely offline.')}
       </p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_300px]">
         <div>
           <textarea value={text} onChange={(e) => setText(e.target.value)} rows={4} spellCheck={false}
-            placeholder="URL, text, WIFI:S:MyNet;T:WPA;P:pass;; …"
+            placeholder={t('URL, text, WIFI:S:MyNet;T:WPA;P:pass;; …')}
             className="w-full rounded-xl border border-slate-300 bg-white p-3 font-mono text-sm dark:border-slate-700 dark:bg-slate-950/60" />
           {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
           <div className="mt-3 rounded-xl border border-slate-200 bg-white p-4 text-center dark:border-slate-800 dark:bg-slate-900">
             <canvas ref={canvasRef} className="mx-auto max-w-full rounded-lg" style={{ width: Math.min(size, 280) }} />
-            {!text && <p className="text-xs text-slate-500">Type above to generate</p>}
+            {!text && <p className="text-xs text-slate-500">{t('Type above to generate')}</p>}
           </div>
         </div>
 
         <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
-          <label className="block text-xs text-slate-500">Size — {size}px
+          <label className="block text-xs text-slate-500">{t('Size')} — {size}px
             <input type="range" min={128} max={1024} step={64} value={size} onChange={(e) => setSize(+e.target.value)} className="mt-2 w-full accent-sky-500" />
           </label>
-          <label className="block text-xs text-slate-500">Error correction
+          <label className="block text-xs text-slate-500">{t('Error correction')}
             <select value={level} onChange={(e) => setLevel(e.target.value as typeof level)} className={`${sel} mt-1 w-full`}>
-              <option value="L">Low (7%)</option><option value="M">Medium (15%)</option>
-              <option value="Q">Quartile (25%)</option><option value="H">High (30%)</option>
+              <option value="L">{t('Low')} (7%)</option><option value="M">{t('Medium')} (15%)</option>
+              <option value="Q">{t('Quartile')} (25%)</option><option value="H">{t('High')} (30%)</option>
             </select>
           </label>
           <div className="grid grid-cols-2 gap-3">
-            <label className="block text-xs text-slate-500">Foreground
+            <label className="block text-xs text-slate-500">{t('Foreground')}
               <input type="color" value={fg} onChange={(e) => setFg(e.target.value)} className="mt-1 h-9 w-full cursor-pointer rounded-lg border border-slate-300 dark:border-slate-700" />
             </label>
-            <label className="block text-xs text-slate-500">Background
+            <label className="block text-xs text-slate-500">{t('Background')}
               <input type="color" value={bg} onChange={(e) => setBg(e.target.value)} className="mt-1 h-9 w-full cursor-pointer rounded-lg border border-slate-300 dark:border-slate-700" />
             </label>
           </div>
@@ -84,7 +85,7 @@ export default function QrGenerator() {
         </div>
       </div>
       <p className="mt-4 flex items-center gap-1.5 text-xs text-slate-500">
-        <QrCode size={13} /> Test the result instantly with our QR Scanner tool.
+        <QrCode size={13} /> {t('Test the result instantly with our QR Scanner tool.')}
       </p>
     </div>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Bell, Pause, Play, RotateCcw, Timer } from 'lucide-react'
+import { t } from '../utils/i18n'
 
 type Mode = 'stopwatch' | 'countdown' | 'pomodoro'
 
@@ -48,13 +49,13 @@ export default function TimerTools() {
         if (nr <= 0) {
           if (mode === 'pomodoro') {
             const isBreak = phase === 'focus'
-            notify(isBreak ? 'Focus done — break time' : 'Break over — back to it')
+            notify(isBreak ? t('Focus done — break time') : t('Break over — back to it'))
             if (isBreak) setPomoCount((c) => c + 1)
             setPhase(isBreak ? 'break' : 'focus')
             return (isBreak ? 5 : mins) * 60_000
           }
           setRunning(false)
-          notify('Timer finished')
+          notify(t('Timer finished'))
           return 0
         }
         return nr
@@ -71,16 +72,16 @@ export default function TimerTools() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Timer &amp; Pomodoro</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Timer & Pomodoro')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Stopwatch, countdown, and focus cycles — with a sound + notification when time's up.
+        {t('Stopwatch, countdown, and focus cycles — with a sound + notification when time\'s up.')}
       </p>
 
       <div className="mt-6 flex rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-800 dark:bg-slate-900">
         {(['stopwatch', 'countdown', 'pomodoro'] as const).map((m) => (
           <button key={m} type="button" onClick={() => { setMode(m); setRunning(false); setRemain(mins * 60_000) }}
             className={`flex-1 rounded-lg px-3 py-2.5 text-xs font-medium capitalize transition sm:text-sm ${mode === m ? 'bg-slate-200 text-slate-900 dark:bg-slate-800 dark:text-white' : 'text-slate-500'}`}>
-            {m}
+            {t(m)}
           </button>
         ))}
       </div>
@@ -102,26 +103,26 @@ export default function TimerTools() {
       <div className="mt-8 rounded-2xl border border-slate-200 bg-white py-10 text-center dark:border-slate-800 dark:bg-slate-900">
         {mode === 'pomodoro' && (
           <p className="mb-2 text-xs font-medium uppercase tracking-widest text-slate-500">
-            {phase === 'focus' ? 'Focus' : 'Break'} · cycle {pomoCount}
+            {phase === 'focus' ? t('Focus') : t('Break')} · {t('cycle')} {pomoCount}
           </p>
         )}
         <p className="font-mono text-6xl font-bold tabular-nums tracking-tight sm:text-7xl">{fmt(display)}</p>
         <div className="mt-8 flex justify-center gap-2">
           <button type="button" onClick={() => setRunning((r) => !r)} className={btn}>
-            {running ? <Pause size={16} /> : <Play size={16} />} {running ? 'Pause' : 'Start'}
+            {running ? <Pause size={16} /> : <Play size={16} />} {running ? t('Pause') : t('Start')}
           </button>
           <button type="button" onClick={() => { setRunning(false); setElapsed(0); setRemain(mins * 60_000); setPhase('focus'); setPomoCount(0) }} className={ghost}>
-            <RotateCcw size={16} /> Reset
+            <RotateCcw size={16} /> {t('Reset')}
           </button>
           {('Notification' in window) && Notification.permission !== 'granted' && (
             <button type="button" onClick={() => void Notification.requestPermission()} className={ghost}>
-              <Bell size={15} /> Enable alerts
+              <Bell size={15} /> {t('Enable alerts')}
             </button>
           )}
         </div>
       </div>
       <p className="mt-4 flex items-center gap-1.5 text-xs text-slate-500">
-        <Timer size={13} /> Keep this tab open — timers pause when the browser suspends the page.
+        <Timer size={13} /> {t('Keep this tab open — timers pause when the browser suspends the page.')}
       </p>
     </div>
   )

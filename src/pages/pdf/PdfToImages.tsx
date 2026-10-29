@@ -13,6 +13,7 @@ import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { pdfjs, saveBlob, baseName } from './shared'
 import { fmtBytes } from '../../utils/locale'
+import { t } from '../../utils/i18n'
 
 const EXPORT_SCALE = 2
 const THUMB_TARGET_WIDTH = 360
@@ -78,7 +79,7 @@ export default function PdfToImages() {
       const isPdf =
         candidate.type === 'application/pdf' || candidate.name.toLowerCase().endsWith('.pdf')
       if (!isPdf) {
-        setError('That file is not a PDF.')
+        setError(t('That file is not a PDF.'))
         return
       }
 
@@ -125,7 +126,7 @@ export default function PdfToImages() {
           setPhase('ready')
         } catch {
           if (loadId === runIdRef.current) {
-            setError('Could not open this PDF — it may be corrupted or encrypted.')
+            setError(t('Could not open this PDF — it may be corrupted or encrypted.'))
             setPhase('idle')
           }
         }
@@ -165,7 +166,7 @@ export default function PdfToImages() {
       }
       return await zip.generateAsync({ type: 'blob' })
     } catch {
-      setError('Could not build the ZIP archive.')
+      setError(t('Could not build the ZIP archive.'))
       return null
     } finally {
       setPhase('ready')
@@ -193,8 +194,8 @@ export default function PdfToImages() {
         <FilePicker
           accept="application/pdf"
           onFiles={acceptFile}
-          title="Drop a PDF here or click to browse"
-          subtitle="Every page is rendered to a PNG on-device"
+          title={t('Drop a PDF here or click to browse')}
+          subtitle={t('Every page is rendered to a PNG on-device')}
           icon={Upload}
         />
       ) : (
@@ -205,7 +206,7 @@ export default function PdfToImages() {
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
                 {fmtBytes(file.size)}
-                {numPages > 0 && ` · ${numPages} pages`}
+                {numPages > 0 && ` · ${numPages === 1 ? t('1 page') : t('{count} pages', { count: numPages })}`}
               </p>
             </div>
             <button
@@ -215,19 +216,19 @@ export default function PdfToImages() {
               className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white disabled:opacity-40"
             >
               <FileUp size={15} />
-              <span className="hidden sm:inline">Open a different PDF</span>
-              <span className="sm:hidden">Change</span>
+              <span className="hidden sm:inline">{t('Open a different PDF')}</span>
+              <span className="sm:hidden">{t('Change')}</span>
             </button>
           </div>
 
           {(phase === 'loading' || phase === 'rendering' || phase === 'zipping') && (
             <div className="space-y-2">
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                {phase === 'loading' && 'Opening PDF…'}
+                {phase === 'loading' && t('Opening PDF…')}
                 {phase === 'rendering' &&
-                  `Rendering previews ${progress.done}/${progress.total}…`}
+                  t('Rendering previews {done}/{total}…', { done: progress.done, total: progress.total })}
                 {phase === 'zipping' &&
-                  `Packing ZIP ${progress.done}/${progress.total}…`}
+                  t('Packing ZIP {done}/{total}…', { done: progress.done, total: progress.total })}
               </p>
               <div className="h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
                 <div
@@ -251,18 +252,18 @@ export default function PdfToImages() {
                 >
                   <img
                     src={thumb.url}
-                    alt={`Page ${thumb.page}`}
+                    alt={t('Page {n}', { n: thumb.page })}
                     className="w-full object-contain"
                   />
                   <figcaption className="flex items-center justify-between px-2 py-1.5">
                     <span className="text-[11px] font-medium tabular-nums text-slate-600 dark:text-slate-400">
-                      Page {thumb.page}
+                      {t('Page {n}', { n: thumb.page })}
                     </span>
                     <button
                       type="button"
                       onClick={() => void downloadPage(thumb.page)}
                       disabled={busyPage !== null || controlsDisabled}
-                      aria-label={`Download page ${thumb.page} as PNG`}
+                      aria-label={t('Download page {n} as PNG', { n: thumb.page })}
                       className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/15 disabled:opacity-40"
                     >
                       {busyPage === thumb.page ? (
@@ -281,7 +282,7 @@ export default function PdfToImages() {
           {phase === 'ready' && (
             <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2.5">
               <span className="text-sm text-slate-600 dark:text-slate-400">
-                {numPages} page{numPages === 1 ? '' : 's'} ready
+                {numPages === 1 ? t('1 page ready') : t('{count} pages ready', { count: numPages })}
               </span>
               <button
                 type="button"
@@ -289,7 +290,7 @@ export default function PdfToImages() {
                 className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
               >
                 <FileArchive size={16} />
-                Download all as ZIP
+                {t('Download all as ZIP')}
               </button>
               <ShareButton
                 payload={async () => {

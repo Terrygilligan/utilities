@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Check } from 'lucide-react'
+import { t } from '../utils/i18n'
 
 function hexToRgb(hex: string): [number, number, number] | null {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim())
@@ -36,7 +37,7 @@ function palette(hex: string): string[] {
 function Swatch({ hex }: { hex: string }) {
   const [ok, setOk] = useState(false)
   return (
-    <button type="button" title={`Copy ${hex}`}
+    <button type="button" title={`${t('Copy')} ${hex}`}
       onClick={async () => { await navigator.clipboard.writeText(hex); setOk(true); setTimeout(() => setOk(false), 1200) }}
       className="group relative h-14 flex-1 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800"
       style={{ backgroundColor: hex }}>
@@ -50,7 +51,7 @@ function Swatch({ hex }: { hex: string }) {
 function Pass({ pass, label }: { pass: boolean; label: string }) {
   return (
     <span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${pass ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400' : 'bg-red-500/15 text-red-700 dark:text-red-400'}`}>
-      {label} {pass ? 'PASS' : 'FAIL'}
+      {t(label)} {pass ? t('PASS') : t('FAIL')}
     </span>
   )
 }
@@ -68,35 +69,35 @@ export default function ColorTools() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Color Tools</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Color Tools')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Pick colors, generate tints/shades, and check WCAG 2.2 contrast — all offline.
+        {t('Pick colors, generate tints/shades, and check WCAG 2.2 contrast — all offline.')}
       </p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <h2 className="text-sm font-semibold">Picker &amp; palette</h2>
+          <h2 className="text-sm font-semibold">{t('Picker & palette')}</h2>
           <div className="mt-3 flex items-center gap-3">
             <input type="color" value={rgb ? color : '#0284c7'} onChange={(e) => setColor(e.target.value)}
               className="h-12 w-16 cursor-pointer rounded-lg border border-slate-300 dark:border-slate-700" />
             <input value={color} onChange={(e) => setColor(e.target.value)} spellCheck={false} className={inputCls} />
             <span className="font-mono text-xs text-slate-500">
-              {rgb ? `rgb(${rgb.join(', ')})` : 'invalid hex'}
+              {rgb ? `rgb(${rgb.join(', ')})` : t('invalid hex')}
             </span>
           </div>
           <div className="mt-4 flex gap-1.5">
             {shades.map((s) => <Swatch key={s} hex={s} />)}
           </div>
-          <p className="mt-2 text-[11px] text-slate-500">Click a swatch to copy its hex.</p>
+          <p className="mt-2 text-[11px] text-slate-500">{t('Click a swatch to copy its hex.')}</p>
         </div>
 
         <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <h2 className="text-sm font-semibold">WCAG 2.2 contrast</h2>
+          <h2 className="text-sm font-semibold">{t('WCAG 2.2 contrast')}</h2>
           <div className="mt-3 flex items-center gap-3">
-            <label className="text-xs text-slate-500">Text
+            <label className="text-xs text-slate-500">{t('Text')}
               <input value={color} onChange={(e) => setColor(e.target.value)} spellCheck={false} className={`${inputCls} mt-1 block w-full`} />
             </label>
-            <label className="text-xs text-slate-500">Background
+            <label className="text-xs text-slate-500">{t('Background')}
               <input value={bg} onChange={(e) => setBg(e.target.value)} spellCheck={false} className={`${inputCls} mt-1 block w-full`} />
             </label>
             <input type="color" value={bgRgb ? bg : '#0f172a'} onChange={(e) => setBg(e.target.value)}
@@ -114,8 +115,8 @@ export default function ColorTools() {
                 <Pass pass={r >= 4.5} label="AAA large" />
               </div>
               <div className="mt-4 rounded-lg p-4" style={{ backgroundColor: bgRgb ? bg : '#000' }}>
-                <p className="text-sm" style={{ color: rgb ? color : '#fff' }}>Normal text sample (14px)</p>
-                <p className="text-xl font-bold" style={{ color: rgb ? color : '#fff' }}>Large text sample</p>
+                <p className="text-sm" style={{ color: rgb ? color : '#fff' }}>{t('Normal text sample (14px)')}</p>
+                <p className="text-xl font-bold" style={{ color: rgb ? color : '#fff' }}>{t('Large text sample')}</p>
               </div>
             </>
           )}

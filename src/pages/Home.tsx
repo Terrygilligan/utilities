@@ -3,10 +3,13 @@ import {
   ArrowRightLeft,
   ArrowUpDown,
   Barcode,
+  BatteryCharging,
+  BrickWall,
   CalendarClock,
   Braces,
   Calculator,
   Clapperboard,
+  CloudRain,
   Code2,
   Database,
   FileCheck2,
@@ -31,6 +34,7 @@ import {
   Star,
   Timer,
   Type,
+  Waves,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import ToolCard from '../components/ToolCard'
@@ -249,6 +253,34 @@ const TOOLS: Tool[] = [
     title: 'Sync Hub',
     description: 'Move all app data between devices via QR code or JSON file — merge safely or overwrite with a warning gate.',
     icon: RefreshCw,
+  },
+  {
+    id: '/solar',
+    to: '/solar',
+    title: 'Solar & Battery Autonomy',
+    description: 'How long can the battery bank carry the homestead load? Energy, load, and optional solar input.',
+    icon: BatteryCharging,
+  },
+  {
+    id: '/rainwater',
+    to: '/rainwater',
+    title: 'Rainwater Harvesting & Reserve',
+    description: 'How much water the roof can catch, and how long the tank lasts without rain.',
+    icon: CloudRain,
+  },
+  {
+    id: '/mix',
+    to: '/mix',
+    title: 'Lime & Concrete Mix Estimator',
+    description: 'Binder, sand, and aggregate quantities for mortar, concrete, and screed — in bags and kg.',
+    icon: BrickWall,
+  },
+  {
+    id: '/swale',
+    to: '/swale',
+    title: 'Swale & Gradient Calculator',
+    description: 'Slope percentage, 1:X ratio, and excavation volume for trapezoid swale trenches.',
+    icon: Waves,
   },
 ]
 

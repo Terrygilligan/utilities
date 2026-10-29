@@ -5,6 +5,7 @@ import ShareButton from '../components/ShareButton'
 import { saveBlob } from '../lib/download'
 import { loadXlsx } from './excel/shared'
 import { CURRENCIES, fmtDate, fmtDateTime, fmtMoney, getCurrency } from '../utils/locale'
+import { t } from '../utils/i18n'
 import { CategoryDonut, CurrencyToggle, MonthlyBarChart } from './expenses/ExpenseCharts'
 
 const CATEGORIES = [
@@ -255,14 +256,19 @@ export default function ExpenseTracker() {
       await worker.terminate()
       setOcrText(data.text)
       const found = applyOcrText(data.text)
+      const fieldNames = found.map((f) =>
+        f === 'vendor' ? t('vendor')
+        : f === 'date' ? t('date')
+        : f === 'amount' ? t('amount')
+        : t('currency {code}', { code: f.slice(9) }))
       setOcrNote(
         found.length
-          ? `Auto-filled from scan: ${found.join(', ')} — check before saving.`
-          : 'Scan finished — nothing recognized, fill the fields manually.',
+          ? t('Auto-filled from scan: {fields} — check before saving.', { fields: fieldNames.join(', ') })
+          : t('Scan finished — nothing recognized, fill the fields manually.'),
       )
     } catch (err) {
       console.error('OCR failed:', err)
-      setOcrNote('Text scan failed — photo attached, fill the fields manually.')
+      setOcrNote(t('Text scan failed — photo attached, fill the fields manually.'))
     } finally {
       setScanning(false)
     }
@@ -342,7 +348,7 @@ export default function ExpenseTracker() {
     const XLSX = await loadXlsx()
     const wb = XLSX.utils.book_new()
     const rows = [
-      ['Vendor', 'Date', 'Amount', 'Currency', 'Category', 'Entity', 'VAT %', 'VAT amount', 'Notes', 'Source image'],
+      [t('Vendor'), t('Date'), t('Amount'), t('Currency'), t('Category'), t('Entity'), t('VAT %'), t('VAT amount'), t('Notes'), t('Source image')],
       ...entries.map((e) => [
         e.vendor, e.date, e.amount, e.currency, e.category,
         e.entity ?? '', e.vatRate ?? '', e.vatRate ? vatAmount(e) : '',
@@ -351,24 +357,24 @@ export default function ExpenseTracker() {
     ]
     const ws = XLSX.utils.aoa_to_sheet(rows)
     ws['!cols'] = [{ wch: 22 }, { wch: 12 }, { wch: 10 }, { wch: 9 }, { wch: 16 }, { wch: 12 }, { wch: 7 }, { wch: 11 }, { wch: 24 }, { wch: 24 }]
-    XLSX.utils.book_append_sheet(wb, ws, 'Expenses')
+    XLSX.utils.book_append_sheet(wb, ws, t('Expenses'))
 
-    const summaryRows: (string | number)[][] = [['Summary'], []]
+    const summaryRows: (string | number)[][] = [[t('Summary')], []]
     for (const [cur, total] of totalsByCurrency(entries)) {
-      summaryRows.push(['Total', cur, Math.round(total * 100) / 100])
+      summaryRows.push([t('Total'), cur, Math.round(total * 100) / 100])
     }
     const allCurs = [...new Set([...CURRENCIES, ...entries.map((e) => e.currency)])]
-    summaryRows.push([], ['Month', ...allCurs])
+    summaryRows.push([], [t('Month'), ...allCurs])
     for (const [month, map] of totalsByMonth(entries)) {
       summaryRows.push([month, ...allCurs.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
     }
-    summaryRows.push([], ['Category', ...allCurs])
+    summaryRows.push([], [t('Category'), ...allCurs])
     for (const [cat, map] of totalsByCategory(entries)) {
-      summaryRows.push([cat, ...allCurs.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
+      summaryRows.push([t(cat), ...allCurs.map((c) => Math.round((map.get(c) ?? 0) * 100) / 100)])
     }
     const sws = XLSX.utils.aoa_to_sheet(summaryRows)
     sws['!cols'] = [{ wch: 20 }, ...allCurs.map(() => ({ wch: 10 }))]
-    XLSX.utils.book_append_sheet(wb, sws, 'Summary')
+    XLSX.utils.book_append_sheet(wb, sws, t('Summary'))
     return XLSX.write(wb, { type: 'array', bookType: 'xlsx' }) as Uint8Array
   }, [entries])
 
@@ -378,7 +384,7 @@ export default function ExpenseTracker() {
       return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
     }
     const rows: (string | number)[][] = [
-      ['Date', 'Vendor', 'Amount', 'Currency', 'Category', 'Entity', 'VAT', 'Notes'],
+      [t('Date'), t('Vendor'), t('Amount'), t('Currency'), t('Category'), t('Entity'), t('VAT'), t('Notes')],
       ...entries.map((e) => [
         e.date,
         e.vendor,
@@ -434,22 +440,21 @@ export default function ExpenseTracker() {
   return (
     <div>
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold tracking-tight">Receipt &amp; Expense Tracker</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t('Receipt & Expense Tracker')}</h1>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400 print:hidden">
           {saveState === 'saving' ? (
             <>
-              <Loader2 size={12} className="animate-spin" /> Saving…
+              <Loader2 size={12} className="animate-spin" /> {t('Saving…')}
             </>
           ) : (
             <>
-              <Check size={12} className="text-emerald-500" /> Saved locally
+              <Check size={12} className="text-emerald-500" /> {t('Saved locally')}
             </>
           )}
         </span>
       </div>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Snap or upload bills, log the details, and export a running Excel workbook — all on-device.
-        Each entry keeps its own currency; totals stay grouped per currency (no fake exchange rates).
+        {t('Snap or upload bills, log the details, and export a running Excel workbook — all on-device. Each entry keeps its own currency; totals stay grouped per currency (no fake exchange rates).')}
       </p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2 print:grid-cols-1">
@@ -457,12 +462,12 @@ export default function ExpenseTracker() {
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => void openCam()}
               className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400">
-              <Camera size={16} /> Scan bill
+              <Camera size={16} /> {t('Scan bill')}
             </button>
             <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden"
               onChange={(e) => e.target.files?.[0] && pickImage(e.target.files[0])} />
           </div>
-          <FilePicker accept="image/*" title="Or drop a receipt photo" icon={Receipt}
+          <FilePicker accept="image/*" title={t('Or drop a receipt photo')} icon={Receipt}
             onFiles={(files) => files[0] && pickImage(files[0])} />
           {camOpen && (
             <div className="mt-3 space-y-2">
@@ -471,36 +476,36 @@ export default function ExpenseTracker() {
               <div className="flex gap-2">
                 <button type="button" onClick={snap}
                   className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-sky-500 px-3 text-xs font-semibold text-white transition hover:bg-sky-400">
-                  <Camera size={14} /> Take photo
+                  <Camera size={14} /> {t('Take photo')}
                 </button>
                 <button type="button" onClick={stopCam}
                   className="inline-flex h-9 items-center rounded-lg px-3 text-xs text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800">
-                  Cancel
+                  {t('Cancel')}
                 </button>
               </div>
             </div>
           )}
           {preview && (
             <div className="mt-3 space-y-2">
-              <img src={preview} alt="Receipt preview"
+              <img src={preview} alt={t('Receipt preview')}
                 className="max-h-44 rounded-lg border border-slate-200 object-contain dark:border-slate-800" />
               <div className="flex gap-2">
                 <button type="button" disabled={scanning || !fileRef.current}
                   onClick={() => fileRef.current && void ocrImage(fileRef.current)}
                   className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-sky-500/15 px-3 text-xs font-semibold text-sky-600 transition hover:bg-sky-500/25 disabled:opacity-40 dark:text-sky-400">
                   {scanning ? <Loader2 size={14} className="animate-spin" /> : <ScanText size={14} />}
-                  {scanning ? 'Processing receipt…' : 'Extract receipt data'}
+                  {scanning ? t('Processing receipt…') : t('Extract receipt data')}
                 </button>
                 <button type="button" onClick={clearPreview}
                   className="inline-flex h-9 items-center rounded-lg px-3 text-xs text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800">
-                  Clear
+                  {t('receipt.clear')}
                 </button>
               </div>
             </div>
           )}
           {scanning && (
             <p className="mt-2 flex items-center gap-2 rounded-lg bg-sky-500/10 px-3 py-2 text-xs font-medium text-sky-700 dark:text-sky-400">
-              <Loader2 size={13} className="animate-spin" /> Processing receipt — extracting vendor, date and total…
+              <Loader2 size={13} className="animate-spin" /> {t('Processing receipt — extracting vendor, date and total…')}
             </p>
           )}
           {ocrNote && !scanning && (
@@ -508,16 +513,16 @@ export default function ExpenseTracker() {
           )}
           {ocrText && !scanning && (
             <details className="mt-2 text-xs text-slate-500">
-              <summary className="cursor-pointer select-none">View recognized text</summary>
+              <summary className="cursor-pointer select-none">{t('View recognized text')}</summary>
               <pre className="mt-1 max-h-32 overflow-auto whitespace-pre-wrap rounded-lg bg-slate-500/10 p-2">{ocrText}</pre>
             </details>
           )}
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <input value={form.vendor} onChange={(e) => set({ vendor: e.target.value })} placeholder="Vendor" className={input} />
+            <input value={form.vendor} onChange={(e) => set({ vendor: e.target.value })} placeholder={t('Vendor')} className={input} />
             <input type="date" value={form.date} onChange={(e) => set({ date: e.target.value })} className={input} />
             <div className="flex gap-2">
-              <input value={form.amount} onChange={(e) => set({ amount: e.target.value })} inputMode="decimal" placeholder="Amount" className={input} />
+              <input value={form.amount} onChange={(e) => set({ amount: e.target.value })} inputMode="decimal" placeholder={t('Amount')} className={input} />
               <select value={form.currency} onChange={(e) => set({ currency: e.target.value })}
                 className="w-24 rounded-lg border border-slate-300 bg-white px-2 py-2 text-sm dark:border-slate-700 dark:bg-slate-950/60">
                 {CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -527,27 +532,27 @@ export default function ExpenseTracker() {
               </select>
             </div>
             <select value={form.category} onChange={(e) => set({ category: e.target.value })} className={input}>
-              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-              <option value={CUSTOM}>Custom…</option>
+              {CATEGORIES.map((c) => <option key={c} value={c}>{t(c)}</option>)}
+              <option value={CUSTOM}>{t('Custom…')}</option>
             </select>
             {form.category === CUSTOM && (
               <input value={form.customCategory} onChange={(e) => set({ customCategory: e.target.value })}
-                placeholder="Custom category (e.g. Домакинство)" className={`${input} sm:col-span-2`} />
+                placeholder={t('Custom category (e.g. {example})', { example: 'Домакинство' })} className={`${input} sm:col-span-2`} />
             )}
-            <input value={form.entity} onChange={(e) => set({ entity: e.target.value })} placeholder="Entity (optional)" className={input} />
-            <input value={form.vatRate} onChange={(e) => set({ vatRate: e.target.value })} inputMode="decimal" placeholder="VAT % incl. (optional)" className={input} />
-            <input value={form.notes} onChange={(e) => set({ notes: e.target.value })} placeholder="Notes (optional)" className={`${input} sm:col-span-2`} />
+            <input value={form.entity} onChange={(e) => set({ entity: e.target.value })} placeholder={t('Entity (optional)')} className={input} />
+            <input value={form.vatRate} onChange={(e) => set({ vatRate: e.target.value })} inputMode="decimal" placeholder={t('VAT % incl. (optional)')} className={input} />
+            <input value={form.notes} onChange={(e) => set({ notes: e.target.value })} placeholder={t('Notes (optional)')} className={`${input} sm:col-span-2`} />
           </div>
           <div className="mt-3 flex gap-2">
             <button type="button" onClick={saveEntry}
               disabled={!form.vendor.trim() || !form.amount || (form.category === CUSTOM && !form.customCategory.trim())}
               className="inline-flex h-10 flex-1 items-center justify-center rounded-lg bg-sky-500 px-4 text-sm font-semibold text-white transition hover:bg-sky-400 disabled:opacity-40">
-              {editingId ? 'Save changes' : 'Add expense'}
+              {editingId ? t('Save changes') : t('Add expense')}
             </button>
             {editingId && (
-              <button type="button" onClick={resetForm} aria-label="Cancel edit"
+              <button type="button" onClick={resetForm} aria-label={t('Cancel edit')}
                 className="inline-flex h-10 items-center gap-1.5 rounded-lg px-3 text-sm text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800">
-                <X size={14} /> Cancel
+                <X size={14} /> {t('Cancel')}
               </button>
             )}
           </div>
@@ -556,12 +561,12 @@ export default function ExpenseTracker() {
         <div className="print-sheet rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 print:border-0 print:p-0">
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold">
-              {entries.length} entr{entries.length === 1 ? 'y' : 'ies'}
+              {entries.length} {entries.length === 1 ? t('entry') : t('entries')}
             </p>
             <span className="flex gap-1 print:hidden">
               <button type="button" onClick={() => window.print()} disabled={!entries.length}
                 className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800">
-                <Printer size={14} /> Print / PDF
+                <Printer size={14} /> {t('Print / PDF')}
               </button>
               <button type="button" onClick={exportCsv} disabled={!entries.length}
                 className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-medium text-slate-700 hover:bg-slate-200 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800">
@@ -593,7 +598,7 @@ export default function ExpenseTracker() {
                   </span>
                 ))}
                 <span className="rounded-lg bg-slate-500/10 px-2 py-1 text-slate-500">
-                  monthly avg {[...curTotals].map(([c, t]) => fmtMoney(t / monthCount, c)).join(' · ')}
+                  {t('monthly avg {avg}', { avg: [...curTotals].map(([c, tot]) => fmtMoney(tot / monthCount, c)).join(' · ') })}
                 </span>
               </div>
               {chartCur && (
@@ -607,7 +612,7 @@ export default function ExpenseTracker() {
                   {monthSeries.length > 0 && (
                     <>
                       <p className="mt-3 mb-1 font-semibold text-slate-500">
-                        Monthly spend — {chartCur}
+                        {t('Monthly spend — {currency}', { currency: chartCur })}
                       </p>
                       <MonthlyBarChart data={monthSeries} currency={chartCur} />
                     </>
@@ -615,7 +620,7 @@ export default function ExpenseTracker() {
                   {catSeries.length > 0 && (
                     <>
                       <p className="mt-3 mb-1 font-semibold text-slate-500">
-                        By category — {chartCur}
+                        {t('By category — {currency}', { currency: chartCur })}
                       </p>
                       <CategoryDonut data={catSeries} currency={chartCur} />
                     </>
@@ -627,7 +632,7 @@ export default function ExpenseTracker() {
 
           <div className="mt-3 max-h-80 overflow-auto print:hidden">
             {entries.length === 0 && (
-              <p className="py-8 text-center text-sm text-slate-500">No expenses yet — scan or add your first bill.</p>
+              <p className="py-8 text-center text-sm text-slate-500">{t('No expenses yet — scan or add your first bill.')}</p>
             )}
             {sorted.map((e) => (
               <div key={e.id} className="flex items-center gap-3 border-b border-slate-200 py-2 text-sm last:border-0 dark:border-slate-800">
@@ -637,17 +642,17 @@ export default function ExpenseTracker() {
                     {e.entity && <span className="ml-1.5 rounded bg-slate-500/10 px-1.5 py-0.5 text-[10px] font-medium text-slate-500">{e.entity}</span>}
                   </p>
                   <p className="text-xs text-slate-500">
-                    {fmtDate(e.date + 'T00:00')} · {e.category}
-                    {e.vatRate ? ` · incl. ${fmtMoney(vatAmount(e), e.currency)} VAT` : ''}
+                    {fmtDate(e.date + 'T00:00')} · {t(e.category)}
+                    {e.vatRate ? ` · ${t('incl. {amount} VAT', { amount: fmtMoney(vatAmount(e), e.currency) })}` : ''}
                     {e.notes ? ` — ${e.notes}` : ''}
                   </p>
                 </div>
                 <span className="font-mono text-sm tabular-nums">{fmtMoney(e.amount, e.currency)}</span>
-                <button type="button" aria-label="Edit entry" onClick={() => startEdit(e)}
+                <button type="button" aria-label={t('Edit entry')} onClick={() => startEdit(e)}
                   className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-200 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200">
                   <Pencil size={14} />
                 </button>
-                <button type="button" aria-label="Delete entry"
+                <button type="button" aria-label={t('Delete entry')}
                   onClick={() => setEntries((x) => x.filter((y) => y.id !== e.id))}
                   className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-950 dark:hover:text-red-300">
                   <Trash2 size={14} />
@@ -657,12 +662,12 @@ export default function ExpenseTracker() {
           </div>
 
           <div className="hidden print:block">
-            <p className="mt-4 text-xs text-slate-500">Generated {fmtDateTime(new Date())}</p>
+            <p className="mt-4 text-xs text-slate-500">{t('Generated {date}', { date: fmtDateTime(new Date()) })}</p>
             <table className="mt-2 w-full border-collapse text-xs">
               <thead>
                 <tr>
                   {['Date', 'Vendor', 'Amount', 'Currency', 'Category', 'Entity', 'VAT', 'Notes'].map((h) => (
-                    <th key={h} className="border-b-2 border-slate-400 py-1 pr-2 text-left font-semibold">{h}</th>
+                    <th key={h} className="border-b-2 border-slate-400 py-1 pr-2 text-left font-semibold">{t(h)}</th>
                   ))}
                 </tr>
               </thead>
@@ -684,8 +689,10 @@ export default function ExpenseTracker() {
               </tbody>
             </table>
             <p className="mt-3 text-xs font-semibold">
-              Totals: {[...curTotals].map(([c, t]) => fmtMoney(t, c)).join(' · ')}
-              {' — '}monthly avg {[...curTotals].map(([c, t]) => fmtMoney(t / monthCount, c)).join(' · ')}
+              {t('Totals: {totals} — monthly avg {avg}', {
+                totals: [...curTotals].map(([c, tot]) => fmtMoney(tot, c)).join(' · '),
+                avg: [...curTotals].map(([c, tot]) => fmtMoney(tot / monthCount, c)).join(' · '),
+              })}
             </p>
           </div>
         </div>

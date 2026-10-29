@@ -32,6 +32,10 @@ const TotpAuthenticator = lazy(() => import('./pages/TotpAuthenticator'))
 const BarcodeScanner = lazy(() => import('./pages/BarcodeScanner'))
 const DatabaseSandbox = lazy(() => import('./pages/DatabaseSandbox'))
 const SyncHub = lazy(() => import('./pages/SyncHub'))
+const SolarAutonomy = lazy(() => import('./pages/SolarAutonomy'))
+const RainwaterEstimator = lazy(() => import('./pages/RainwaterEstimator'))
+const MortarConcreteEstimator = lazy(() => import('./pages/MortarConcreteEstimator'))
+const SwaleGradient = lazy(() => import('./pages/SwaleGradient'))
 
 function Loading() {
   return (
@@ -277,6 +281,38 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <SyncHub />
+              </Suspense>
+            }
+          />
+          <Route
+            path="solar"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SolarAutonomy />
+              </Suspense>
+            }
+          />
+          <Route
+            path="rainwater"
+            element={
+              <Suspense fallback={<Loading />}>
+                <RainwaterEstimator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="mix"
+            element={
+              <Suspense fallback={<Loading />}>
+                <MortarConcreteEstimator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="swale"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SwaleGradient />
               </Suspense>
             }
           />

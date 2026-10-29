@@ -19,6 +19,7 @@ import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { saveBlob, baseName, IconButton, LoadingNote } from './shared'
 import { fmtBytes } from '../../utils/locale'
+import { t } from '../../utils/i18n'
 
 const MIN_ZOOM = 0.5
 const MAX_ZOOM = 3
@@ -53,7 +54,7 @@ export default function PdfReader() {
     const isPdf =
       candidate.type === 'application/pdf' || candidate.name.toLowerCase().endsWith('.pdf')
     if (!isPdf) {
-      setLoadError('That file is not a PDF.')
+      setLoadError(t('That file is not a PDF.'))
       return
     }
     setFile(candidate)
@@ -106,8 +107,8 @@ export default function PdfReader() {
         <FilePicker
           accept="application/pdf"
           onFiles={acceptFile}
-          title="Drop a PDF here or click to browse"
-          subtitle="Processed on-device only"
+          title={t('Drop a PDF here or click to browse')}
+          subtitle={t('Processed on-device only')}
           icon={Upload}
         />
       ) : (
@@ -118,7 +119,7 @@ export default function PdfReader() {
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
                 {fmtBytes(file.size)}
-                {numPages > 0 && ` · ${numPages} pages`}
+                {numPages > 0 && ` · ${numPages === 1 ? t('1 page') : t('{count} pages', { count: numPages })}`}
               </p>
             </div>
             <label
@@ -126,8 +127,8 @@ export default function PdfReader() {
               className="ml-auto inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <FileUp size={15} />
-              <span className="hidden sm:inline">Open a different PDF</span>
-              <span className="sm:hidden">Change</span>
+              <span className="hidden sm:inline">{t('Open a different PDF')}</span>
+              <span className="sm:hidden">{t('Change')}</span>
             </label>
             <input
               id="pdf-reader-input"
@@ -144,17 +145,17 @@ export default function PdfReader() {
 
           <div className="flex flex-wrap items-center gap-x-1 gap-y-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2 py-2">
             <IconButton
-              label="Previous page"
+              label={t('Previous page')}
               disabled={pageNumber <= 1}
               onClick={() => setPageNumber((page) => Math.max(1, page - 1))}
             >
               <ChevronLeft size={18} />
             </IconButton>
             <span className="min-w-24 text-center text-sm tabular-nums text-slate-700 dark:text-slate-300">
-              Page {pageNumber} of {numPages || '—'}
+              {t('Page {n} of {total}', { n: pageNumber, total: numPages || '—' })}
             </span>
             <IconButton
-              label="Next page"
+              label={t('Next page')}
               disabled={numPages === 0 || pageNumber >= numPages}
               onClick={() => setPageNumber((page) => Math.min(numPages, page + 1))}
             >
@@ -164,7 +165,7 @@ export default function PdfReader() {
             <span className="mx-1 hidden h-6 w-px bg-slate-200 dark:bg-slate-800 sm:block" />
 
             <IconButton
-              label="Zoom out"
+              label={t('Zoom out')}
               disabled={zoom <= MIN_ZOOM}
               onClick={() => setZoom((value) => Math.max(MIN_ZOOM, value - ZOOM_STEP))}
             >
@@ -174,7 +175,7 @@ export default function PdfReader() {
               {Math.round(zoom * 100)}%
             </span>
             <IconButton
-              label="Zoom in"
+              label={t('Zoom in')}
               disabled={zoom >= MAX_ZOOM}
               onClick={() => setZoom((value) => Math.min(MAX_ZOOM, value + ZOOM_STEP))}
             >
@@ -192,7 +193,7 @@ export default function PdfReader() {
               ) : (
                 <ImageDown size={16} />
               )}
-              <span className="hidden sm:inline">Download page as PNG</span>
+              <span className="hidden sm:inline">{t('Download page as PNG')}</span>
               <span className="sm:hidden">PNG</span>
             </button>
             <ShareButton
@@ -221,16 +222,16 @@ export default function PdfReader() {
                 setNumPages(document.numPages)
               }}
               onLoadError={() =>
-                setLoadError('Could not open this PDF — it may be corrupted or encrypted.')
+                setLoadError(t('Could not open this PDF — it may be corrupted or encrypted.'))
               }
-              loading={<LoadingNote>Opening PDF…</LoadingNote>}
-              error={<LoadingNote>Unable to load document.</LoadingNote>}
+              loading={<LoadingNote>{t('Opening PDF…')}</LoadingNote>}
+              error={<LoadingNote>{t('Unable to load document.')}</LoadingNote>}
             >
               <Page
                 pageNumber={pageNumber}
                 width={Math.max(200, Math.floor(viewerWidth * zoom))}
                 className="mx-auto w-fit shadow-2xl shadow-black/40"
-                loading={<LoadingNote>Rendering page…</LoadingNote>}
+                loading={<LoadingNote>{t('Rendering page…')}</LoadingNote>}
               />
             </Document>
           </div>

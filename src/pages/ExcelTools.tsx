@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FileSpreadsheet, Table2, FileText } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { t } from '../utils/i18n'
 import SheetPreview from './excel/SheetPreview'
 import XlsxToCsv from './excel/XlsxToCsv'
 import CsvToXlsx from './excel/CsvToXlsx'
@@ -18,15 +19,14 @@ export default function ExcelTools() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Excel &amp; CSV Tools</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Excel & CSV Tools')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Preview, convert, and build spreadsheets entirely on your device — files
-        never leave this browser.
+        {t('Preview, convert, and build spreadsheets entirely on your device — files never leave this browser.')}
       </p>
 
       <div
         role="tablist"
-        aria-label="Spreadsheet tools"
+        aria-label={t('Spreadsheet tools')}
         className="mt-6 flex rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-1"
       >
         {tabs.map(({ id, label, icon: Icon }) => (
@@ -43,7 +43,7 @@ export default function ExcelTools() {
             }`}
           >
             <Icon size={15} className="shrink-0" />
-            <span className="truncate">{label}</span>
+            <span className="truncate">{t(label)}</span>
           </button>
         ))}
       </div>

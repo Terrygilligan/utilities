@@ -5,6 +5,7 @@ import ShareButton from '../../components/ShareButton'
 import { saveBlob, baseName } from '../../lib/download'
 import { fmtBytes } from '../../utils/locale'
 import { loadXlsx } from './shared'
+import { t } from '../../utils/i18n'
 
 const CSV_ACCEPT = '.csv,text/csv'
 
@@ -35,7 +36,11 @@ export default function CsvToXlsx() {
   const addFiles = useCallback((incoming: File[]) => {
     const csv = incoming.filter(isCsv)
     if (csv.length < incoming.length) {
-      setError(`Skipped ${incoming.length - csv.length} non-CSV file(s).`)
+      setError(
+        incoming.length - csv.length === 1
+          ? t('Skipped 1 non-CSV file.')
+          : t('Skipped {count} non-CSV files.', { count: incoming.length - csv.length }),
+      )
     } else {
       setError(null)
     }
@@ -78,7 +83,7 @@ export default function CsvToXlsx() {
 
       return XLSX.write(workbook, { type: 'array', bookType: 'xlsx' }) as Uint8Array
     } catch {
-      setError('Could not build the workbook — one of the CSV files may be malformed.')
+      setError(t('Could not build the workbook — one of the CSV files may be malformed.'))
       return null
     }
   }, [files])
@@ -118,8 +123,8 @@ export default function CsvToXlsx() {
         accept={CSV_ACCEPT}
         multiple
         onFiles={addFiles}
-        title="Drop CSV files here or click to browse"
-        subtitle="Each file becomes a sheet in the workbook · processed on-device"
+        title={t('Drop CSV files here or click to browse')}
+        subtitle={t('Each file becomes a sheet in the workbook · processed on-device')}
         icon={Upload}
       />
 
@@ -132,8 +137,10 @@ export default function CsvToXlsx() {
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium">{file.name}</p>
                   <p className="text-xs text-slate-500">
-                    {fmtBytes(file.size)} → sheet “
-                    {baseName(file.name).replace(/[[\]:*?/\\]/g, '').slice(0, 31)}”
+                    {t('{size} → sheet “{name}”', {
+                      size: fmtBytes(file.size),
+                      name: baseName(file.name).replace(/[[\]:*?/\\]/g, '').slice(0, 31),
+                    })}
                   </p>
                 </div>
                 <button
@@ -141,7 +148,7 @@ export default function CsvToXlsx() {
                   onClick={() =>
                     setFiles((current) => current.filter((entry) => entry.id !== id))
                   }
-                  aria-label={`Remove ${file.name}`}
+                  aria-label={t('Remove {name}', { name: file.name })}
                   className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-red-600 dark:hover:text-red-300"
                 >
                   <X size={15} />
@@ -154,7 +161,7 @@ export default function CsvToXlsx() {
                 className="flex cursor-pointer items-center justify-center gap-2 px-4 py-3 text-xs font-medium text-slate-600 dark:text-slate-400 transition hover:text-slate-200"
               >
                 <Plus size={14} />
-                Add more CSV files
+                {t('Add more CSV files')}
                 <input
                   id="csv-more-input"
                   type="file"
@@ -172,8 +179,9 @@ export default function CsvToXlsx() {
 
           <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2.5">
             <span className="text-sm text-slate-600 dark:text-slate-400">
-              {files.length} file{files.length === 1 ? '' : 's'} → {files.length} sheet
-              {files.length === 1 ? '' : 's'}
+              {files.length === 1
+                ? t('1 file → 1 sheet')
+                : t('{count} files → {count} sheets', { count: files.length })}
             </span>
             <button
               type="button"
@@ -181,7 +189,7 @@ export default function CsvToXlsx() {
               className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <Trash2 size={16} />
-              Clear
+              {t('csv.clear')}
             </button>
             <button
               type="button"
@@ -194,7 +202,7 @@ export default function CsvToXlsx() {
               ) : (
                 <FileDown size={16} />
               )}
-              {building ? 'Building…' : 'Create & download XLSX'}
+              {building ? t('Building…') : t('Create & download XLSX')}
             </button>
             <ShareButton
               disabled={files.length === 0}

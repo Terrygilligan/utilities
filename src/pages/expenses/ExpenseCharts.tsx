@@ -1,4 +1,5 @@
 import { LOCALE, fmtMoney } from '../../utils/locale'
+import { t } from '../../utils/i18n'
 
 const SLICE_COLORS = [
   '#0ea5e9', '#6366f1', '#7dd3fc', '#94a3b8',
@@ -79,7 +80,7 @@ export function MonthlyBarChart({
       viewBox={`0 0 ${W} ${H}`}
       className="h-auto w-full"
       role="img"
-      aria-label={`Monthly spending in ${currency}`}>
+      aria-label={t('Monthly spending in {currency}', { currency })}>
       {ticks.map((t) => {
         const y = MT + plotH - (t / niceMax) * plotH
         return (
@@ -105,7 +106,7 @@ export function MonthlyBarChart({
             <rect
               x={x} y={MT + plotH - h} width={bw} height={h} rx={2}
               className="fill-sky-500 hover:fill-sky-400 dark:fill-sky-400 dark:hover:fill-sky-300">
-              <title>{`${d.month}: ${fmtMoney(d.total, currency)}`}</title>
+              <title>{t('{month}: {amount}', { month: d.month, amount: fmtMoney(d.total, currency) })}</title>
             </rect>
             {i % labelEvery === 0 && (
               <text
@@ -156,7 +157,7 @@ export function CategoryDonut({
         viewBox="0 0 120 120"
         className="mx-auto h-40 w-40"
         role="img"
-        aria-label={`Expenses by category in ${currency}`}>
+        aria-label={t('Expenses by category in {currency}', { currency })}>
         {data.map((d, i) => {
           const frac = d.total / total
           const a1 =
@@ -169,7 +170,7 @@ export function CategoryDonut({
               d={path}
               fill={SLICE_COLORS[i % SLICE_COLORS.length]}
               className="opacity-90 transition hover:opacity-100">
-              <title>{`${d.label}: ${fmtMoney(d.total, currency)} (${Math.round(frac * 100)}%)`}</title>
+              <title>{t('{label}: {amount} ({pct}%)', { label: d.label, amount: fmtMoney(d.total, currency), pct: Math.round(frac * 100) })}</title>
             </path>
           )
         })}

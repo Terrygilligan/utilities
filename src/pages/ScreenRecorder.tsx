@@ -4,6 +4,7 @@ import FilePicker from '../components/FilePicker'
 import ShareButton from '../components/ShareButton'
 import { saveBlob } from '../lib/download'
 import { fmtBytes, fmtNumber } from '../utils/locale'
+import { t } from '../utils/i18n'
 
 export default function ScreenRecorder() {
   const [recording, setRecording] = useState(false)
@@ -37,8 +38,8 @@ export default function ScreenRecorder() {
       setRecording(true)
     } catch (e) {
       setError(e instanceof Error && e.name === 'NotAllowedError'
-        ? 'Screen share was denied — pick a window or screen to start recording.'
-        : 'Recording is not supported in this browser.')
+        ? t('Screen share was denied — pick a window or screen to start recording.')
+        : t('Recording is not supported in this browser.'))
     }
   }
 
@@ -47,9 +48,9 @@ export default function ScreenRecorder() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Screen Recorder</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Screen Recorder')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Record your screen, window, or tab to WebM — captured and saved entirely on-device.
+        {t('Record your screen, window, or tab to WebM — captured and saved entirely on-device.')}
       </p>
 
       <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 text-center dark:border-slate-800 dark:bg-slate-900">
@@ -57,11 +58,11 @@ export default function ScreenRecorder() {
           <>
             <p className="font-mono text-5xl font-bold tabular-nums text-red-500">{mmss}</p>
             <p className="mt-2 flex items-center justify-center gap-1.5 text-xs text-red-500">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" /> Recording{audio ? ' with audio' : ''}
+              <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" /> {audio ? t('Recording with audio') : t('Recording')}
             </p>
             <button type="button" onClick={() => recRef.current?.stop()}
               className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-red-500/15 px-4 text-sm font-medium text-red-600 transition hover:bg-red-500/25 dark:text-red-400">
-              <Square size={15} /> Stop recording
+              <Square size={15} /> {t('Stop recording')}
             </button>
           </>
         ) : (
@@ -69,11 +70,11 @@ export default function ScreenRecorder() {
             <MonitorPlay size={40} className="mx-auto text-sky-600 dark:text-sky-400" />
             <label className="mt-4 flex items-center justify-center gap-2 text-sm text-slate-700 dark:text-slate-300">
               <input type="checkbox" checked={audio} onChange={(e) => setAudio(e.target.checked)} className="accent-sky-500" />
-              Include system/tab audio
+              {t('Include system/tab audio')}
             </label>
             <button type="button" onClick={() => void start()}
               className="mt-4 inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400">
-              <Video size={15} /> Start recording
+              <Video size={15} /> {t('Start recording')}
             </button>
             {error && <p className="mt-3 text-sm text-red-600 dark:text-red-400">{error}</p>}
           </>
@@ -87,18 +88,18 @@ export default function ScreenRecorder() {
             <span className="text-xs text-slate-500">{name} · {fmtBytes(blob.size)} · {fmtNumber(seconds)}s</span>
             <button type="button" onClick={() => saveBlob(blob, name)}
               className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400">
-              <Download size={15} /> Download
+              <Download size={15} /> {t('Download')}
             </button>
             <ShareButton payload={() => ({ kind: 'file', file: new File([blob], name, { type: 'video/webm' }) })} />
           </div>
         </div>
       )}
       <p className="mt-4 flex items-center gap-1.5 text-xs text-slate-500">
-        <MonitorPlay size={13} /> Output is WebM (browser-native). Convert to MP4 in Media Tools if needed.
+        <MonitorPlay size={13} /> {t('Output is WebM (browser-native). Convert to MP4 in Media Tools if needed.')}
       </p>
-      <p className="mt-1 text-xs text-slate-500">Or trim an existing recording:</p>
+      <p className="mt-1 text-xs text-slate-500">{t('Or trim an existing recording:')}</p>
       <div className="mt-3">
-        <FilePicker accept="video/*" icon={Video} title="Drop an existing recording to preview" onFiles={(f) => f[0] && setBlob(f[0])} />
+        <FilePicker accept="video/*" icon={Video} title={t('Drop an existing recording to preview')} onFiles={(f) => f[0] && setBlob(f[0])} />
       </div>
     </div>
   )

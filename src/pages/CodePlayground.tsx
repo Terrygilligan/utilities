@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Braces, Check, Copy, Regex } from 'lucide-react'
 import { fmtNumber } from '../utils/locale'
+import { t } from '../utils/i18n'
 
 type Tab = 'regex' | 'json'
 
@@ -10,7 +11,7 @@ function CopyBtn({ text }: { text: string }) {
     <button type="button" disabled={!text}
       onClick={async () => { await navigator.clipboard.writeText(text); setOk(true); setTimeout(() => setOk(false), 1500) }}
       className="inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-900 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white">
-      {ok ? <Check size={14} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={14} />} Copy
+      {ok ? <Check size={14} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={14} />} {t('Copy')}
     </button>
   )
 }
@@ -37,7 +38,7 @@ function RegexPanel() {
         .replace(/\u0001/g, '</mark>')
       return { html: out, count }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Invalid regex')
+      setError(e instanceof Error ? e.message : t('Invalid regex'))
       return { html: null, count: 0 }
     }
   }, [pattern, flags, test])
@@ -47,24 +48,24 @@ function RegexPanel() {
       <div className="space-y-3">
         <div className="flex gap-2">
           <input value={pattern} onChange={(e) => setPattern(e.target.value)}
-            placeholder="pattern e.g. \b\w+@\w+\.\w+\b" spellCheck={false}
+            placeholder={t('pattern, e.g. {example}', { example: '\\b\\w+@\\w+\\.\\w+\\b' })} spellCheck={false}
             className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-sm dark:border-slate-700 dark:bg-slate-950/60" />
           <input value={flags} onChange={(e) => setFlags(e.target.value.replace(/[^dgimsuvy]/g, ''))}
-            placeholder="flags" spellCheck={false} title="flags: g i m s u y"
+            placeholder={t('flags')} spellCheck={false} title={t('flags: g i m s u y')}
             className="w-16 rounded-lg border border-slate-300 bg-white px-2 py-2 text-center font-mono text-sm dark:border-slate-700 dark:bg-slate-950/60" />
         </div>
         <textarea value={test} onChange={(e) => setTest(e.target.value)} rows={10}
-          placeholder="Paste test text here…" spellCheck={false}
+          placeholder={t('Paste test text here…')} spellCheck={false}
           className="w-full rounded-lg border border-slate-300 bg-white p-3 font-mono text-sm leading-relaxed dark:border-slate-700 dark:bg-slate-950/60" />
       </div>
       <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950/40">
         <div className="flex items-center justify-between text-xs text-slate-500">
-          <span>{fmtNumber(count)} match{count === 1 ? '' : 'es'}</span>
+          <span>{fmtNumber(count)} {count === 1 ? t('match') : t('matches')}</span>
           <CopyBtn text={test} />
         </div>
         {error && <p className="mt-2 text-xs text-red-600 dark:text-red-400">{error}</p>}
         <div className="mt-2 whitespace-pre-wrap break-words font-mono text-sm leading-relaxed text-slate-800 dark:text-slate-200"
-          dangerouslySetInnerHTML={{ __html: html ?? '<span class="text-slate-400 dark:text-slate-600">Matches will be highlighted here.</span>' }} />
+          dangerouslySetInnerHTML={{ __html: html ?? `<span class="text-slate-400 dark:text-slate-600">${t('Matches will be highlighted here.')}</span>` }} />
       </div>
     </div>
   )
@@ -79,9 +80,9 @@ function JsonPanel() {
     try {
       const parsed = JSON.parse(input)
       setError(null)
-      setOutput(mode === 'min' ? JSON.stringify(parsed) : mode === 'pretty' ? JSON.stringify(parsed, null, 2) : 'Valid JSON')
+      setOutput(mode === 'min' ? JSON.stringify(parsed) : mode === 'pretty' ? JSON.stringify(parsed, null, 2) : t('Valid JSON'))
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Invalid JSON')
+      setError(e instanceof Error ? e.message : t('Invalid JSON'))
       setOutput('')
     }
   }
@@ -90,13 +91,13 @@ function JsonPanel() {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={14} spellCheck={false}
-        placeholder='{"paste": "JSON here"}'
+        placeholder={t('{"paste": "JSON here"}')}
         className="w-full rounded-lg border border-slate-300 bg-white p-3 font-mono text-sm dark:border-slate-700 dark:bg-slate-950/60" />
       <div>
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={() => run('pretty')} className={btn}>Format</button>
-          <button type="button" onClick={() => run('min')} className={btn}>Minify</button>
-          <button type="button" onClick={() => run('validate')} className={btn}>Validate</button>
+          <button type="button" onClick={() => run('pretty')} className={btn}>{t('Format')}</button>
+          <button type="button" onClick={() => run('min')} className={btn}>{t('Minify')}</button>
+          <button type="button" onClick={() => run('validate')} className={btn}>{t('Validate')}</button>
           <CopyBtn text={output} />
         </div>
         {error && <p className="mt-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 font-mono text-xs text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">{error}</p>}
@@ -110,15 +111,15 @@ export default function CodePlayground() {
   const [tab, setTab] = useState<Tab>('regex')
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Regex &amp; JSON Playground</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Regex & JSON Playground')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Test regex patterns with live highlighting, or format / validate / minify JSON. Nothing leaves the browser.
+        {t('Test regex patterns with live highlighting, or format / validate / minify JSON. Nothing leaves the browser.')}
       </p>
       <div role="tablist" className="mt-6 flex rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-800 dark:bg-slate-900">
         {([{ id: 'regex', label: 'Regex tester', icon: Regex }, { id: 'json', label: 'JSON tools', icon: Braces }] as const).map(({ id, label, icon: Icon }) => (
           <button key={id} type="button" role="tab" aria-selected={tab === id} onClick={() => setTab(id)}
             className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-xs font-medium transition sm:text-sm ${tab === id ? 'bg-slate-200 text-slate-900 shadow dark:bg-slate-800 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'}`}>
-            <Icon size={15} /> {label}
+            <Icon size={15} /> {t(label)}
           </button>
         ))}
       </div>

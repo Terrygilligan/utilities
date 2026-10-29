@@ -12,6 +12,7 @@ import {
   Volume2,
 } from 'lucide-react'
 import ShareButton from '../components/ShareButton'
+import { t } from '../utils/i18n'
 
 interface RecognitionAlternativeLike {
   transcript: string
@@ -92,7 +93,7 @@ function SpeechToTextCard() {
       setInterim(interimText)
     }
     recognition.onerror = (event) => {
-      setError(RECOGNITION_ERRORS[event.error] ?? `Recognition error: ${event.error}`)
+      setError(event.error in RECOGNITION_ERRORS ? t(RECOGNITION_ERRORS[event.error]) : t('Recognition error: {error}', { error: event.error }))
       wantListeningRef.current = false
       setListening(false)
     }
@@ -115,7 +116,7 @@ function SpeechToTextCard() {
       setListening(true)
     } catch {
       setListening(false)
-      setError('Could not start speech recognition.')
+      setError(t('Could not start speech recognition.'))
     }
   }, [])
 
@@ -138,7 +139,7 @@ function SpeechToTextCard() {
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
-      setError('Copy failed — select the transcript text to copy it manually.')
+      setError(t('Copy failed — select the transcript text to copy it manually.'))
     }
   }, [finalText, interim])
 
@@ -150,19 +151,18 @@ function SpeechToTextCard() {
         <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-800 text-sky-600 dark:text-sky-400">
           <Mic size={17} />
         </span>
-        <h2 className="text-base font-semibold">Speech to text</h2>
+        <h2 className="text-base font-semibold">{t('Speech to text')}</h2>
         {listening && (
           <span className="ml-auto inline-flex items-center gap-1.5 text-xs font-medium text-red-600 dark:text-red-400">
             <span className="h-2 w-2 animate-pulse rounded-full bg-red-400" />
-            Listening
+            {t('Listening')}
           </span>
         )}
       </div>
 
       {!supported ? (
         <p className="mt-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/60 p-4 text-sm text-slate-600 dark:text-slate-400">
-          Speech recognition isn&apos;t available in this browser — try Chrome,
-          Edge, or Safari.
+          {t('Speech recognition isn\'t available in this browser — try Chrome, Edge, or Safari.')}
         </p>
       ) : (
         <>
@@ -180,7 +180,7 @@ function SpeechToTextCard() {
               </>
             ) : (
               <span className="text-slate-500">
-                Your transcript appears here as you speak…
+                {t('Your transcript appears here as you speak…')}
               </span>
             )}
           </div>
@@ -193,7 +193,7 @@ function SpeechToTextCard() {
                 className="inline-flex h-10 items-center gap-2 rounded-lg bg-red-500/15 px-4 text-sm font-medium text-red-600 dark:text-red-300 transition hover:bg-red-500/25"
               >
                 <MicOff size={16} />
-                Stop
+                {t('Stop')}
               </button>
             ) : (
               <button
@@ -202,7 +202,7 @@ function SpeechToTextCard() {
                 className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
               >
                 <Mic size={16} />
-                Start listening
+                {t('Start listening')}
               </button>
             )}
             <button
@@ -212,7 +212,7 @@ function SpeechToTextCard() {
               className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               {copied ? <Check size={16} className="text-emerald-600 dark:text-emerald-400" /> : <Copy size={16} />}
-              {copied ? 'Copied' : 'Copy text'}
+              {copied ? t('Copied!') : t('Copy text')}
             </button>
             <button
               type="button"
@@ -221,7 +221,7 @@ function SpeechToTextCard() {
                 setInterim('')
               }}
               disabled={!transcript}
-              aria-label="Clear transcript"
+              aria-label={t('Clear transcript')}
               className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white disabled:opacity-40"
             >
               <Trash2 size={16} />
@@ -230,7 +230,7 @@ function SpeechToTextCard() {
               disabled={!transcript.trim()}
               payload={() =>
                 transcript.trim()
-                  ? { kind: 'text', text: transcript.trim(), title: 'Transcript' }
+                  ? { kind: 'text', text: transcript.trim(), title: t('Transcript') }
                   : null
               }
             />
@@ -291,25 +291,25 @@ function TextToSpeechCard() {
         <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-800 text-sky-600 dark:text-sky-400">
           <Volume2 size={17} />
         </span>
-        <h2 className="text-base font-semibold">Text to speech</h2>
+        <h2 className="text-base font-semibold">{t('Text to speech')}</h2>
         {speaking && (
           <span className="ml-auto inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
             <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
-            Playing
+            {t('Playing')}
           </span>
         )}
       </div>
 
       {!supported ? (
         <p className="mt-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/60 p-4 text-sm text-slate-600 dark:text-slate-400">
-          Text-to-speech isn&apos;t available in this browser.
+          {t('Text-to-speech isn\'t available in this browser.')}
         </p>
       ) : (
         <>
           <textarea
             value={text}
             onChange={(event) => setText(event.target.value)}
-            placeholder="Type or paste text to read aloud…"
+            placeholder={t('Type or paste text to read aloud…')}
             className="mt-4 min-h-40 w-full resize-y rounded-xl border border-transparent bg-slate-100 dark:bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-800 dark:text-slate-200 outline-none transition placeholder:text-slate-500 focus:border-sky-500/60"
           />
           <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -321,7 +321,7 @@ function TextToSpeechCard() {
                   className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
                 >
                   {paused ? <Play size={16} /> : <Pause size={16} />}
-                  {paused ? 'Resume' : 'Pause'}
+                  {paused ? t('Resume') : t('Pause')}
                 </button>
                 <button
                   type="button"
@@ -329,7 +329,7 @@ function TextToSpeechCard() {
                   className="inline-flex h-10 items-center gap-2 rounded-lg bg-red-500/15 px-4 text-sm font-medium text-red-600 dark:text-red-300 transition hover:bg-red-500/25"
                 >
                   <Square size={15} />
-                  Stop
+                  {t('Stop')}
                 </button>
               </>
             ) : (
@@ -340,11 +340,11 @@ function TextToSpeechCard() {
                 className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Play size={16} />
-                Read aloud
+                {t('Read aloud')}
               </button>
             )}
             <span className="ml-auto text-xs text-slate-500">
-              {text.length} chars · uses your device&apos;s system voices
+              {t('{count} chars · uses your device\'s system voices', { count: text.length })}
             </span>
           </div>
         </>
@@ -356,19 +356,16 @@ function TextToSpeechCard() {
 export default function VoiceTools() {
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Voice Tools</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Voice Tools')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Dictate notes or have text read aloud — powered by your browser&apos;s
-        built-in speech features. No sign-in, nothing uploaded.
+        {t('Dictate notes or have text read aloud — powered by your browser\'s built-in speech features. No sign-in, nothing uploaded.')}
       </p>
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
         <SpeechToTextCard />
         <TextToSpeechCard />
       </div>
       <p className="mt-4 text-xs leading-relaxed text-slate-500">
-        Text-to-speech runs entirely on-device. Speech recognition uses your
-        browser&apos;s built-in engine — on Chrome and Edge, audio is processed
-        by the browser&apos;s speech service rather than locally.
+        {t('Text-to-speech runs entirely on-device. Speech recognition uses your browser\'s built-in engine — on Chrome and Edge, audio is processed by the browser\'s speech service rather than locally.')}
       </p>
     </div>
   )

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Check, Copy, Plus, ShieldCheck, Trash2 } from 'lucide-react'
+import { t } from '../utils/i18n'
 
 interface Entry { id: string; label: string; secret: string }
 
@@ -32,7 +33,7 @@ const parseOtpauth = (uri: string): { label: string; secret: string } | null => 
     if (u.protocol !== 'otpauth:' || !u.hostname.startsWith('totp')) return null
     const secret = u.searchParams.get('secret')
     if (!secret) return null
-    const label = decodeURIComponent(u.pathname.slice(1)) || u.searchParams.get('issuer') || 'Account'
+    const label = decodeURIComponent(u.pathname.slice(1)) || u.searchParams.get('issuer') || t('Account')
     return { label, secret }
   } catch { return null }
 }
@@ -57,7 +58,7 @@ export default function TotpAuthenticator() {
       const out: Record<string, string> = {}
       for (const e of entries) {
         const bytes = b32(e.secret)
-        out[e.id] = bytes ? await hotp(bytes, counter) : 'invalid'
+        out[e.id] = bytes ? await hotp(bytes, counter) : t('invalid')
       }
       setCodes(out)
     }
@@ -72,20 +73,20 @@ export default function TotpAuthenticator() {
     setError('')
     const parsed = parseOtpauth(input)
     if (parsed) {
-      if (!b32(parsed.secret)) return setError('Secret in that URI is not valid Base32.')
+      if (!b32(parsed.secret)) return setError(t('Secret in that URI is not valid Base32.'))
       persist([...entries, { id: crypto.randomUUID(), ...parsed }])
       return setInput('')
     }
-    if (!b32(input)) return setError('Paste an otpauth:// URI or a Base32 secret (A–Z, 2–7).')
-    persist([...entries, { id: crypto.randomUUID(), label: 'Manual entry', secret: input.replace(/\s/g, '') }])
+    if (!b32(input)) return setError(t('Paste an otpauth:// URI or a Base32 secret (A–Z, 2–7).'))
+    persist([...entries, { id: crypto.randomUUID(), label: t('Manual entry'), secret: input.replace(/\s/g, '') }])
     setInput('')
   }
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">TOTP Authenticator</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('TOTP Authenticator')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Generate 2FA codes from an <code>otpauth://</code> URI or Base32 secret — computed locally, stored only in this browser.
+        {t('Generate 2FA codes from an')} <code>otpauth://</code> {t('URI or Base32 secret — computed locally, stored only in this browser.')}
       </p>
 
       <div className="mt-6 flex gap-2">
@@ -94,7 +95,7 @@ export default function TotpAuthenticator() {
           className="min-w-0 flex-1 rounded-xl border border-slate-300 bg-white px-4 py-2.5 font-mono text-sm dark:border-slate-700 dark:bg-slate-950/60" />
         <button type="button" onClick={add} disabled={!input}
           className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 disabled:opacity-40 dark:text-sky-400">
-          <Plus size={15} /> Add
+          <Plus size={15} /> {t('Add')}
         </button>
       </div>
       {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
@@ -107,7 +108,7 @@ export default function TotpAuthenticator() {
                 <p className="truncate text-sm font-medium">{e.label}</p>
                 <p className="font-mono text-[10px] text-slate-500">{e.secret.slice(0, 8)}…</p>
               </div>
-              <button type="button" title="Copy code"
+              <button type="button" title={t('Copy code')}
                 onClick={async () => { await navigator.clipboard.writeText(codes[e.id] ?? ''); setCopied(e.id); setTimeout(() => setCopied(''), 1200) }}
                 className="flex items-center gap-2 rounded-lg px-2 py-1 font-mono text-2xl font-bold tabular-nums tracking-wider text-sky-600 transition hover:bg-sky-500/10 dark:text-sky-400">
                 {codes[e.id] ?? '…'}
@@ -123,7 +124,7 @@ export default function TotpAuthenticator() {
 
       <p className="mt-4 flex items-start gap-1.5 text-xs text-slate-500">
         <ShieldCheck size={13} className="mt-0.5 shrink-0" />
-        Secrets never leave this device — but browser storage isn't a vault. For high-value accounts a dedicated authenticator app is the stronger choice.
+        {t('Secrets never leave this device — but browser storage isn\'t a vault. For high-value accounts a dedicated authenticator app is the stronger choice.')}
       </p>
     </div>
   )

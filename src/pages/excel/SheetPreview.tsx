@@ -13,6 +13,7 @@ import {
   sheetRows,
   sheetSelectClass,
 } from './shared'
+import { t } from '../../utils/i18n'
 
 const PREVIEW_CAP = 500
 
@@ -132,7 +133,7 @@ export default function SheetPreview() {
       const candidate = files[0]
       if (!candidate) return
       if (!isSpreadsheet(candidate)) {
-        setError('That file is not a spreadsheet — upload .xlsx, .xls, .xlsm or .ods.')
+        setError(t('That file is not a spreadsheet — upload .xlsx, .xls, .xlsm or .ods.'))
         return
       }
       setParsing(true)
@@ -144,7 +145,7 @@ export default function SheetPreview() {
         setSheetNames(wb.SheetNames)
         await showSheet(wb, wb.SheetNames[0])
       } catch {
-        setError('Could not read that spreadsheet — it may be corrupted or password-protected.')
+        setError(t('Could not read that spreadsheet — it may be corrupted or password-protected.'))
         setFile(null)
         setWorkbook(null)
       } finally {
@@ -161,9 +162,9 @@ export default function SheetPreview() {
     try {
       const blob = await rowsToPdfBlob(rows, `${baseName(file.name)} — ${activeSheet}`)
       if (blob) saveBlob(blob, `${baseName(file.name)}-${activeSheet}.pdf`)
-      else setError('Nothing to export — the sheet is empty.')
+      else setError(t('Nothing to export — the sheet is empty.'))
     } catch {
-      setError('Could not generate the PDF.')
+      setError(t('Could not generate the PDF.'))
     } finally {
       setExporting(false)
     }
@@ -185,8 +186,8 @@ export default function SheetPreview() {
         <FilePicker
           accept={SPREADSHEET_ACCEPT}
           onFiles={(files) => void acceptFile(files)}
-          title="Drop a spreadsheet here or click to browse"
-          subtitle={parsing ? 'Reading…' : '.xlsx, .xls, .xlsm or .ods · processed on-device'}
+          title={t('Drop a spreadsheet here or click to browse')}
+          subtitle={parsing ? t('Reading…') : t('.xlsx, .xls, .xlsm or .ods · processed on-device')}
           icon={Upload}
         />
       ) : (
@@ -196,8 +197,10 @@ export default function SheetPreview() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
-                {fmtBytes(file.size)} · {sheetNames.length} sheet
-                {sheetNames.length === 1 ? '' : 's'}
+                {fmtBytes(file.size)} ·{' '}
+                {sheetNames.length === 1
+                  ? t('1 sheet')
+                  : t('{count} sheets', { count: sheetNames.length })}
               </p>
             </div>
             <div className="ml-auto flex items-center gap-2">
@@ -207,7 +210,7 @@ export default function SheetPreview() {
                   onChange={(event) => {
                     if (workbook) void showSheet(workbook, event.target.value)
                   }}
-                  aria-label="Active sheet"
+                  aria-label={t('Active sheet')}
                   className={sheetSelectClass()}
                 >
                   {sheetNames.map((name) => (
@@ -222,8 +225,8 @@ export default function SheetPreview() {
                 className="inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
               >
                 <FileUp size={15} />
-                <span className="hidden sm:inline">Open a different file</span>
-                <span className="sm:hidden">Change</span>
+                <span className="hidden sm:inline">{t('Open a different file')}</span>
+                <span className="sm:hidden">{t('Change')}</span>
               </label>
               <input
                 id="xlsx-preview-input"
@@ -241,7 +244,9 @@ export default function SheetPreview() {
 
           <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2.5">
             <span className="text-sm text-slate-600 dark:text-slate-400">
-              {rows.length} row{rows.length === 1 ? '' : 's'} · sheet “{activeSheet}”
+              {rows.length === 1
+                ? t('1 row · sheet “{sheet}”', { sheet: activeSheet })
+                : t('{count} rows · sheet “{sheet}”', { count: rows.length, sheet: activeSheet })}
             </span>
             <button
               type="button"
@@ -254,7 +259,7 @@ export default function SheetPreview() {
               ) : (
                 <FileDown size={16} />
               )}
-              {exporting ? 'Building…' : 'Download as PDF'}
+              {exporting ? t('Building…') : t('Download as PDF')}
             </button>
             <ShareButton
               disabled={exporting || rows.length === 0}
@@ -278,7 +283,7 @@ export default function SheetPreview() {
 
           {rows.length === 0 ? (
             <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-12 text-center text-sm text-slate-500">
-              This sheet is empty.
+              {t('This sheet is empty.')}
             </div>
           ) : (
             <>
@@ -321,8 +326,7 @@ export default function SheetPreview() {
               </div>
               {rows.length - 1 > PREVIEW_CAP && (
                 <p className="text-xs text-slate-500">
-                  Preview capped at the first {PREVIEW_CAP} rows — the PDF export
-                  includes all {rows.length - 1}.
+                  {t('Preview capped at the first {cap} rows — the PDF export includes all {total}.', { cap: PREVIEW_CAP, total: rows.length - 1 })}
                 </p>
               )}
             </>

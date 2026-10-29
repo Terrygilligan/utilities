@@ -43,3 +43,25 @@ These rules apply to every coding agent working in this repo (Devin, Jules, Casc
 
 - `.env*`, API keys, service-account JSON, personal emails/uids. `.env.example` stays blank if added later.
 - `node_modules/`, `dist/`, `dev-dist/` are already gitignored.
+# Codebase Refactoring & Localization Rules
+
+## 1. Zero Broad Regex Sweeps
+- NEVER perform global or batch multi-file regex replacements across user-facing component files (`src/tools/`, `src/components/`).
+- Do NOT wrap class names, SQL queries, timezone identifiers, HTML elements, mathematical operators (`+`, `-`), or dynamic key expressions into translation dictionaries or string replacements.
+
+## 2. Incremental Batching & Build Gates
+- When extracting strings or refactoring legacy tools, process files **ONE BY ONE** (or maximum 2 files per iteration).
+- **Mandatory Build Verification:** You MUST run `npm run build` (or `npx tsc --noEmit`) immediately after modifying a file. If the build fails, revert that specific file instantly before touching any other part of the codebase.
+
+## 3. Preserved Modules
+- Do NOT touch or refactor files inside `src/tools/` marked as active user work (e.g., `SolarAutonomy.tsx`, `RainwaterEstimator.tsx`, `MortarConcreteEstimator.tsx`, `SwaleGradient.tsx`) unless explicitly directed in the prompt.
+- Protect all state initialization, hooks, and complex JSX interpolation when extracting hardcoded labels into `t()` calls.
+
+## 4. Context-Aware Localization
+- **Domain-scoped key naming:** name keys by functional context, not generic single words — e.g. `solar.status_safe` / `tools.common.status_safe` instead of a bare `safe`; `action.clear_data` / `form.clear_input` instead of `clear`. Namespaced keys get their English text from the `EN` map in `src/utils/i18n.ts`; plain English keys remain their own English text.
+- **UI intent over literal meaning:** action buttons → imperative/command forms ("Run" → "Ausführen" / "Стартирай"); status indicators → descriptive states ("Safe" → "Sicher" / "Безопасно"); form hints & labels → natural localized web-UI terminology for each target language. Never do literal 1:1 word translations — translate for how/where the text appears.
+- **No string concatenation for dynamic text:** use parameterized keys with variables — `t('search.results_count', { count })` mapping to `"Found {count} items"` — instead of `t('found') + count + t('items')`. `t()` accepts an optional `vars` object and interpolates `{name}` placeholders.
+
+## 5. File Editing Constraints
+- NEVER use shell heredocs (`cat << 'EOF'`) for file modifications or documentation updates — they corrupt delimiters and mangle lines (backticks/`$`/`\` get shell-processed).
+- Always use targeted single-file write operations, atomic patches, or the standard file writing tools (`edit`/`write`).

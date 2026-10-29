@@ -1,4 +1,4 @@
-export const APP_VERSION = '1.2.0'
+export const APP_VERSION = '1.3.0'
 
 const VERSION_KEY = 'utility-hub.last-seen-version'
 const TOURS_KEY = 'utility-hub.show-update-tours'

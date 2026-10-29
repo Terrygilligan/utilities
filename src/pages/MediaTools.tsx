@@ -3,6 +3,7 @@ import { Clapperboard, Download, Loader2, TriangleAlert } from 'lucide-react'
 import FilePicker from '../components/FilePicker'
 import ShareButton from '../components/ShareButton'
 import { saveBlob, baseName } from '../lib/download'
+import { t } from '../utils/i18n'
 
 export default function MediaTools() {
   const [file, setFile] = useState<File | null>(null)
@@ -94,7 +95,7 @@ export default function MediaTools() {
       }
     } catch {
       setError(
-        'Could not process that media. The browser needs captureStream + MediaRecorder support (Chrome/Edge work best). Output is WebM.',
+        t('Could not process that media. The browser needs captureStream + MediaRecorder support (Chrome/Edge work best). Output is WebM.'),
       )
     } finally {
       setBusy(false)
@@ -103,16 +104,16 @@ export default function MediaTools() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Media Compressor &amp; Trimmer</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Media Compressor & Trimmer')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Trim and re-encode video/audio locally. Plays through in real time — nothing is uploaded.
+        {t('Trim and re-encode video/audio locally. Plays through in real time — nothing is uploaded.')}
       </p>
 
       {!file ? (
         <FilePicker
           accept="video/*,audio/*"
-          title="Drop a video or audio file"
-          subtitle="Re-encoded to WebM entirely in your browser"
+          title={t('Drop a video or audio file')}
+          subtitle={t('Re-encoded to WebM entirely in your browser')}
           icon={Clapperboard}
           onFiles={(files) => files[0] && pick(files[0])}
         />
@@ -138,7 +139,7 @@ export default function MediaTools() {
               ).map(([label, val, set, min, max]) => (
                 <label key={label} className="text-sm">
                   <span className="flex justify-between text-slate-700 dark:text-slate-300">
-                    {label} <b className="tabular-nums text-sky-600 dark:text-sky-400">{val.toFixed(1)}s</b>
+                    {t(label)} <b className="tabular-nums text-sky-600 dark:text-sky-400">{val.toFixed(1)}s</b>
                   </span>
                   <input type="range" min={min} max={Math.max(max, 0.1)} step={0.1} value={val}
                     onChange={(e) => set(+e.target.value)} className="mt-2 w-full accent-sky-500" />
@@ -146,7 +147,7 @@ export default function MediaTools() {
               ))}
             </div>
             <p className="mt-2 text-xs text-slate-500">
-              {duration ? `${duration.toFixed(1)}s total · clip ${(end - start).toFixed(1)}s` : 'loading…'}
+              {duration ? t('{total}s total · clip {clip}s', { total: duration.toFixed(1), clip: (end - start).toFixed(1) }) : t('loading…')}
             </p>
           </div>
 
@@ -155,7 +156,7 @@ export default function MediaTools() {
               onClick={() => void run()}
               className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 disabled:opacity-40 dark:text-sky-400">
               {busy ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
-              {busy ? 'Processing…' : 'Trim & download WebM'}
+              {busy ? t('Processing…') : t('Trim & download WebM')}
             </button>
             <ShareButton disabled={busy || !duration}
               payload={async () => {
@@ -164,11 +165,11 @@ export default function MediaTools() {
               }} />
             <button type="button" onClick={() => { setFile(null); setUrl(''); urlRef.current = '' }}
               className="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
-              Choose a different file
+              {t('Choose a different file')}
             </button>
-            {done && <span className="text-xs text-emerald-600 dark:text-emerald-400">Processed</span>}
+            {done && <span className="text-xs text-emerald-600 dark:text-emerald-400">{t('Processed')}</span>}
           </div>
-          {busy && <p className="mt-3 text-xs text-slate-500">Playing through the clip — leave this tab focused.</p>}
+          {busy && <p className="mt-3 text-xs text-slate-500">{t('Playing through the clip — leave this tab focused.')}</p>}
           {error && (
             <p className="mt-3 flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
               <TriangleAlert size={15} /> {error}

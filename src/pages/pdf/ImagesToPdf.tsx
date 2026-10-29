@@ -3,6 +3,7 @@ import { FileDown, Images, Loader2, Plus, Trash2, TriangleAlert, X } from 'lucid
 import FilePicker from '../../components/FilePicker'
 import ShareButton from '../../components/ShareButton'
 import { saveBlob } from './shared'
+import { t } from '../../utils/i18n'
 
 interface PickedImage {
   id: string
@@ -31,7 +32,9 @@ export default function ImagesToPdf() {
     const supported = files.filter(isSupported)
     if (supported.length < files.length) {
       setError(
-        `Skipped ${files.length - supported.length} unsupported file(s) — only PNG and JPEG images are accepted.`,
+        files.length - supported.length === 1
+          ? t('Skipped 1 unsupported file — only PNG and JPEG images are accepted.')
+          : t('Skipped {count} unsupported files — only PNG and JPEG images are accepted.', { count: files.length - supported.length }),
       )
     } else {
       setError(null)
@@ -90,7 +93,7 @@ export default function ImagesToPdf() {
       const pdfBytes = await doc.save()
       return new Blob([pdfBytes.slice()], { type: 'application/pdf' })
     } catch {
-      setError('Could not build the PDF — one of the images may be corrupt or unsupported.')
+      setError(t('Could not build the PDF — one of the images may be corrupt or unsupported.'))
       return null
     }
   }, [images])
@@ -119,8 +122,8 @@ export default function ImagesToPdf() {
         accept="image/png,image/jpeg"
         multiple
         onFiles={addImages}
-        title="Drop images here or click to browse"
-        subtitle="PNG or JPEG · multiple files welcome · pages follow the order shown below"
+        title={t('Drop images here or click to browse')}
+        subtitle={t('PNG or JPEG · multiple files welcome · pages follow the order shown below')}
         icon={Images}
       />
 
@@ -143,7 +146,7 @@ export default function ImagesToPdf() {
                 <button
                   type="button"
                   onClick={() => removeImage(image.id)}
-                  aria-label={`Remove ${image.file.name}`}
+                  aria-label={t('Remove {name}', { name: image.file.name })}
                   className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-slate-950/80 text-slate-700 dark:text-slate-300 transition hover:bg-red-100 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-300"
                 >
                   <X size={14} />
@@ -159,7 +162,7 @@ export default function ImagesToPdf() {
               className="flex aspect-[3/4] cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-slate-500 transition hover:border-slate-500 hover:text-slate-300"
             >
               <Plus size={20} />
-              <span className="text-xs font-medium">Add more</span>
+              <span className="text-xs font-medium">{t('Add more')}</span>
               <input
                 id="pdf-img-more"
                 type="file"
@@ -176,8 +179,9 @@ export default function ImagesToPdf() {
 
           <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2.5">
             <span className="text-sm text-slate-600 dark:text-slate-400">
-              {images.length} image{images.length === 1 ? '' : 's'} →{' '}
-              {images.length} page{images.length === 1 ? '' : 's'}
+              {images.length === 1
+                ? t('1 image → 1 page')
+                : t('{count} images → {count} pages', { count: images.length })}
             </span>
             <button
               type="button"
@@ -185,7 +189,7 @@ export default function ImagesToPdf() {
               className="ml-auto inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <Trash2 size={16} />
-              Clear
+              {t('imgpdf.clear')}
             </button>
             <button
               type="button"
@@ -198,7 +202,7 @@ export default function ImagesToPdf() {
               ) : (
                 <FileDown size={16} />
               )}
-              {building ? 'Building…' : 'Create & download PDF'}
+              {building ? t('Building…') : t('Create & download PDF')}
             </button>
             <ShareButton
               disabled={images.length === 0}

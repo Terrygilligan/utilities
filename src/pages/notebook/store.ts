@@ -1,3 +1,5 @@
+import { t } from '../../utils/i18n'
+
 export interface Note {
   id: string
   title: string
@@ -38,8 +40,8 @@ export function removeNote(id: string) {
 export function createNote(): Note {
   const note: Note = {
     id: `note-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
-    title: 'Untitled note',
-    content: '# Untitled\n\nStart writing in **Markdown**…',
+    title: t('Untitled note'),
+    content: t('# Untitled\n\nStart writing in **Markdown**…'),
     updatedAt: Date.now(),
   }
   persistNote(note)

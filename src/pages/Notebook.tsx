@@ -16,6 +16,7 @@ import ShareButton from '../components/ShareButton'
 import { createNote, loadNotes, persistNote, removeNote } from './notebook/store'
 import type { Note } from './notebook/store'
 import { markdownToPdfBlob } from './notebook/exportPdf'
+import { t } from '../utils/i18n'
 
 const byRecent = (a: Note, b: Note) => b.updatedAt - a.updatedAt
 
@@ -60,7 +61,7 @@ function NoteList({
           <button
             type="button"
             onClick={() => onDelete(note.id)}
-            aria-label={`Delete ${note.title}`}
+            aria-label={t('Delete {title}', { title: note.title })}
             className="absolute right-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md text-slate-500 transition hover:bg-red-100 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-300 md:opacity-0 md:group-hover:opacity-100"
           >
             <Trash2 size={13} />
@@ -97,7 +98,7 @@ export default function Notebook() {
         persistNote(pendingRef.current)
         setSavedAt(Date.now())
       } catch {
-        setError('Could not save — browser storage is full or unavailable.')
+        setError(t('Could not save — browser storage is full or unavailable.'))
       }
       pendingRef.current = null
     }
@@ -151,7 +152,7 @@ export default function Notebook() {
   const handleDelete = useCallback(
     (id: string) => {
       const target = notes.find((note) => note.id === id)
-      if (!target || !window.confirm(`Delete “${target.title}”? This cannot be undone.`))
+      if (!target || !window.confirm(t('Delete “{title}”? This cannot be undone.', { title: target.title })))
         return
       removeNote(id)
       setNotes((current) => {
@@ -216,7 +217,7 @@ export default function Notebook() {
       const blob = await markdownToPdfBlob(previewHtml, active.title)
       saveBlob(blob, `${baseName(active.title)}.pdf`)
     } catch {
-      setError('Could not generate the PDF.')
+      setError(t('Could not generate the PDF.'))
     } finally {
       setExporting(false)
     }
@@ -224,10 +225,9 @@ export default function Notebook() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Markdown Notebook</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Markdown Notebook')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Distraction-free notes with live preview. Saved automatically to this
-        device — no account, no cloud.
+        {t('Distraction-free notes with live preview. Saved automatically to this device — no account, no cloud.')}
       </p>
 
       {error && (
@@ -245,7 +245,7 @@ export default function Notebook() {
             className="mb-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-sky-500/15 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
           >
             <FilePlus2 size={16} />
-            New note
+            {t('New note')}
           </button>
           <NoteList
             notes={notes}
@@ -262,7 +262,7 @@ export default function Notebook() {
                 <button
                   type="button"
                   onClick={() => setListOpen(true)}
-                  aria-label="Open notes list"
+                  aria-label={t('Open notes list')}
                   className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 md:hidden"
                 >
                   <List size={18} />
@@ -271,7 +271,7 @@ export default function Notebook() {
                   value={active.title}
                   onChange={(event) => patchActive({ title: event.target.value })}
                   onBlur={flushSave}
-                  aria-label="Note title"
+                  aria-label={t('Note title')}
                   className="min-w-0 flex-1 rounded-lg bg-transparent px-2 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 outline-none transition focus:bg-slate-200 dark:focus:bg-slate-800/60"
                 />
                 <div className="ml-auto flex items-center gap-1">
@@ -329,7 +329,7 @@ export default function Notebook() {
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    {view}
+                    {t(view)}
                   </button>
                 ))}
               </div>
@@ -338,7 +338,7 @@ export default function Notebook() {
                 <textarea
                   value={active.content}
                   onChange={(event) => patchActive({ content: event.target.value })}
-                  placeholder="Write markdown…"
+                  placeholder={t('Write markdown…')}
                   spellCheck
                   className={`min-h-[55vh] w-full resize-y rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 font-mono text-sm leading-relaxed text-slate-800 dark:text-slate-200 outline-none transition focus:border-sky-500/60 ${
                     mobileView === 'preview' ? 'hidden md:block' : ''
@@ -356,13 +356,13 @@ export default function Notebook() {
                 {savedAt ? (
                   <>
                     <Check size={12} className="text-emerald-600 dark:text-emerald-400" />
-                    Auto-saved {formatTime(savedAt)}
+                    {t('Auto-saved {time}', { time: formatTime(savedAt) })}
                   </>
                 ) : (
-                  'Saves automatically as you type'
+                  t('Saves automatically as you type')
                 )}
                 <span className="mx-1">·</span>
-                {active.content.length} chars
+                {t('{count} chars', { count: active.content.length })}
               </p>
             </>
           ) : (
@@ -370,14 +370,14 @@ export default function Notebook() {
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-200 dark:bg-slate-800 text-sky-600 dark:text-sky-400">
                 <NotebookPen size={26} />
               </span>
-              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">No notes yet</p>
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{t('No notes yet')}</p>
               <button
                 type="button"
                 onClick={handleCreate}
                 className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
               >
                 <FilePlus2 size={16} />
-                Create your first note
+                {t('Create your first note')}
               </button>
             </div>
           )}
@@ -397,7 +397,7 @@ export default function Notebook() {
               className="mb-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-sky-500/15 text-sm font-medium text-sky-600 dark:text-sky-400 transition hover:bg-sky-500/25"
             >
               <FilePlus2 size={16} />
-              New note
+              {t('New note')}
             </button>
             <NoteList
               notes={notes}

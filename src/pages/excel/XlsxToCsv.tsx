@@ -12,6 +12,7 @@ import {
   openWorkbook,
   sheetSelectClass,
 } from './shared'
+import { t } from '../../utils/i18n'
 
 export default function XlsxToCsv() {
   const [file, setFile] = useState<File | null>(null)
@@ -25,7 +26,7 @@ export default function XlsxToCsv() {
     const candidate = files[0]
     if (!candidate) return
     if (!isSpreadsheet(candidate)) {
-      setError('That file is not a spreadsheet — upload .xlsx, .xls, .xlsm or .ods.')
+      setError(t('That file is not a spreadsheet — upload .xlsx, .xls, .xlsm or .ods.'))
       return
     }
     setParsing(true)
@@ -36,7 +37,7 @@ export default function XlsxToCsv() {
       setWorkbook(wb)
       setActiveSheet(wb.SheetNames[0])
     } catch {
-      setError('Could not read that spreadsheet — it may be corrupted or password-protected.')
+      setError(t('Could not read that spreadsheet — it may be corrupted or password-protected.'))
       setFile(null)
       setWorkbook(null)
     } finally {
@@ -62,7 +63,7 @@ export default function XlsxToCsv() {
           `${baseName(file.name)}-${activeSheet}.csv`,
         )
     } catch {
-      setError('Could not convert that sheet to CSV.')
+      setError(t('Could not convert that sheet to CSV.'))
     } finally {
       setExporting(false)
     }
@@ -81,8 +82,8 @@ export default function XlsxToCsv() {
         <FilePicker
           accept={SPREADSHEET_ACCEPT}
           onFiles={(files) => void acceptFile(files)}
-          title="Drop a spreadsheet here or click to browse"
-          subtitle={parsing ? 'Reading…' : 'Each sheet can be exported as its own CSV'}
+          title={t('Drop a spreadsheet here or click to browse')}
+          subtitle={parsing ? t('Reading…') : t('Each sheet can be exported as its own CSV')}
           icon={Upload}
         />
       ) : (
@@ -92,8 +93,10 @@ export default function XlsxToCsv() {
             <div className="min-w-0">
               <p className="truncate text-sm font-medium">{file.name}</p>
               <p className="text-xs text-slate-500">
-                {fmtBytes(file.size)} · {workbook?.SheetNames.length ?? 0} sheet
-                {(workbook?.SheetNames.length ?? 0) === 1 ? '' : 's'}
+                {fmtBytes(file.size)} ·{' '}
+                {(workbook?.SheetNames.length ?? 0) === 1
+                  ? t('1 sheet')
+                  : t('{count} sheets', { count: workbook?.SheetNames.length ?? 0 })}
               </p>
             </div>
             <label
@@ -101,8 +104,8 @@ export default function XlsxToCsv() {
               className="ml-auto inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
             >
               <FileUp size={15} />
-              <span className="hidden sm:inline">Open a different file</span>
-              <span className="sm:hidden">Change</span>
+              <span className="hidden sm:inline">{t('Open a different file')}</span>
+              <span className="sm:hidden">{t('Change')}</span>
             </label>
             <input
               id="xlsx-csv-input"
@@ -120,7 +123,7 @@ export default function XlsxToCsv() {
           <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2.5">
             {(workbook?.SheetNames.length ?? 0) > 1 ? (
               <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-                Sheet
+                {t('Sheet')}
                 <select
                   value={activeSheet}
                   onChange={(event) => setActiveSheet(event.target.value)}
@@ -134,7 +137,7 @@ export default function XlsxToCsv() {
                 </select>
               </label>
             ) : (
-              <span className="text-sm text-slate-600 dark:text-slate-400">Sheet “{activeSheet}”</span>
+              <span className="text-sm text-slate-600 dark:text-slate-400">{t('Sheet “{name}”', { name: activeSheet })}</span>
             )}
             <button
               type="button"
@@ -147,7 +150,7 @@ export default function XlsxToCsv() {
               ) : (
                 <FileDown size={16} />
               )}
-              Download CSV
+              {t('Download CSV')}
             </button>
             <ShareButton
               payload={async () => {

@@ -1,5 +1,6 @@
 import { Moon, Sun, SunMoon } from 'lucide-react'
 import { useTheme } from '../lib/theme'
+import { t } from '../utils/i18n'
 import type { Theme } from '../lib/theme'
 
 const ORDER: Theme[] = ['light', 'dark', 'system']
@@ -13,7 +14,10 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useTheme()
   const next = ORDER[(ORDER.indexOf(theme) + 1) % ORDER.length]
   const Icon = META[theme].icon
-  const label = `Theme: ${META[theme].label} — switch to ${META[next].label}`
+  const label = t('Theme: {current} — switch to {next}', {
+    current: t(META[theme].label),
+    next: t(META[next].label),
+  })
 
   return (
     <button

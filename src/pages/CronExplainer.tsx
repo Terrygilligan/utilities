@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react'
 import { AlarmClockCheck, Info } from 'lucide-react'
 import { fmtDateTime } from '../utils/locale'
+import { t, LANG } from '../utils/i18n'
 
 const FIELD_NAMES = ['minute', 'hour', 'day of month', 'month', 'day of week'] as const
+const FIELD_PLURALS = ['minutes', 'hours', 'days of month', 'months', 'days of week'] as const
 const RANGES: [number, number][] = [[0, 59], [0, 23], [1, 31], [1, 12], [0, 7]]
 const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -26,16 +28,16 @@ function parseField(raw: string, lo: number, hi: number): Set<number> | null {
   return out.size ? out : null
 }
 
-function describe(field: string, name: string, lo: number, hi: number): string {
-  if (field === '*') return `every ${name}`
+function describe(field: string, name: string, plural: string, lo: number, hi: number): string {
+  if (field === '*') return t(`every ${name}`)
   const set = parseField(field, lo, hi)
-  if (!set) return `invalid ${name}`
+  if (!set) return `${t('invalid')} ${t(name)}`
   if (field.includes('/')) {
     const [, step] = field.split('/')
-    return `every ${step} ${name}s`
+    return `${t('every')} ${step} ${t(plural)}`
   }
   const label = (v: number) => name === 'day of week' ? DOW[v] : name === 'month' ? MON[v - 1] : String(v)
-  return `${name} ${[...set].map(label).join(', ')}`
+  return `${t(name)} ${[...set].map(label).join(', ')}`
 }
 
 export default function CronExplainer() {
@@ -43,11 +45,11 @@ export default function CronExplainer() {
 
   const result = useMemo(() => {
     const fields = expr.trim().split(/\s+/)
-    if (fields.length !== 5) return { error: 'Expected 5 fields: minute hour day-of-month month day-of-week' }
+    if (fields.length !== 5) return { error: t('Expected 5 fields: minute hour day-of-month month day-of-week') }
     const parsed = fields.map((f, i) => parseField(f, RANGES[i][0], RANGES[i][1]))
-    if (parsed.some((p) => p === null)) return { error: 'Could not parse one or more fields.' }
+    if (parsed.some((p) => p === null)) return { error: t('Could not parse one or more fields.') }
     const [min, hr, dom, mon, dow] = parsed as Set<number>[]
-    const desc = fields.map((f, i) => describe(f, FIELD_NAMES[i], RANGES[i][0], RANGES[i][1]))
+    const desc = fields.map((f, i) => describe(f, FIELD_NAMES[i], FIELD_PLURALS[i], RANGES[i][0], RANGES[i][1]))
     const runs: number[] = []
     const d = new Date()
     d.setSeconds(0, 0)
@@ -59,13 +61,13 @@ export default function CronExplainer() {
       d.setMinutes(d.getMinutes() + 1)
     }
     return { desc, runs }
-  }, [expr])
+  }, [expr, LANG])
 
   return (
     <div>
-      <h1 className="text-2xl font-bold tracking-tight">Cron Expression Explainer</h1>
+      <h1 className="text-2xl font-bold tracking-tight">{t('Cron Expression Explainer')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
-        Paste a 5-field cron expression — get a field-by-field breakdown and the next run times.
+        {t('Paste a 5-field cron expression — get a field-by-field breakdown and the next run times.')}
       </p>
 
       <input value={expr} onChange={(e) => setExpr(e.target.value)} spellCheck={false}
@@ -95,11 +97,11 @@ export default function CronExplainer() {
           </ul>
           <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
             <h3 className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500">
-              <AlarmClockCheck size={13} /> Next runs
+              <AlarmClockCheck size={13} /> {t('Next runs')}
             </h3>
             <ul className="mt-2 space-y-1.5 font-mono text-sm text-slate-700 dark:text-slate-300">
               {result.runs!.map((t) => <li key={t}>{fmtDateTime(t)}</li>)}
-              {!result.runs!.length && <li className="text-slate-500">No runs within the next year.</li>}
+              {!result.runs!.length && <li className="text-slate-500">{t('No runs within the next year.')}</li>}
             </ul>
           </div>
         </div>
