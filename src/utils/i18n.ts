@@ -169,10 +169,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Този набор от инструменти е създаден и се поддържа изцяло от 76-годишен независим разработчик, живеещ в къща на село. Няма корпоративен отдел за поддръжка и нямам времето и силите да отговарям на отделни имейли за поддръжка.',
     'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
       'Но ако забележите грешка или неработеща функция, все пак ми пишете! Редовно актуализирам и поправям приложението, така че докладите за грешки отиват направо в опашката за поправки към следващата актуализация.',
-    'Copy app info': 'Копирай информация за приложението',
-    'Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.':
-      'Копира анонимни данни за приложението — без лични данни. Поставянето им в доклада е по желание, но помага за по-бързо откриване на проблема.',
+    'Copy Diagnostics': 'Копирай диагностиката',
+    'Click "Copy Diagnostics" — this copies technical details like your browser type, screen size, and the page address to your clipboard.':
+      'Щракнете „Копирай диагностиката“ — това копира технически данни като типа на браузъра, размера на екрана и адреса на страницата в клипборда.',
+    '🔒 Rest assured: No personal, identifying, or private information is ever collected or shared — only technical diagnostics.':
+      '🔒 Бъдете спокойни: никаква лична, идентифицираща или поверителна информация не се събира или споделя — само техническа диагностика.',
+    'Click "Report a Bug" — it opens the GitHub issues page in a new tab.':
+      'Щракнете „Докладвай грешка“ — отваря страницата с проблеми в GitHub в нов раздел.',
+    'Describe what went wrong in a sentence or two.':
+      'Опишете накратко какво се обърка — едно-две изречения са напълно достатъчни.',
+    'Paste the diagnostics into the "App diagnostics" box — you can review every detail before submitting. Nothing is sent automatically.':
+      'Поставете диагностиката в полето „App diagnostics“ — можете да прегледате всеки детайл преди изпращане. Нищо не се изпраща автоматично.',
     'Open GitHub issues': 'Отвори GitHub проблеми',
+    'Games Hub': 'Games Hub',
     'Close': 'Затвори',
     'Language': 'Език',
     'Auto': 'Авто',
@@ -876,6 +885,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Dark': 'Тъмна',
     'System': 'Системна',
     'Theme: {current} — switch to {next}': 'Тема: {current} — превключи към {next}',
+    'Rate this tool': 'Оцени този инструмент',
+    'Rate {n} stars': 'Оцени с {n} звезди',
+    'Average rating': 'Средна оценка',
+    'rating': 'оценка',
+    'ratings': 'оценки',
+    'Not rated yet': 'Все още без оценка',
+    'Leave a review': 'Остави отзив',
+    'Hide review': 'Скрий отзива',
+    'Your review (optional)…': 'Вашият отзив (по желание)…',
+    'Submit Rating': 'Изпрати оценката',
+    'How ratings work': 'Как работят оценките',
+    'Ratings and optional reviews are saved locally on your device for immediate access and synced anonymously to our secure cloud index to display aggregate community scores. We collect zero personal data, zero user accounts, and zero IP addresses.':
+      'Оценките и отзивите по желание се записват локално на вашето устройство за незабавен достъп и се синхронизират анонимно със защитения ни облачен индекс, за да показват общи резултати от общността. Не събираме лични данни, потребителски акаунти или IP адреси.',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -995,10 +1017,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Este conjunto de utilidades está creado y mantenido en su totalidad por un desarrollador independiente de 76 años que vive en una granja. No hay un servicio de soporte corporativo y no tengo tiempo ni energía para responder correos de soporte individuales.',
     'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
       'Sin embargo, si detectas un error o una función rota, ¡avísame de todos modos! Actualizo y corrijo la aplicación con regularidad, así que tus informes de errores van directamente a la cola de correcciones de la próxima actualización.',
-    'Copy app info': 'Copiar info de la app',
-    'Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.':
-      'Copia datos anónimos de la app — sin datos personales. Pegarlos en el informe es opcional, pero ayuda a encontrar el problema antes.',
+    'Copy Diagnostics': 'Copiar diagnóstico',
+    'Click "Copy Diagnostics" — this copies technical details like your browser type, screen size, and the page address to your clipboard.':
+      'Pulsa "Copiar diagnóstico" — copia al portapapeles detalles técnicos como el tipo de navegador, el tamaño de la pantalla y la dirección de la página.',
+    '🔒 Rest assured: No personal, identifying, or private information is ever collected or shared — only technical diagnostics.':
+      '🔒 Tranquilo: nunca se recopila ni se comparte información personal, identificativa o privada — solo datos técnicos de diagnóstico.',
+    'Click "Report a Bug" — it opens the GitHub issues page in a new tab.':
+      'Pulsa "Informar de un error" — se abrirá la página de issues de GitHub en una pestaña nueva.',
+    'Describe what went wrong in a sentence or two.':
+      'Describe brevemente qué salió mal: una o dos frases bastan.',
+    'Paste the diagnostics into the "App diagnostics" box — you can review every detail before submitting. Nothing is sent automatically.':
+      'Pega el diagnóstico en el cuadro "App diagnostics" — puedes revisar cada detalle antes de enviar. Nada se envía automáticamente.',
     'Open GitHub issues': 'Abrir issues en GitHub',
+    'Games Hub': 'Games Hub',
     'Close': 'Cerrar',
     'Language': 'Idioma',
     'Auto': 'Auto',
@@ -1703,6 +1734,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Dark': 'Oscuro',
     'System': 'Sistema',
     'Theme: {current} — switch to {next}': 'Tema: {current} — cambiar a {next}',
+    'Rate this tool': 'Califica esta herramienta',
+    'Rate {n} stars': 'Calificar con {n} estrellas',
+    'Average rating': 'Calificación media',
+    'rating': 'calificación',
+    'ratings': 'calificaciones',
+    'Not rated yet': 'Aún sin calificación',
+    'Leave a review': 'Dejar una reseña',
+    'Hide review': 'Ocultar reseña',
+    'Your review (optional)…': 'Tu reseña (opcional)…',
+    'Submit Rating': 'Enviar calificación',
+    'How ratings work': 'Cómo funcionan las calificaciones',
+    'Ratings and optional reviews are saved locally on your device for immediate access and synced anonymously to our secure cloud index to display aggregate community scores. We collect zero personal data, zero user accounts, and zero IP addresses.':
+      'Las calificaciones y las reseñas opcionales se guardan localmente en tu dispositivo para acceso inmediato y se sincronizan de forma anónima con nuestro índice seguro en la nube para mostrar puntuaciones agregadas de la comunidad. No recopilamos datos personales, cuentas de usuario ni direcciones IP.',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -1822,10 +1866,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Cette suite d’utilitaires est entièrement créée et maintenue par un développeur indépendant de 76 ans vivant dans une ferme. Il n’y a pas de support technique d’entreprise et je n’ai ni le temps ni l’énergie de répondre à des e-mails d’assistance individuels.',
     'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
       'Mais si vous repérez un bug ou une fonctionnalité défectueuse, faites-le-moi savoir quand même ! Je mets régulièrement à jour et corrige l’application, donc vos rapports de bugs vont directement dans la file de correction de la prochaine mise à jour.',
-    'Copy app info': 'Copier les infos de l’app',
-    'Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.':
-      'Copie des infos anonymes sur l’app — aucune donnée personnelle. Les coller dans le rapport est facultatif, mais aide à trouver le problème plus vite.',
+    'Copy Diagnostics': 'Copier le diagnostic',
+    'Click "Copy Diagnostics" — this copies technical details like your browser type, screen size, and the page address to your clipboard.':
+      'Cliquez sur « Copier le diagnostic » — cela copie dans le presse-papiers des détails techniques comme le type de navigateur, la taille de l’écran et l’adresse de la page.',
+    '🔒 Rest assured: No personal, identifying, or private information is ever collected or shared — only technical diagnostics.':
+      '🔒 Soyez rassuré : aucune information personnelle, identifiante ou privée n’est jamais collectée ni partagée — uniquement des données techniques de diagnostic.',
+    'Click "Report a Bug" — it opens the GitHub issues page in a new tab.':
+      'Cliquez sur « Signaler un bug » — la page des tickets GitHub s’ouvre dans un nouvel onglet.',
+    'Describe what went wrong in a sentence or two.':
+      'Décrivez brièvement ce qui n’a pas fonctionné — une phrase ou deux suffisent.',
+    'Paste the diagnostics into the "App diagnostics" box — you can review every detail before submitting. Nothing is sent automatically.':
+      'Collez le diagnostic dans la case « App diagnostics » — vous pouvez vérifier chaque détail avant l’envoi. Rien n’est envoyé automatiquement.',
     'Open GitHub issues': 'Ouvrir les tickets GitHub',
+    'Games Hub': 'Games Hub',
     'Close': 'Fermer',
     'Language': 'Langue',
     'Auto': 'Auto',
@@ -2530,6 +2583,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Dark': 'Sombre',
     'System': 'Système',
     'Theme: {current} — switch to {next}': 'Thème : {current} — passer à {next}',
+    'Rate this tool': 'Notez cet outil',
+    'Rate {n} stars': 'Noter {n} étoiles',
+    'Average rating': 'Note moyenne',
+    'rating': 'note',
+    'ratings': 'notes',
+    'Not rated yet': 'Pas encore noté',
+    'Leave a review': 'Laisser un avis',
+    'Hide review': 'Masquer l’avis',
+    'Your review (optional)…': 'Votre avis (facultatif)…',
+    'Submit Rating': 'Envoyer la note',
+    'How ratings work': 'Comment fonctionnent les notes',
+    'Ratings and optional reviews are saved locally on your device for immediate access and synced anonymously to our secure cloud index to display aggregate community scores. We collect zero personal data, zero user accounts, and zero IP addresses.':
+      'Les notes et avis facultatifs sont enregistrés localement sur votre appareil pour un accès immédiat et synchronisés anonymement avec notre index cloud sécurisé afin d’afficher les scores agrégés de la communauté. Nous ne collectons aucune donnée personnelle, aucun compte utilisateur et aucune adresse IP.',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -2649,10 +2715,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Diese Werkzeugsammlung wird vollständig von einem 76-jährigen unabhängigen Entwickler entwickelt und gepflegt, der auf einem Gehöft lebt. Es gibt keinen Firmen-Support, und ich habe weder Zeit noch Energie, einzelne Support-E-Mails zu beantworten.',
     'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
       'Wenn Sie aber einen Fehler oder eine defekte Funktion entdecken, lassen Sie es mich trotzdem wissen! Ich aktualisiere und verbessere die App regelmäßig, sodass Ihre Fehlermeldungen direkt in der Fehlerbehebungsliste für das nächste Update landen.',
-    'Copy app info': 'App-Infos kopieren',
-    'Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.':
-      'Kopiert anonyme App-Details — keine persönlichen Daten. Das Einfügen in den Bericht ist freiwillig, hilft aber, das Problem schneller zu finden.',
+    'Copy Diagnostics': 'Diagnose kopieren',
+    'Click "Copy Diagnostics" — this copies technical details like your browser type, screen size, and the page address to your clipboard.':
+      'Klicken Sie auf „Diagnose kopieren“ — das kopiert technische Details wie Browsertyp, Bildschirmgröße und Seitenadresse in die Zwischenablage.',
+    '🔒 Rest assured: No personal, identifying, or private information is ever collected or shared — only technical diagnostics.':
+      '🔒 Seien Sie beruhigt: Es werden niemals persönliche, identifizierende oder private Informationen gesammelt oder weitergegeben — nur technische Diagnosedaten.',
+    'Click "Report a Bug" — it opens the GitHub issues page in a new tab.':
+      'Klicken Sie auf „Fehler melden“ — die GitHub-Issues-Seite öffnet sich in einem neuen Tab.',
+    'Describe what went wrong in a sentence or two.':
+      'Beschreiben Sie kurz, was schiefgelaufen ist — ein bis zwei Sätze genügen.',
+    'Paste the diagnostics into the "App diagnostics" box — you can review every detail before submitting. Nothing is sent automatically.':
+      'Fügen Sie die Diagnose in das Feld „App diagnostics“ ein — Sie können jedes Detail vor dem Absenden prüfen. Nichts wird automatisch gesendet.',
     'Open GitHub issues': 'GitHub-Issues öffnen',
+    'Games Hub': 'Games Hub',
     'Close': 'Schließen',
     'Language': 'Sprache',
     'Auto': 'Auto',
@@ -3357,6 +3432,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Dark': 'Dunkel',
     'System': 'System',
     'Theme: {current} — switch to {next}': 'Design: {current} — wechseln zu {next}',
+    'Rate this tool': 'Dieses Tool bewerten',
+    'Rate {n} stars': 'Mit {n} Sternen bewerten',
+    'Average rating': 'Durchschnittsbewertung',
+    'rating': 'Bewertung',
+    'ratings': 'Bewertungen',
+    'Not rated yet': 'Noch nicht bewertet',
+    'Leave a review': 'Bewertung schreiben',
+    'Hide review': 'Bewertung ausblenden',
+    'Your review (optional)…': 'Ihre Bewertung (optional)…',
+    'Submit Rating': 'Bewertung absenden',
+    'How ratings work': 'So funktionieren Bewertungen',
+    'Ratings and optional reviews are saved locally on your device for immediate access and synced anonymously to our secure cloud index to display aggregate community scores. We collect zero personal data, zero user accounts, and zero IP addresses.':
+      'Bewertungen und optionale Rezensionen werden lokal auf Ihrem Gerät gespeichert und anonym mit unserem sicheren Cloud-Index synchronisiert, um aggregierte Community-Ergebnisse anzuzeigen. Wir erheben keine persönlichen Daten, keine Benutzerkonten und keine IP-Adressen.',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -3476,10 +3564,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Deze utilities-suite is volledig gebouwd en wordt onderhouden door een 76-jarige onafhankelijke ontwikkelaar die op een hoeve woont. Er is geen zakelijke helpdesk en ik heb geen tijd of energie om individuele supportmails te beantwoorden.',
     'However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.':
       'Maar als je een bug of een kapotte functie ziet, laat het me toch weten! Ik werk de app regelmatig bij en repareer problemen, dus je bugrapporten komen direct in de fixlijst voor de volgende update.',
-    'Copy app info': 'App-info kopiëren',
-    'Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.':
-      'Kopieert anonieme app-gegevens — geen persoonlijke data. Plakken in je bugrapport is optioneel, maar helpt het probleem sneller te vinden.',
+    'Copy Diagnostics': 'Diagnose kopiëren',
+    'Click "Copy Diagnostics" — this copies technical details like your browser type, screen size, and the page address to your clipboard.':
+      'Klik op „Diagnose kopiëren” — dit kopieert technische gegevens zoals het browsertype, de schermgrootte en het pagina-adres naar het klembord.',
+    '🔒 Rest assured: No personal, identifying, or private information is ever collected or shared — only technical diagnostics.':
+      '🔒 Wees gerust: er wordt nooit persoonlijke, identificerende of privé-informatie verzameld of gedeeld — alleen technische diagnosegegevens.',
+    'Click "Report a Bug" — it opens the GitHub issues page in a new tab.':
+      'Klik op „Meld een bug” — de GitHub-issuespagina opent in een nieuw tabblad.',
+    'Describe what went wrong in a sentence or two.':
+      'Beschrijf kort wat er misging — een of twee zinnen is genoeg.',
+    'Paste the diagnostics into the "App diagnostics" box — you can review every detail before submitting. Nothing is sent automatically.':
+      'Plak de diagnose in het vak „App diagnostics” — je kunt alle details controleren voordat je verstuurt. Er wordt niets automatisch verzonden.',
     'Open GitHub issues': 'GitHub-issues openen',
+    'Games Hub': 'Games Hub',
     'Close': 'Sluiten',
     'Language': 'Taal',
     'Auto': 'Auto',
@@ -4184,6 +4281,19 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Dark': 'Donker',
     'System': 'Systeem',
     'Theme: {current} — switch to {next}': 'Thema: {current} — wissel naar {next}',
+    'Rate this tool': 'Beoordeel deze tool',
+    'Rate {n} stars': 'Beoordeel met {n} sterren',
+    'Average rating': 'Gemiddelde beoordeling',
+    'rating': 'beoordeling',
+    'ratings': 'beoordelingen',
+    'Not rated yet': 'Nog niet beoordeeld',
+    'Leave a review': 'Laat een review achter',
+    'Hide review': 'Verberg review',
+    'Your review (optional)…': 'Je review (optioneel)…',
+    'Submit Rating': 'Beoordeling versturen',
+    'How ratings work': 'Hoe beoordelingen werken',
+    'Ratings and optional reviews are saved locally on your device for immediate access and synced anonymously to our secure cloud index to display aggregate community scores. We collect zero personal data, zero user accounts, and zero IP addresses.':
+      'Beoordelingen en optionele reviews worden lokaal op je apparaat opgeslagen voor directe toegang en anoniem gesynchroniseerd met onze beveiligde cloud-index om geaggregeerde community-scores te tonen. We verzamelen geen persoonlijke gegevens, geen gebruikersaccounts en geen IP-adressen.',
   },
 }
 

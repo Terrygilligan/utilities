@@ -7,8 +7,10 @@ import BackupPanel from './BackupPanel'
 import BugReport from './BugReport'
 import FeatureSuggest from './FeatureSuggest'
 import SettingsMenu from './SettingsMenu'
+import ToolRating from './ToolRating'
 import CurrencySelect from './CurrencySelect'
 import LangSelect from './LangSelect'
+import { TOOLS } from '../lib/tools'
 import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
@@ -24,10 +26,12 @@ import {
   Coffee,
   Code2,
   Database,
+  ExternalLink,
   FileCheck2,
   FileCode2,
   FileSpreadsheet,
   FileText,
+  Gamepad2,
   GitCompareArrows,
   Hash,
   ImageDown,
@@ -231,12 +235,25 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         )
       })}
+      <a
+        href="https://games-hub-online.web.app/"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onNavigate}
+        className="mt-3 flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-200/70 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white"
+      >
+        <Gamepad2 size={18} />
+        {t('Games Hub')}
+        <ExternalLink size={12} className="ml-auto text-slate-400" />
+      </a>
     </>
   )
 }
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname } = useLocation()
+  const ratedTool = TOOLS.find((tool) => tool.to === pathname)
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -280,6 +297,13 @@ export default function Layout() {
 
         <div className="min-w-0 flex-1">
           <main className="px-4 py-8 sm:px-8">
+            {ratedTool && (
+              <ToolRating
+                key={pathname}
+                toolId={ratedTool.id.slice(1)}
+                toolName={ratedTool.title}
+              />
+            )}
             <Outlet />
           </main>
           <footer className="border-t border-slate-200 px-4 pb-8 pt-6 text-center text-xs text-slate-500 dark:border-slate-800 sm:px-8 print:hidden">
@@ -300,6 +324,15 @@ export default function Layout() {
             <div className="mt-3 flex items-center justify-center gap-4">
               <BugReport />
               <FeatureSuggest />
+              <a
+                href="https://games-hub-online.web.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-400 underline-offset-2 transition hover:text-slate-600 hover:underline dark:text-slate-500 dark:hover:text-slate-300"
+              >
+                <Gamepad2 size={12} />
+                {t('Games Hub')}
+              </a>
               <SettingsMenu />
             </div>
           </footer>

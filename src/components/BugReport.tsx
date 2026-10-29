@@ -17,6 +17,7 @@ export default function BugReport() {
       url: window.location.href,
       userAgent: navigator.userAgent,
       language: navigator.language,
+      screenSize: `${window.screen.width}x${window.screen.height}`,
       online: navigator.onLine,
       storageKeys: dataKeys().length,
       storageEstimate: await storageEstimate(),
@@ -35,6 +36,14 @@ export default function BugReport() {
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
+
+  const steps = [
+    t('Click "Copy Diagnostics" — this copies technical details like your browser type, screen size, and the page address to your clipboard.'),
+    t('🔒 Rest assured: No personal, identifying, or private information is ever collected or shared — only technical diagnostics.'),
+    t('Click "Report a Bug" — it opens the GitHub issues page in a new tab.'),
+    t('Describe what went wrong in a sentence or two.'),
+    t('Paste the diagnostics into the "App diagnostics" box — you can review every detail before submitting. Nothing is sent automatically.'),
+  ]
 
   return (
     <>
@@ -67,6 +76,24 @@ export default function BugReport() {
             <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
               {t('However, if you spot a bug or broken feature, let me know anyway! I regularly update and patch the app, so your bug reports go straight into the fix queue for the next update.')}
             </p>
+            <ol className="mt-4 space-y-2.5">
+              {steps.map((step, i) => (
+                <li key={i} className="flex gap-2.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-sky-500/15 text-[11px] font-bold text-sky-600 dark:text-sky-400">
+                    {i + 1}
+                  </span>
+                  {i === 1 ? (
+                    <p className="flex-1 rounded-lg border border-emerald-300 bg-emerald-50 px-2.5 py-1.5 text-[13px] font-medium leading-relaxed text-emerald-800 dark:border-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">
+                      {step}
+                    </p>
+                  ) : (
+                    <p className="flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                      {step}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ol>
             <div className="mt-5 space-y-2">
               <button
                 type="button"
@@ -74,11 +101,8 @@ export default function BugReport() {
                 className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400"
               >
                 {copied ? <Check size={15} /> : <Copy size={15} />}
-                {copied ? t('Copied!') : t('Copy app info')}
+                {copied ? t('Copied!') : t('Copy Diagnostics')}
               </button>
-              <p className="text-[11px] leading-relaxed text-slate-500">
-                {t('Copies anonymous app details — no personal data. Pasting it into your bug report is optional, but it helps find the problem faster.')}
-              </p>
               <a
                 href={ISSUES_URL}
                 target="_blank"
@@ -86,7 +110,7 @@ export default function BugReport() {
                 className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 <ExternalLink size={14} />
-                {t('Open GitHub issues')}
+                {t('Report a Bug')}
               </a>
               <button
                 type="button"
