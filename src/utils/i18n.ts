@@ -120,8 +120,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Скоро още инструменти',
     'Open tool': 'Отвори инструмента',
     'Buy me a coffee': 'Купете ми кафе',
-    '100% Client-Side & Private · Zero Server Tracking · TOG Utilities':
-      '100% на устройството и лично · Нула сървърно проследяване · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Вашите файлове и данни никога не напускат устройството ви · Само анонимна статистика за ползване · TOG Utilities',
     'Installable PWA — works offline': 'Инсталируем PWA — работи офлайн',
     'Add to Home Screen': 'Добави към началния екран',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -968,8 +968,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Pronto más herramientas',
     'Open tool': 'Abrir herramienta',
     'Buy me a coffee': 'Invítame a un café',
-    '100% Client-Side & Private · Zero Server Tracking · TOG Utilities':
-      '100% local y privado · Cero rastreo en servidores · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Tus archivos y datos nunca salen de tu dispositivo · Solo estadísticas de uso anónimas · TOG Utilities',
     'Installable PWA — works offline': 'PWA instalable — funciona sin conexión',
     'Add to Home Screen': 'Añadir a pantalla de inicio',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -1817,8 +1817,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'D’autres outils arrivent bientôt',
     'Open tool': 'Ouvrir l’outil',
     'Buy me a coffee': 'Offrez-moi un café',
-    '100% Client-Side & Private · Zero Server Tracking · TOG Utilities':
-      '100 % local et privé · Zéro suivi serveur · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Vos fichiers et données ne quittent jamais votre appareil · Statistiques d’usage anonymes uniquement · TOG Utilities',
     'Installable PWA — works offline': 'PWA installable — fonctionne hors ligne',
     'Add to Home Screen': 'Ajouter à l’écran d’accueil',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -2666,8 +2666,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Bald mehr Tools',
     'Open tool': 'Tool öffnen',
     'Buy me a coffee': 'Spendier mir einen Kaffee',
-    '100% Client-Side & Private · Zero Server Tracking · TOG Utilities':
-      '100 % lokal & privat · Kein Server-Tracking · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Ihre Dateien und Daten verlassen Ihr Gerät nie · Nur anonyme Nutzungsstatistiken · TOG Utilities',
     'Installable PWA — works offline': 'Installierbare PWA — funktioniert offline',
     'Add to Home Screen': 'Zum Startbildschirm hinzufügen',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -3515,8 +3515,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Binnenkort meer tools',
     'Open tool': 'Tool openen',
     'Buy me a coffee': 'Trakteer me op een koffie',
-    '100% Client-Side & Private · Zero Server Tracking · TOG Utilities':
-      '100% lokaal & privé · Nul server-tracking · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Je bestanden en gegevens verlaten je apparaat nooit · Alleen anonieme gebruiksstatistieken · TOG Utilities',
     'Installable PWA — works offline': 'Installeerbare PWA — werkt offline',
     'Add to Home Screen': 'Toevoegen aan beginscherm',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
