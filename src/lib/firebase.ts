@@ -1,3 +1,5 @@
+import type { FirebaseApp } from '@firebase/app'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAG5q5kRQH6mhUNQs38zdBpT0gdiX5dMNs',
   authDomain: 'farmfresh-5e95e.firebaseapp.com',
@@ -8,15 +10,23 @@ const firebaseConfig = {
   measurementId: 'G-262C3517H3',
 }
 
+let appPromise: Promise<FirebaseApp> | null = null
+
+export function getFirebaseApp(): Promise<FirebaseApp> {
+  appPromise ??= import('@firebase/app').then(({ getApp, getApps, initializeApp }) =>
+    getApps().length ? getApp() : initializeApp(firebaseConfig),
+  )
+  return appPromise
+}
+
 export function initAnalytics() {
   if (import.meta.env.DEV) return
   void (async () => {
     try {
-      const [{ initializeApp }, { getAnalytics, isSupported }] = await Promise.all([
-        import('@firebase/app'),
+      const [{ getAnalytics, isSupported }, app] = await Promise.all([
         import('@firebase/analytics'),
+        getFirebaseApp(),
       ])
-      const app = initializeApp(firebaseConfig)
       if (await isSupported()) getAnalytics(app)
     } catch {
       // best-effort only — analytics must never break the app
