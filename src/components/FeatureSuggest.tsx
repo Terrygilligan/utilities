@@ -1,35 +1,26 @@
 import { useState } from 'react'
-import { Check, Copy, ExternalLink, Lightbulb, X } from 'lucide-react'
+import { Check, ExternalLink, Lightbulb, X } from 'lucide-react'
 import { t } from '../utils/i18n'
+import { submitReport } from '../lib/feedback'
 
 const ISSUES_URL =
   'https://github.com/Terrygilligan/utilities/issues/new?template=feature_request.yml'
 
 export default function FeatureSuggest() {
   const [open, setOpen] = useState(false)
-  const [idea, setIdea] = useState('')
-  const [copied, setCopied] = useState(false)
+  const [text, setText] = useState('')
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
 
-  const copyIdea = async () => {
-    const text = [
-      `Feature idea: ${idea || '(empty)'}`,
-      '---',
-      'app: utility-hub',
-      `timestamp: ${new Date().toISOString()}`,
-      `url: ${window.location.href}`,
-    ].join('\n')
-    try {
-      await navigator.clipboard.writeText(text)
-    } catch {
-      const ta = document.createElement('textarea')
-      ta.value = text
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      ta.remove()
+  const submit = async () => {
+    if (!text.trim() || sending) return
+    setSending(true)
+    const ok = await submitReport('feature', text)
+    setSending(false)
+    if (ok) {
+      setSent(true)
+      setText('')
     }
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   return (
@@ -58,47 +49,52 @@ export default function FeatureSuggest() {
               </button>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              {t('This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can\'t promise to build every suggestion.')}
+              {t("This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can't promise to build every suggestion.")}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-              {t('However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.')}
-            </p>
-            <textarea
-              value={idea}
-              onChange={(e) => setIdea(e.target.value)}
-              rows={3}
-              placeholder={t('Describe your idea…')}
-              className="mt-4 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-950/60"
-            />
-            <div className="mt-4 space-y-2">
-              <button
-                type="button"
-                onClick={() => void copyIdea()}
-                className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400"
-              >
-                {copied ? <Check size={15} /> : <Copy size={15} />}
-                {copied ? t('Copied!') : t('Copy idea details')}
-              </button>
-              <p className="text-[11px] leading-relaxed text-slate-500">
-                {t('Your idea is copied — paste it into a GitHub issue or anywhere handy.')}
+            {sent ? (
+              <p className="mt-4 flex items-center gap-2 rounded-lg bg-emerald-500/15 px-3 py-2.5 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                <Check size={15} />
+                {t('Thanks — report received!')}
               </p>
-              <a
-                href={ISSUES_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
-              >
-                <ExternalLink size={14} />
-                {t('Open GitHub issues')}
-              </a>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="inline-flex h-10 w-full items-center justify-center rounded-lg text-xs text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800"
-              >
-                {t('Close')}
-              </button>
-            </div>
+            ) : (
+              <div className="mt-4 space-y-2">
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  maxLength={2000}
+                  rows={4}
+                  placeholder={t('Describe your idea…')}
+                  className="w-full resize-none rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
+                />
+                <p className="text-[11px] leading-relaxed text-slate-500">
+                  {t('Anonymous — only a page link and browser info are attached.')}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void submit()}
+                  disabled={!text.trim() || sending}
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400 disabled:opacity-40"
+                >
+                  {sending ? t('Sending…') : t('Send report')}
+                </button>
+              </div>
+            )}
+            <a
+              href={ISSUES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-600 transition hover:bg-slate-200 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+            >
+              <ExternalLink size={14} />
+              {t('Suggest a Feature')}
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="mt-2 inline-flex h-10 w-full items-center justify-center rounded-lg text-xs text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800"
+            >
+              {t('Close')}
+            </button>
           </div>
         </div>
       )}

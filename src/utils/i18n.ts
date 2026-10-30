@@ -164,6 +164,11 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Move up': 'Премести нагоре',
     'Move down': 'Премести надолу',
     'Report a Bug': 'Докладвай грешка',
+    'Describe what went wrong — what you did and what happened': 'Опиши какво се обърка — какво направи и какво се случи',
+    'Thanks — report received!': 'Благодаря — сигналът е получен!',
+    'Anonymous — only a page link and browser info are attached.': 'Анонимно — прикачват се само линк към страницата и инфо за браузъра.',
+    'Sending…': 'Изпращане…',
+    'Send report': 'Изпрати сигнал',
     'Found a Bug?': 'Намери грешка?',
     'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
       'Този набор от инструменти е създаден и се поддържа изцяло от 76-годишен независим разработчик, живеещ в къща на село. Няма корпоративен отдел за поддръжка и нямам времето и силите да отговарям на отделни имейли за поддръжка.',
@@ -1058,6 +1063,11 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Move up': 'Subir',
     'Move down': 'Bajar',
     'Report a Bug': 'Informar de un error',
+    'Describe what went wrong — what you did and what happened': 'Describe qué salió mal — qué hiciste y qué pasó',
+    'Thanks — report received!': '¡Gracias — informe recibido!',
+    'Anonymous — only a page link and browser info are attached.': 'Anónimo — solo se adjunta un enlace a la página e info del navegador.',
+    'Sending…': 'Enviando…',
+    'Send report': 'Enviar informe',
     'Found a Bug?': '¿Encontraste un error?',
     'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
       'Este conjunto de utilidades está creado y mantenido en su totalidad por un desarrollador independiente de 76 años que vive en una granja. No hay un servicio de soporte corporativo y no tengo tiempo ni energía para responder correos de soporte individuales.',
@@ -1085,7 +1095,6 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Este conjunto de utilidades está creado y mantenido en su totalidad por un desarrollador independiente de 76 años que vive en una granja. Solo construyo herramientas que personalmente me resultan útiles o disfruto creando, así que no puedo prometer construir cada sugerencia.',
     'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
       'Sin embargo, si tienes una idea brillante para una herramienta ligera que funcione sin conexión, ¡compártela de todos modos! Si despierta mi curiosidad, podría aparecer en una futura actualización.',
-    'Describe your idea…': 'Describe tu idea…',
     'Copy idea details': 'Copiar la idea',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Tu idea está copiada — pégala en un issue de GitHub o donde prefieras.',
@@ -1953,6 +1962,11 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Move up': 'Monter',
     'Move down': 'Descendre',
     'Report a Bug': 'Signaler un bug',
+    'Describe what went wrong — what you did and what happened': 'Décris ce qui n\'a pas marché — ce que tu as fait et ce qui s\'est passé',
+    'Thanks — report received!': 'Merci — rapport reçu !',
+    'Anonymous — only a page link and browser info are attached.': 'Anonyme — seuls un lien de page et les infos du navigateur sont joints.',
+    'Sending…': 'Envoi…',
+    'Send report': 'Envoyer le rapport',
     'Found a Bug?': 'Un bug ?',
     'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
       'Cette suite d’utilitaires est entièrement créée et maintenue par un développeur indépendant de 76 ans vivant dans une ferme. Il n’y a pas de support technique d’entreprise et je n’ai ni le temps ni l’énergie de répondre à des e-mails d’assistance individuels.',
@@ -2848,6 +2862,11 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Move up': 'Nach oben',
     'Move down': 'Nach unten',
     'Report a Bug': 'Fehler melden',
+    'Describe what went wrong — what you did and what happened': 'Beschreibe, was schiefging — was du getan hast und was passiert ist',
+    'Thanks — report received!': 'Danke — Meldung erhalten!',
+    'Anonymous — only a page link and browser info are attached.': 'Anonym — nur ein Seitenlink und Browser-Infos werden angehängt.',
+    'Sending…': 'Senden…',
+    'Send report': 'Meldung senden',
     'Found a Bug?': 'Einen Fehler gefunden?',
     'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
       'Diese Werkzeugsammlung wird vollständig von einem 76-jährigen unabhängigen Entwickler entwickelt und gepflegt, der auf einem Gehöft lebt. Es gibt keinen Firmen-Support, und ich habe weder Zeit noch Energie, einzelne Support-E-Mails zu beantworten.',
@@ -3743,6 +3762,11 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Move up': 'Omhoog',
     'Move down': 'Omlaag',
     'Report a Bug': 'Meld een bug',
+    'Describe what went wrong — what you did and what happened': 'Beschrijf wat er misging — wat je deed en wat er gebeurde',
+    'Thanks — report received!': 'Bedankt — melding ontvangen!',
+    'Anonymous — only a page link and browser info are attached.': 'Anoniem — alleen een paginalink en browserinfo worden meegestuurd.',
+    'Sending…': 'Versturen…',
+    'Send report': 'Melding versturen',
     'Found a Bug?': 'Een bug gevonden?',
     'This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. There is no corporate support desk, and I don\'t have the time or energy to answer individual support emails.':
       'Deze utilities-suite is volledig gebouwd en wordt onderhouden door een 76-jarige onafhankelijke ontwikkelaar die op een hoeve woont. Er is geen zakelijke helpdesk en ik heb geen tijd of energie om individuele supportmails te beantwoorden.',
@@ -3770,7 +3794,6 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
       'Deze utilities-suite is volledig gebouwd en wordt onderhouden door een 76-jarige onafhankelijke ontwikkelaar die op een hoeve woont. Ik bouw alleen tools die ik zelf nuttig vind of leuk vind om te maken, dus ik kan niet beloven elke suggestie te bouwen.',
     'However, if you have a brilliant idea for a lightweight, offline-first tool, share it anyway! If it tickles my curiosity, it just might show up in a future update.':
       'Maar als je een briljant idee hebt voor een lichtgewicht, offline-first tool, deel het toch! Als het mijn nieuwsgierigheid prikkelt, verschijnt het misschien in een toekomstige update.',
-    'Describe your idea…': 'Beschrijf je idee…',
     'Copy idea details': 'Kopieer het idee',
     'Your idea is copied — paste it into a GitHub issue or anywhere handy.':
       'Je idee is gekopieerd — plak het in een GitHub-issue of waar je maar wilt.',
