@@ -5,21 +5,35 @@ import { submitReport } from '../lib/feedback'
 
 const ISSUES_URL =
   'https://github.com/Terrygilligan/utilities/issues/new?template=bug_report.yml'
+const COOLDOWN_KEY = 'utility-hub.lastReportAt'
+const COOLDOWN_MS = 120_000
 
 export default function BugReport() {
   const [open, setOpen] = useState(false)
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
+  const [honey, setHoney] = useState('')
+  const [cooldown, setCooldown] = useState(false)
 
   const submit = async () => {
     if (!text.trim() || sending) return
+    // Honeypot — bots fill the hidden field; fake success and drop it.
+    if (honey) {
+      setSent(true)
+      return
+    }
+    if (Date.now() - Number(localStorage.getItem(COOLDOWN_KEY) ?? 0) < COOLDOWN_MS) {
+      setCooldown(true)
+      return
+    }
     setSending(true)
     const ok = await submitReport('bug', text)
     setSending(false)
     if (ok) {
       setSent(true)
       setText('')
+      localStorage.setItem(COOLDOWN_KEY, String(Date.now()))
     }
   }
 
@@ -66,9 +80,23 @@ export default function BugReport() {
                   placeholder={t('Describe what went wrong — what you did and what happened')}
                   className="w-full resize-none rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-500 focus:outline-none dark:border-slate-700 dark:bg-slate-800"
                 />
+                <input
+                  type="text"
+                  value={honey}
+                  onChange={(e) => setHoney(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
+                />
                 <p className="text-[11px] leading-relaxed text-slate-500">
                   {t('Anonymous — only a page link and browser info are attached.')}
                 </p>
+                {cooldown && (
+                  <p className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-600 dark:text-amber-400">
+                    {t('Please wait a moment before sending another report.')}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => void submit()}
