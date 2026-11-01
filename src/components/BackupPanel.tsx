@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Download, Trash2, Upload } from 'lucide-react'
+import { Download, HardDrive, Trash2, Upload, X } from 'lucide-react'
 import { t } from '../utils/i18n'
 import {
   clearAllData,
@@ -8,6 +8,7 @@ import {
   lastBackupAt,
   requestPersistence,
   storageEstimate,
+  storagePersisted,
 } from '../lib/backup'
 
 const formatBytes = (bytes: number) => {
@@ -25,9 +26,11 @@ export default function BackupPanel() {
   const fileRef = useRef<HTMLInputElement>(null)
   const [estimate, setEstimate] = useState<{ usage: number; quota: number } | null>(null)
   const [lastBackup, setLastBackup] = useState<string | null>(() => lastBackupAt())
+  const [persisted, setPersisted] = useState<boolean | null>(null)
+  const [persistDismissed, setPersistDismissed] = useState(false)
 
   useEffect(() => {
-    void requestPersistence()
+    void storagePersisted().then(setPersisted)
     void storageEstimate().then(setEstimate)
   }, [])
 
@@ -106,6 +109,29 @@ export default function BackupPanel() {
         {t('Last backup')}: {lastBackup ? new Date(lastBackup).toLocaleDateString() : t('never')}
         {estimate && ` · ${t('Storage')}: ${formatBytes(estimate.usage)} / ${formatBytes(estimate.quota)}`}
       </p>
+      {persisted === false && !persistDismissed && (
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500">
+            {t('Want to save your work locally? Ask the browser to keep app data on this device so it is not auto-cleared.')}
+          </span>
+          <button
+            type="button"
+            onClick={() => void requestPersistence().then(setPersisted)}
+            className={chip}
+          >
+            <HardDrive size={14} />
+            {t('Keep data on this device')}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPersistDismissed(true)}
+            aria-label={t('Dismiss')}
+            className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-500/15 hover:text-slate-600 dark:text-slate-500"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
     </div>
   )
 }
