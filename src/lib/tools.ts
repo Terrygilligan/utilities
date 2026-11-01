@@ -49,8 +49,8 @@ export const TOOLS: Tool[] = [
   {
     id: '/pdf',
     to: '/pdf',
-    title: 'PDF Reader & Converter',
-    description: 'Open, read, and convert PDF documents right on your device. Files never leave your machine.',
+    title: 'PDF Reader, Editor & Converter',
+    description: 'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.',
     icon: FileText,
   },
   {
