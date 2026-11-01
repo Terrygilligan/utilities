@@ -18,6 +18,8 @@ A multi-utility Progressive Web App: a growing collection of everyday browser to
 
 2026-10-31: **v1.4.0 shipped + persistence prompt deferred.** PDF edit mode deployed (be844fc). `BackupPanel` no longer calls `requestPersistence()` on mount — first-time visitors on Firefox got an unexplained "store data in persistent storage?" nag. Now it only queries `storagePersisted()` (new in backup.ts, no prompt); if not persistent, a small opt-in row shows the explanation + "Keep data on this device" button that calls `requestPersistence()` on click, with an X to dismiss for the session. Browser prompt text itself is not customizable — the deferral + our explanation is the fix.
 
+2026-10-31: **JSON backup/restore removed.** The Export/Restore buttons produced a `.json` file most users can't use, and Sync Hub (`/sync`, QR-based) already covers device transfer better. `BackupPanel` now shows only Clear data, storage estimate, and the keep-data opt-in. Removed from `backup.ts`: `exportBackup`, `importBackup`, `lastBackupAt`, `BackupFile`, `LAST_BACKUP_KEY` — `dataKeys`/`snapshot`/`restore`/`clearAllData` remain (sync.ts needs them). Sync Hub's JSON-payload import path was left intact (it's internal, not a user file flow).
+
 ## Key architectural decisions
 
 - **SPA + PWA, no server.** React Router for navigation; `vite-plugin-pwa` (`generateSW` + `autoUpdate`) precaches the app for offline use and auto-updates users on next visit.

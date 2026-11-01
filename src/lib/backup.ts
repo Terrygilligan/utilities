@@ -1,15 +1,4 @@
-import { saveBlob } from './download'
-
 const PREFIX = 'utility-hub.'
-const LAST_BACKUP_KEY = `${PREFIX}lastBackup`
-const BACKUP_VERSION = 1
-
-export interface BackupFile {
-  app: 'utility-hub'
-  version: number
-  exportedAt: string
-  data: Record<string, string>
-}
 
 export function dataKeys(): string[] {
   const keys: string[] = []
@@ -35,58 +24,8 @@ export function restore(data: Record<string, string>) {
   }
 }
 
-export function exportBackup() {
-  const exportedAt = new Date().toISOString()
-  localStorage.setItem(LAST_BACKUP_KEY, exportedAt)
-  const backup: BackupFile = {
-    app: 'utility-hub',
-    version: BACKUP_VERSION,
-    exportedAt,
-    data: snapshot(),
-  }
-  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' })
-  saveBlob(blob, `utility-hub-backup-${exportedAt.slice(0, 10)}.json`)
-}
-
-export async function importBackup(file: File): Promise<number> {
-  let parsed: unknown
-  try {
-    parsed = JSON.parse(await file.text())
-  } catch {
-    throw new Error('Could not read the file as JSON.')
-  }
-  const backup = parsed as BackupFile
-  if (
-    backup?.app !== 'utility-hub' ||
-    backup.version !== BACKUP_VERSION ||
-    !backup.data ||
-    typeof backup.data !== 'object' ||
-    Object.values(backup.data).some((value) => typeof value !== 'string')
-  ) {
-    throw new Error('Not a valid Utility Hub backup file.')
-  }
-
-  const entries = Object.entries(backup.data).filter(([key]) => key.startsWith(PREFIX))
-  const previous = snapshot()
-  try {
-    restore(Object.fromEntries(entries))
-  } catch (err) {
-    try {
-      restore(previous)
-    } catch {
-      // rollback best-effort — original error still propagates
-    }
-    throw err
-  }
-  return entries.length
-}
-
 export function clearAllData() {
   for (const key of dataKeys()) localStorage.removeItem(key)
-}
-
-export function lastBackupAt(): string | null {
-  return localStorage.getItem(LAST_BACKUP_KEY)
 }
 
 export async function storagePersisted(): Promise<boolean> {
