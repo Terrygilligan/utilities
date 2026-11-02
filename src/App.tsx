@@ -40,6 +40,7 @@ const PhotoToText = lazy(() => import('./pages/PhotoToText'))
 const DateAge = lazy(() => import('./pages/DateAge'))
 const InvoiceMaker = lazy(() => import('./pages/InvoiceMaker'))
 const JsonCsv = lazy(() => import('./pages/JsonCsv'))
+const PaletteMaker = lazy(() => import('./pages/PaletteMaker'))
 
 function Loading() {
   return (
@@ -349,6 +350,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <JsonCsv />
+              </Suspense>
+            }
+          />
+          <Route
+            path="palette"
+            element={
+              <Suspense fallback={<Loading />}>
+                <PaletteMaker />
               </Suspense>
             }
           />

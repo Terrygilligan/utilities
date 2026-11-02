@@ -24,6 +24,7 @@ import {
   MonitorPlay,
   NotebookPen,
   Palette,
+  Pipette,
   QrCode,
   Receipt,
   RefreshCw,
@@ -305,5 +306,12 @@ export const TOOLS: Tool[] = [
     title: 'JSON ↔ CSV Converter',
     description: 'Flatten JSON into spreadsheet-ready CSV or turn CSV rows back into JSON — parsed entirely on your device.',
     icon: FileJson2,
+  },
+  {
+    id: '/palette',
+    to: '/palette',
+    title: 'Image Color Palette',
+    description: 'Extract the dominant colors from any photo — click a swatch to copy its hex code, or export the whole palette.',
+    icon: Pipette,
   },
 ]

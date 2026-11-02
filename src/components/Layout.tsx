@@ -44,6 +44,7 @@ import {
   MonitorPlay,
   NotebookPen,
   Palette,
+  Pipette,
   QrCode,
   Receipt,
   RefreshCw,
@@ -99,6 +100,7 @@ const navGroups: { label: string; items: NavItem[] }[] = [
     items: [
       { to: '/image-optimizer', label: 'Image Optimizer', icon: ImageDown },
       { to: '/colors', label: 'Color Tools', icon: Palette },
+      { to: '/palette', label: 'Image Palette', icon: Pipette },
       { to: '/media', label: 'Media Tools', icon: Clapperboard },
       { to: '/watermark', label: 'Watermark', icon: Stamp },
       { to: '/screen-recorder', label: 'Screen Recorder', icon: MonitorPlay },
