@@ -42,6 +42,7 @@ const InvoiceMaker = lazy(() => import('./pages/InvoiceMaker'))
 const JsonCsv = lazy(() => import('./pages/JsonCsv'))
 const PaletteMaker = lazy(() => import('./pages/PaletteMaker'))
 const SignatureMaker = lazy(() => import('./pages/signature/SignatureMaker'))
+const FaviconMaker = lazy(() => import('./pages/FaviconMaker'))
 
 function Loading() {
   return (
@@ -367,6 +368,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <SignatureMaker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="favicon"
+            element={
+              <Suspense fallback={<Loading />}>
+                <FaviconMaker />
               </Suspense>
             }
           />

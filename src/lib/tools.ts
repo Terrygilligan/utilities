@@ -34,6 +34,7 @@ import {
   ScrollText,
   ShieldCheck,
   Stamp,
+  Star,
   Timer,
   Type,
   Waves,
@@ -321,5 +322,12 @@ export const TOOLS: Tool[] = [
     title: 'Signature Maker',
     description: 'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.',
     icon: PenLine,
+  },
+  {
+    id: '/favicon',
+    to: '/favicon',
+    title: 'Favicon Generator',
+    description: 'Turn any image into a full favicon and PWA icon set — PNG sizes, favicon.ico and a web manifest snippet, zipped on your device.',
+    icon: Star,
   },
 ]
