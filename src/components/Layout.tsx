@@ -30,6 +30,7 @@ import {
   ExternalLink,
   FileCheck2,
   FileCode2,
+  FileJson2,
   FileSpreadsheet,
   FileText,
   Gamepad2,
@@ -73,6 +74,7 @@ const navGroups: { label: string; items: NavItem[] }[] = [
     items: [
       { to: '/pdf', label: 'PDF Tools', icon: FileText },
       { to: '/excel', label: 'Excel & CSV', icon: FileSpreadsheet },
+      { to: '/json-csv', label: 'JSON ↔ CSV', icon: FileJson2 },
       { to: '/notebook', label: 'Notebook', icon: NotebookPen },
       { to: '/photo-text', label: 'Photo → Text', icon: ScanText },
       { to: '/text-tools', label: 'Text Tools', icon: Type },

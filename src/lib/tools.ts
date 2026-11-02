@@ -13,6 +13,7 @@ import {
   Database,
   FileCheck2,
   FileCode2,
+  FileJson2,
   FileSpreadsheet,
   FileText,
   GitCompareArrows,
@@ -297,5 +298,12 @@ export const TOOLS: Tool[] = [
     title: 'Invoice Maker',
     description: 'Fill in your details and line items, then print or save a clean PDF invoice — everything stays on your device.',
     icon: ScrollText,
+  },
+  {
+    id: '/json-csv',
+    to: '/json-csv',
+    title: 'JSON ↔ CSV Converter',
+    description: 'Flatten JSON into spreadsheet-ready CSV or turn CSV rows back into JSON — parsed entirely on your device.',
+    icon: FileJson2,
   },
 ]

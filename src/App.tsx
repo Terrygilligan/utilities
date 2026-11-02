@@ -39,6 +39,7 @@ const SwaleGradient = lazy(() => import('./pages/SwaleGradient'))
 const PhotoToText = lazy(() => import('./pages/PhotoToText'))
 const DateAge = lazy(() => import('./pages/DateAge'))
 const InvoiceMaker = lazy(() => import('./pages/InvoiceMaker'))
+const JsonCsv = lazy(() => import('./pages/JsonCsv'))
 
 function Loading() {
   return (
@@ -340,6 +341,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <InvoiceMaker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="json-csv"
+            element={
+              <Suspense fallback={<Loading />}>
+                <JsonCsv />
               </Suspense>
             }
           />
