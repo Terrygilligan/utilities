@@ -27,7 +27,7 @@ export default function InstallButton() {
         {t('Add to Home Screen')}
       </a>
       {hint && (
-        <span className="max-w-56 text-[11px] text-slate-500">
+        <span className="max-w-56 text-[11px] text-slate-500 dark:text-slate-400">
           {available ||
             t('On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.')}
         </span>

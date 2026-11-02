@@ -400,7 +400,7 @@ export default function Layout() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-sky-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        className="absolute -top-20 left-4 z-50 rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition-all focus:top-4"
       >
         {t('Skip to content')}
       </a>
@@ -458,7 +458,7 @@ export default function Layout() {
               href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=2Q8NHQCFDDLKQ&item_name=Tip&no_shipping=1&currency_code=EUR"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400/15 px-3 py-2 font-medium text-amber-700 transition hover:bg-amber-400/25 dark:text-amber-400"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-400/15 px-3 py-2 font-medium text-amber-800 transition hover:bg-amber-400/25 dark:text-amber-200"
             >
               <Coffee size={14} />
               {t('Buy me a coffee')}

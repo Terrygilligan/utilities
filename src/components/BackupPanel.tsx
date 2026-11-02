@@ -66,14 +66,14 @@ export default function BackupPanel() {
         <button
           type="button"
           onClick={handleClear}
-          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-400 transition hover:bg-red-500/10 hover:text-red-600 dark:text-slate-500 dark:hover:text-red-400"
+          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-500 transition hover:bg-red-500/10 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-300"
         >
           <Trash2 size={14} />
           {t('Clear data')}
         </button>
       </div>
       {estimate && (
-        <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">
+        <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
           {t('Storage')}: {formatBytes(estimate.usage)} / {formatBytes(estimate.quota)}
         </p>
       )}
