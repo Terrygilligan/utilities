@@ -19,7 +19,11 @@ const writeList = (key: string, value: string[]) => {
 }
 
 export const readFavorites = (): string[] => readList(FAV_KEY)
-export const writeFavorites = (ids: string[]) => writeList(FAV_KEY, ids)
+export const FAVORITES_EVENT = 'utility-hub:favorites'
+export const writeFavorites = (ids: string[]) => {
+  writeList(FAV_KEY, ids)
+  window.dispatchEvent(new CustomEvent(FAVORITES_EVENT))
+}
 export const readOrder = (): string[] => readList(ORDER_KEY)
 export const writeOrder = (ids: string[]) => writeList(ORDER_KEY, ids)
 

@@ -11,7 +11,7 @@ import ToolRating from './ToolRating'
 import CurrencySelect from './CurrencySelect'
 import LangSelect from './LangSelect'
 import { TOOLS } from '../lib/tools'
-import { readFavorites, writeFavorites } from '../lib/dashboard'
+import { FAVORITES_EVENT, readFavorites, writeFavorites } from '../lib/dashboard'
 import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
@@ -224,6 +224,16 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const { pathname } = useLocation()
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>(readCollapsed)
   const [favorites, setFavorites] = useState<string[]>(readFavorites)
+
+  useEffect(() => {
+    const sync = () => setFavorites(readFavorites())
+    window.addEventListener(FAVORITES_EVENT, sync)
+    window.addEventListener('storage', sync)
+    return () => {
+      window.removeEventListener(FAVORITES_EVENT, sync)
+      window.removeEventListener('storage', sync)
+    }
+  }, [])
 
   const toggleFavorite = (id: string) =>
     setFavorites((current) => {

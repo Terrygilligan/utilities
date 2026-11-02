@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { ArrowUpDown, Sparkles, Star } from 'lucide-react'
 import ToolCard from '../components/ToolCard'
 import UpdateBanner from '../components/UpdateBanner'
-import { readFavorites, readOrder, resolveOrder, writeFavorites, writeOrder } from '../lib/dashboard'
+import { FAVORITES_EVENT, readFavorites, readOrder, resolveOrder, writeFavorites, writeOrder } from '../lib/dashboard'
 import { fetchAllToolAggregates } from '../lib/ratings'
 import type { ToolAggregate } from '../lib/ratings'
 import { TOOLS } from '../lib/tools'
@@ -24,6 +24,16 @@ export default function Home() {
     })
     return () => {
       cancelled = true
+    }
+  }, [])
+
+  useEffect(() => {
+    const sync = () => setFavorites(readFavorites())
+    window.addEventListener(FAVORITES_EVENT, sync)
+    window.addEventListener('storage', sync)
+    return () => {
+      window.removeEventListener(FAVORITES_EVENT, sync)
+      window.removeEventListener('storage', sync)
     }
   }, [])
 
