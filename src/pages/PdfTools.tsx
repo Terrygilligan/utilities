@@ -1,17 +1,19 @@
 import { useState } from 'react'
-import { BookOpen, FileImage, Images } from 'lucide-react'
+import { BookOpen, FileImage, Images, Merge } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { t } from '../utils/i18n'
 import PdfReader from './pdf/PdfReader'
 import ImagesToPdf from './pdf/ImagesToPdf'
 import PdfToImages from './pdf/PdfToImages'
+import MergeSplit from './pdf/MergeSplit'
 
-type TabId = 'reader' | 'to-pdf' | 'to-images'
+type TabId = 'reader' | 'to-pdf' | 'to-images' | 'merge-split'
 
 const tabs: { id: TabId; label: string; icon: LucideIcon }[] = [
   { id: 'reader', label: 'PDF Reader', icon: BookOpen },
   { id: 'to-pdf', label: 'Image → PDF', icon: Images },
   { id: 'to-images', label: 'PDF → Images', icon: FileImage },
+  { id: 'merge-split', label: 'Merge & Split', icon: Merge },
 ]
 
 export default function PdfTools() {
@@ -56,6 +58,9 @@ export default function PdfTools() {
       </div>
       <div className={tab === 'to-images' ? 'mt-6' : 'hidden'}>
         <PdfToImages />
+      </div>
+      <div className={tab === 'merge-split' ? 'mt-6' : 'hidden'}>
+        <MergeSplit />
       </div>
     </div>
   )
