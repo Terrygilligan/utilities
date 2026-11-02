@@ -13,6 +13,7 @@ import {
   Database,
   FileCheck2,
   FileCode2,
+  FileImage,
   FileJson2,
   FileSpreadsheet,
   FileText,
@@ -329,5 +330,12 @@ export const TOOLS: Tool[] = [
     title: 'Favicon Generator',
     description: 'Turn any image into a full favicon and PWA icon set — PNG sizes, favicon.ico and a web manifest snippet, zipped on your device.',
     icon: Star,
+  },
+  {
+    id: '/heic',
+    to: '/heic',
+    title: 'HEIC → JPEG Converter',
+    description: 'Convert iPhone HEIC/HEIF photos to JPEG — decoding runs on your device, nothing is uploaded.',
+    icon: FileImage,
   },
 ]

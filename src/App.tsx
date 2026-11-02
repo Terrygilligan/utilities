@@ -43,6 +43,7 @@ const JsonCsv = lazy(() => import('./pages/JsonCsv'))
 const PaletteMaker = lazy(() => import('./pages/PaletteMaker'))
 const SignatureMaker = lazy(() => import('./pages/signature/SignatureMaker'))
 const FaviconMaker = lazy(() => import('./pages/FaviconMaker'))
+const HeicConvert = lazy(() => import('./pages/HeicConvert'))
 
 function Loading() {
   return (
@@ -376,6 +377,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <FaviconMaker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="heic"
+            element={
+              <Suspense fallback={<Loading />}>
+                <HeicConvert />
               </Suspense>
             }
           />
