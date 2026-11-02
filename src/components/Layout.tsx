@@ -277,6 +277,26 @@ export default function Layout() {
   const { pathname } = useLocation()
   const ratedTool = TOOLS.find((tool) => tool.to === pathname)
 
+  useEffect(() => {
+    const title = ratedTool ? `${t(ratedTool.title)} — Utility Hub` : 'Utility Hub'
+    const description = ratedTool
+      ? t(ratedTool.description)
+      : 'Free browser tools for PDF, images, text, converters and calculators — no uploads, everything runs on your device.'
+    document.title = title
+    const meta =
+      document.querySelector<HTMLMetaElement>('meta[name="description"]') ??
+      Object.assign(document.createElement('meta'), { name: 'description' })
+    meta.content = description
+    if (!meta.parentNode) document.head.appendChild(meta)
+    let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    canonical.href = `https://online-utilities.com${pathname}`
+  }, [pathname, ratedTool])
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 px-4 py-3 backdrop-blur md:hidden print:hidden">
