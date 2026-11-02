@@ -41,6 +41,7 @@ const DateAge = lazy(() => import('./pages/DateAge'))
 const InvoiceMaker = lazy(() => import('./pages/InvoiceMaker'))
 const JsonCsv = lazy(() => import('./pages/JsonCsv'))
 const PaletteMaker = lazy(() => import('./pages/PaletteMaker'))
+const SignatureMaker = lazy(() => import('./pages/signature/SignatureMaker'))
 
 function Loading() {
   return (
@@ -358,6 +359,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <PaletteMaker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="signature"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SignatureMaker />
               </Suspense>
             }
           />

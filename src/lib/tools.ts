@@ -24,6 +24,7 @@ import {
   MonitorPlay,
   NotebookPen,
   Palette,
+  PenLine,
   Pipette,
   QrCode,
   Receipt,
@@ -313,5 +314,12 @@ export const TOOLS: Tool[] = [
     title: 'Image Color Palette',
     description: 'Extract the dominant colors from any photo — click a swatch to copy its hex code, or export the whole palette.',
     icon: Pipette,
+  },
+  {
+    id: '/signature',
+    to: '/signature',
+    title: 'Signature Maker',
+    description: 'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.',
+    icon: PenLine,
   },
 ]
