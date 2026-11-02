@@ -11,6 +11,7 @@ import ToolRating from './ToolRating'
 import CurrencySelect from './CurrencySelect'
 import LangSelect from './LangSelect'
 import { TOOLS } from '../lib/tools'
+import { readFavorites, writeFavorites } from '../lib/dashboard'
 import { t } from '../utils/i18n'
 import {
   ArrowRightLeft,
@@ -182,29 +183,60 @@ function Brand() {
   )
 }
 
-function NavItemLink({ to, label, icon: Icon, end, onNavigate }: NavItem & { onNavigate?: () => void }) {
+function NavItemLink({ to, label, icon: Icon, end, onNavigate, favorite, onToggleFavorite }: NavItem & { onNavigate?: () => void; favorite?: boolean; onToggleFavorite?: () => void }) {
   return (
-    <NavLink
-      to={to}
-      end={end}
-      onClick={onNavigate}
-      className={({ isActive }) =>
-        `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-          isActive
-            ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white'
-            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
-        }`
-      }
-    >
-      <Icon size={18} />
-      {t(label)}
-    </NavLink>
+    <div className="relative">
+      <NavLink
+        to={to}
+        end={end}
+        onClick={onNavigate}
+        className={({ isActive }) =>
+          `flex items-center gap-3 rounded-lg px-3 py-2 pr-8 text-sm font-medium transition-colors ${
+            isActive
+              ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white'
+          }`
+        }
+      >
+        <Icon size={18} />
+        <span className="truncate">{t(label)}</span>
+      </NavLink>
+      {onToggleFavorite && (
+        <button
+          type="button"
+          onClick={onToggleFavorite}
+          aria-label={favorite ? t('Remove from favorites') : t('Add to favorites')}
+          title={favorite ? t('Remove from favorites') : t('Add to favorites')}
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-slate-300 transition hover:text-amber-400 dark:text-slate-600 dark:hover:text-amber-400"
+        >
+          <Star size={13} className={favorite ? 'fill-amber-400 text-amber-400' : ''} />
+        </button>
+      )}
+    </div>
   )
 }
+
+const navItemByTo = new Map<string, NavItem>(
+  [allToolsItem, ...navGroups.flatMap((g) => g.items)].map((item) => [item.to, item]),
+)
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const { pathname } = useLocation()
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>(readCollapsed)
+  const [favorites, setFavorites] = useState<string[]>(readFavorites)
+
+  const toggleFavorite = (id: string) =>
+    setFavorites((current) => {
+      const next = current.includes(id)
+        ? current.filter((f) => f !== id)
+        : [...current, id]
+      writeFavorites(next)
+      return next
+    })
+
+  const favItems = favorites
+    .map((id) => navItemByTo.get(id))
+    .filter((item): item is NavItem => !!item)
 
   const persist = (next: Record<string, boolean>) => {
     try {
@@ -235,6 +267,22 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <>
       <NavItemLink {...allToolsItem} onNavigate={onNavigate} />
+      {favItems.length > 0 && (
+        <div className="mt-3">
+          <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            {t('Favorites')}
+          </p>
+          {favItems.map((item) => (
+            <NavItemLink
+              key={`fav-${item.to}`}
+              {...item}
+              onNavigate={onNavigate}
+              favorite
+              onToggleFavorite={() => toggleFavorite(item.to)}
+            />
+          ))}
+        </div>
+      )}
       {navGroups.map((group) => {
         const isCollapsed = !!collapsed[group.label]
         return (
@@ -252,7 +300,13 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             </button>
             {!isCollapsed &&
               group.items.map((item) => (
-                <NavItemLink key={item.to} {...item} onNavigate={onNavigate} />
+                <NavItemLink
+                  key={item.to}
+                  {...item}
+                  onNavigate={onNavigate}
+                  favorite={favorites.includes(item.to)}
+                  onToggleFavorite={() => toggleFavorite(item.to)}
+                />
               ))}
           </div>
         )
