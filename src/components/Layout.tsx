@@ -56,6 +56,7 @@ import {
   ScanBarcode,
   ScanText,
   ScrollText,
+  Search,
   ShieldCheck,
   Sprout,
   Stamp,
@@ -224,6 +225,13 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const { pathname } = useLocation()
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>(readCollapsed)
   const [favorites, setFavorites] = useState<string[]>(readFavorites)
+  const [query, setQuery] = useState('')
+  const q = query.trim().toLowerCase()
+  const filtered = q
+    ? [...navItemByTo.values()].filter((item) =>
+        t(item.label).toLowerCase().includes(q),
+      )
+    : null
 
   useEffect(() => {
     const sync = () => setFavorites(readFavorites())
@@ -276,6 +284,31 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <>
+      <div className="relative mb-1">
+        <Search
+          size={15}
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"
+        />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t('Search tools')}
+          aria-label={t('Search tools')}
+          className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-8 pr-3 text-sm outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900"
+        />
+      </div>
+      {filtered ? (
+        filtered.map((item) => (
+          <NavItemLink
+            key={item.to}
+            {...item}
+            onNavigate={onNavigate}
+            favorite={favorites.includes(item.to)}
+            onToggleFavorite={() => toggleFavorite(item.to)}
+          />
+        ))
+      ) : (
+        <>
       <NavItemLink {...allToolsItem} onNavigate={onNavigate} />
       {favItems.length > 0 && (
         <div className="mt-3">
@@ -321,6 +354,8 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         )
       })}
+        </>
+      )}
       <a
         href="https://games-hub-online.web.app/"
         target="_blank"

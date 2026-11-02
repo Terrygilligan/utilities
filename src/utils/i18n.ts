@@ -1110,6 +1110,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'US gallons': 'Американски галони',
     'Liner size (incl. ~60 cm overlap)': 'Размер на фолио (вкл. ~60 см нахлупване)',
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Овалните форми се смятат като елипса (≈78,5% от правоъгълника). Средната дълбочина — не максималната — дава реалния обем.',
+    'Search tools': 'Търси инструменти',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -2170,6 +2171,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'US gallons': 'Galones US',
     'Liner size (incl. ~60 cm overlap)': 'Tamaño de lámina (incl. ~60 cm de solape)',
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Las formas ovaladas se estiman como elipse (≈78,5% del rectángulo). La profundidad media — no la máxima — da el volumen real.',
+    'Search tools': 'Buscar herramientas',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -3231,6 +3233,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'US gallons': 'Gallons US',
     'Liner size (incl. ~60 cm overlap)': 'Taille de bâche (incl. ~60 cm de recouvrement)',
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Les formes ovales sont estimées en ellipse (≈78,5 % du rectangle). La profondeur moyenne — pas la maximale — donne le vrai volume.',
+    'Search tools': 'Rechercher des outils',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -4292,6 +4295,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'US gallons': 'US-Gallonen',
     'Liner size (incl. ~60 cm overlap)': 'Foliengröße (inkl. ~60 cm Überstand)',
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Ovale Formen werden als Ellipse geschätzt (≈78,5 % des Rechtecks). Die mittlere Tiefe — nicht die maximale — ergibt das echte Volumen.',
+    'Search tools': 'Tools suchen',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -5352,6 +5356,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'US gallons': 'US gallons',
     'Liner size (incl. ~60 cm overlap)': 'Foliemaat (incl. ~60 cm overlap)',
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Ovale vormen worden als ellips geschat (≈78,5% van de rechthoek). De gemiddelde diepte — niet de maximale — geeft het eerlijke volume.',
+    'Search tools': 'Zoek tools',
   },
 }
 
