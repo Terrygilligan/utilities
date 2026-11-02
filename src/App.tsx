@@ -44,6 +44,9 @@ const PaletteMaker = lazy(() => import('./pages/PaletteMaker'))
 const SignatureMaker = lazy(() => import('./pages/signature/SignatureMaker'))
 const FaviconMaker = lazy(() => import('./pages/FaviconMaker'))
 const HeicConvert = lazy(() => import('./pages/HeicConvert'))
+const FenceCalculator = lazy(() => import('./pages/FenceCalculator'))
+const SeedRate = lazy(() => import('./pages/SeedRate'))
+const PondVolume = lazy(() => import('./pages/PondVolume'))
 
 function Loading() {
   return (
@@ -385,6 +388,30 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <HeicConvert />
+              </Suspense>
+            }
+          />
+          <Route
+            path="fence"
+            element={
+              <Suspense fallback={<Loading />}>
+                <FenceCalculator />
+              </Suspense>
+            }
+          />
+          <Route
+            path="seed"
+            element={
+              <Suspense fallback={<Loading />}>
+                <SeedRate />
+              </Suspense>
+            }
+          />
+          <Route
+            path="pond"
+            element={
+              <Suspense fallback={<Loading />}>
+                <PondVolume />
               </Suspense>
             }
           />
