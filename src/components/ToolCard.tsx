@@ -62,7 +62,7 @@ export default function ToolCard({
         <p className="mt-1 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {description}
         </p>
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sky-600 dark:text-sky-400">
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sky-700 dark:text-sky-300">
           {t('Open tool')}
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
         </span>

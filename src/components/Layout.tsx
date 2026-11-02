@@ -294,7 +294,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t('Search tools')}
           aria-label={t('Search tools')}
-          className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-8 pr-3 text-sm outline-none focus:border-sky-500 dark:border-slate-700 dark:bg-slate-900"
+          className="w-full rounded-lg border border-slate-300 bg-white py-2 pl-8 pr-3 text-sm outline-none focus:border-sky-500 focus-visible:ring-2 focus-visible:ring-sky-500 dark:border-slate-700 dark:bg-slate-900"
         />
       </div>
       {filtered ? (
@@ -312,7 +312,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       <NavItemLink {...allToolsItem} onNavigate={onNavigate} />
       {favItems.length > 0 && (
         <div className="mt-3">
-          <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+          <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             {t('Favorites')}
           </p>
           {favItems.map((item) => (
@@ -333,7 +333,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             <button
               type="button"
               onClick={() => toggle(group.label)}
-              className="flex w-full items-center justify-between px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400 transition-colors hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
+              className="flex w-full items-center justify-between px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 transition-colors hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
             >
               {t(group.label)}
               <ChevronDown
@@ -398,6 +398,12 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-sky-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        {t('Skip to content')}
+      </a>
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/90 px-4 py-3 backdrop-blur md:hidden print:hidden">
         <Brand />
         <CurrencySelect />
@@ -437,7 +443,7 @@ export default function Layout() {
         </aside>
 
         <div className="min-w-0 flex-1">
-          <main className="px-4 py-8 sm:px-8">
+          <main id="main" className="px-4 py-8 sm:px-8">
             {ratedTool && (
               <ToolRating
                 key={pathname}
@@ -469,7 +475,7 @@ export default function Layout() {
                 href="https://games-hub-online.web.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-slate-400 underline-offset-2 transition hover:text-slate-600 hover:underline dark:text-slate-500 dark:hover:text-slate-300"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-500 underline-offset-2 transition hover:text-slate-700 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
               >
                 <Gamepad2 size={12} />
                 {t('Games Hub')}

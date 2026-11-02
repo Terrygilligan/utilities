@@ -21,7 +21,7 @@ export default function InstallButton() {
       <a
         href="/manifest.webmanifest"
         onClick={handleClick}
-        className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500/15 px-3 py-2 text-xs font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400"
+        className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500/15 px-3 py-2 text-xs font-medium text-sky-800 transition hover:bg-sky-500/25 dark:text-sky-200"
       >
         <Download size={14} />
         {t('Add to Home Screen')}

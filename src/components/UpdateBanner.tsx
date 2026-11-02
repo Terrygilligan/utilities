@@ -33,7 +33,7 @@ export default function UpdateBanner() {
             <button
               type="button"
               onClick={() => setTourOpen(true)}
-              className="rounded-lg bg-sky-500/15 px-3 py-1.5 text-xs font-semibold text-sky-700 transition hover:bg-sky-500/25 dark:text-sky-300"
+              className="rounded-lg bg-sky-500/15 px-3 py-1.5 text-xs font-semibold text-sky-800 transition hover:bg-sky-500/25 dark:text-sky-200"
             >
               {t('Take Tour')}
             </button>
