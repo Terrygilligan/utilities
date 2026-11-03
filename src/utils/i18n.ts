@@ -1112,6 +1112,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Овалните форми се смятат като елипса (≈78,5% от правоъгълника). Средната дълбочина — не максималната — дава реалния обем.',
     'Search tools': 'Търси инструменти',
     'Skip to content': 'Към съдържанието',
+    'Tools navigation': 'Навигация по инструменти',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -2174,6 +2175,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Las formas ovaladas se estiman como elipse (≈78,5% del rectángulo). La profundidad media — no la máxima — da el volumen real.',
     'Search tools': 'Buscar herramientas',
     'Skip to content': 'Saltar al contenido',
+    'Tools navigation': 'Navegación de herramientas',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -3237,6 +3239,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Les formes ovales sont estimées en ellipse (≈78,5 % du rectangle). La profondeur moyenne — pas la maximale — donne le vrai volume.',
     'Search tools': 'Rechercher des outils',
     'Skip to content': 'Aller au contenu',
+    'Tools navigation': 'Navigation des outils',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -4300,6 +4303,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Ovale Formen werden als Ellipse geschätzt (≈78,5 % des Rechtecks). Die mittlere Tiefe — nicht die maximale — ergibt das echte Volumen.',
     'Search tools': 'Tools suchen',
     'Skip to content': 'Zum Inhalt',
+    'Tools navigation': 'Werkzeugnavigation',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -5362,6 +5366,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Oval/natural shapes are estimated as an ellipse (≈78.5% of the rectangle). Average depth — not maximum — gives the honest volume.': 'Ovale vormen worden als ellips geschat (≈78,5% van de rechthoek). De gemiddelde diepte — niet de maximale — geeft het eerlijke volume.',
     'Search tools': 'Zoek tools',
     'Skip to content': 'Naar inhoud',
+    'Tools navigation': 'Toolnavigatie',
   },
 }
 

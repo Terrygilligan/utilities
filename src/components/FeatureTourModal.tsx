@@ -50,20 +50,20 @@ export default function FeatureTourModal({ onClose }: FeatureTourModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-900">
         <div className="flex items-start justify-between gap-3">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
             {t('What\'s new')} · {step + 1} / {STEPS.length}
           </p>
           <button
             type="button"
             onClick={finish}
             aria-label={t('Close')}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-200 dark:hover:bg-slate-800"
           >
             <X size={18} />
           </button>
         </div>
 
-        <div className="mt-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400">
+        <div className="mt-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/10 text-sky-700 dark:text-sky-400">
           <Icon size={24} />
         </div>
         <p className="mt-4 text-base font-semibold">{t(STEPS[step].title)}</p>
@@ -108,7 +108,7 @@ export default function FeatureTourModal({ onClose }: FeatureTourModalProps) {
             <button
               type="button"
               onClick={finish}
-              className="inline-flex h-11 flex-1 items-center justify-center rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400"
+              className="inline-flex h-11 flex-1 items-center justify-center rounded-lg bg-sky-700 text-sm font-semibold text-white transition hover:bg-sky-600"
             >
               {t('Done')}
             </button>
@@ -116,7 +116,7 @@ export default function FeatureTourModal({ onClose }: FeatureTourModalProps) {
             <button
               type="button"
               onClick={() => setStep((s) => s + 1)}
-              className="inline-flex h-11 flex-1 items-center justify-center rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400"
+              className="inline-flex h-11 flex-1 items-center justify-center rounded-lg bg-sky-700 text-sm font-semibold text-white transition hover:bg-sky-600"
             >
               {t('Next')}
             </button>

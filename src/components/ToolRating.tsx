@@ -106,13 +106,13 @@ export default function ToolRating({ toolId, toolName }: Props) {
                 className={
                   shown >= n
                     ? 'fill-amber-400 text-amber-400'
-                    : 'text-slate-300 dark:text-slate-600'
+                    : 'text-slate-400 dark:text-slate-600'
                 }
               />
             </button>
           ))}
         </div>
-        <p className="text-xs text-slate-500 dark:text-slate-400">
+        <p className="text-xs text-slate-600 dark:text-slate-400">
           {count > 0 ? (
             <>
               <span className="font-semibold text-slate-700 dark:text-slate-200">
@@ -130,19 +130,19 @@ export default function ToolRating({ toolId, toolName }: Props) {
             setDraft(data.review)
             setReviewOpen((open) => !open)
           }}
-          className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-medium text-sky-600 transition hover:bg-sky-500/10 dark:text-sky-400"
+          className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-xs font-medium text-sky-700 transition hover:bg-sky-500/10 dark:text-sky-400"
         >
           <MessageSquare size={13} />
           {t(reviewOpen ? 'Hide review' : 'Leave a review')}
         </button>
         {saved && (
-          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+          <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">
             {t('Saved locally')}
           </span>
         )}
       </div>
       {data.review && !reviewOpen && (
-        <p className="mt-2 text-xs italic text-slate-500 dark:text-slate-400">
+        <p className="mt-2 text-xs italic text-slate-600 dark:text-slate-400">
           “{data.review}”
         </p>
       )}
@@ -159,7 +159,7 @@ export default function ToolRating({ toolId, toolName }: Props) {
           <button
             type="button"
             onClick={submitReview}
-            className="inline-flex h-9 items-center rounded-lg bg-sky-500 px-4 text-xs font-semibold text-white transition hover:bg-sky-400"
+            className="inline-flex h-9 items-center rounded-lg bg-sky-700 px-4 text-xs font-semibold text-white transition hover:bg-sky-600"
           >
             {t('Submit Rating')}
           </button>
@@ -167,7 +167,7 @@ export default function ToolRating({ toolId, toolName }: Props) {
             <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300">
               {t('How ratings work')}
             </p>
-            <p className="mt-0.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+            <p className="mt-0.5 text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
               {t('Ratings and optional reviews are saved locally on your device for immediate access and synced anonymously to our secure cloud index to display aggregate community scores. We collect zero personal data, zero user accounts, and zero IP addresses.')}
             </p>
           </div>

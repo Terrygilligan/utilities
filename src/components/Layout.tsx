@@ -176,7 +176,7 @@ function readCollapsed(): Record<string, boolean> {
 function Brand() {
   return (
     <NavLink to="/" className="flex items-center gap-2.5">
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-800 text-sky-600 dark:text-sky-400">
+      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-200 dark:bg-slate-800 text-sky-700 dark:text-sky-400">
         <Wrench size={18} />
       </span>
       <span className="text-base font-semibold tracking-tight">Utility Hub</span>
@@ -287,7 +287,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       <div className="relative mb-1">
         <Search
           size={15}
-          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400"
+          className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500"
         />
         <input
           value={query}
@@ -312,7 +312,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       <NavItemLink {...allToolsItem} onNavigate={onNavigate} />
       {favItems.length > 0 && (
         <div className="mt-3">
-          <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
             {t('Favorites')}
           </p>
           {favItems.map((item) => (
@@ -333,7 +333,8 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             <button
               type="button"
               onClick={() => toggle(group.label)}
-              className="flex w-full items-center justify-between px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 transition-colors hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+              aria-expanded={!isCollapsed}
+              className="flex w-full items-center justify-between px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-600 transition-colors hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             >
               {t(group.label)}
               <ChevronDown
@@ -365,7 +366,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       >
         <Gamepad2 size={18} />
         {t('Games Hub')}
-        <ExternalLink size={12} className="ml-auto text-slate-400" />
+        <ExternalLink size={12} className="ml-auto text-slate-500" />
       </a>
     </>
   )
@@ -375,6 +376,15 @@ export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
   const ratedTool = TOOLS.find((tool) => tool.to === pathname)
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
 
   useEffect(() => {
     const title = ratedTool ? `${t(ratedTool.title)} — Utility Hub` : 'Utility Hub'
@@ -400,7 +410,7 @@ export default function Layout() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
       <a
         href="#main"
-        className="absolute -top-20 left-4 z-50 rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition-all focus:top-4"
+        className="absolute -top-20 left-4 z-50 rounded-lg bg-sky-700 px-4 py-2 text-sm font-semibold text-white transition-all focus:top-4"
       >
         {t('Skip to content')}
       </a>
@@ -413,6 +423,8 @@ export default function Layout() {
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
           aria-label="Toggle navigation"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
           className="rounded-lg p-2 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800"
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -420,7 +432,7 @@ export default function Layout() {
       </header>
 
       {menuOpen && (
-        <nav className="max-h-[75vh] space-y-1 overflow-y-auto border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:hidden print:hidden">
+        <nav id="mobile-nav" aria-label={t('Tools navigation')} className="max-h-[75vh] space-y-1 overflow-y-auto border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:hidden print:hidden">
           <NavLinks onNavigate={() => setMenuOpen(false)} />
         </nav>
       )}
@@ -428,7 +440,12 @@ export default function Layout() {
       <div className="mx-auto flex w-full max-w-6xl">
         <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-slate-200 dark:border-slate-800 px-4 py-6 md:flex print:hidden">
           <Brand />
-          <nav className="mt-8 flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto pr-1">
+          <nav
+            aria-label={t('Tools navigation')}
+            role="region"
+            tabIndex={0}
+            className="mt-8 flex min-h-0 flex-1 flex-col gap-0.5 overflow-y-auto pr-1"
+          >
             <NavLinks />
           </nav>
           <div className="mt-auto flex flex-wrap items-center gap-2">
@@ -437,13 +454,13 @@ export default function Layout() {
             <ThemeToggle />
             <InstallButton />
           </div>
-          <p className="mt-2 text-xs text-slate-500">
+          <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
             {t('Installable PWA — works offline')}
           </p>
         </aside>
 
         <div className="min-w-0 flex-1">
-          <main id="main" className="px-4 py-8 sm:px-8">
+          <main id="main" tabIndex={-1} className="px-4 py-8 sm:px-8">
             {ratedTool && (
               <ToolRating
                 key={pathname}
@@ -453,7 +470,7 @@ export default function Layout() {
             )}
             <Outlet />
           </main>
-          <footer className="border-t border-slate-200 px-4 pb-8 pt-6 text-center text-xs text-slate-500 dark:border-slate-800 sm:px-8 print:hidden">
+          <footer className="border-t border-slate-200 px-4 pb-8 pt-6 text-center text-xs text-slate-600 dark:border-slate-800 dark:text-slate-400 sm:px-8 print:hidden">
             <a
               href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=2Q8NHQCFDDLKQ&item_name=Tip&no_shipping=1&currency_code=EUR"
               target="_blank"
@@ -475,7 +492,7 @@ export default function Layout() {
                 href="https://games-hub-online.web.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-slate-500 underline-offset-2 transition hover:text-slate-700 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-600 underline-offset-2 transition hover:text-slate-800 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
               >
                 <Gamepad2 size={12} />
                 {t('Games Hub')}

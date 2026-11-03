@@ -81,8 +81,8 @@ export default function Home() {
           aria-pressed={reordering}
           className={`inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-medium transition ${
             reordering
-              ? 'bg-sky-500/15 text-sky-600 hover:bg-sky-500/25 dark:text-sky-400'
-              : 'text-slate-500 hover:bg-slate-200 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200'
+              ? 'bg-sky-500/15 text-sky-700 hover:bg-sky-500/25 dark:text-sky-400'
+              : 'text-slate-600 hover:bg-slate-200 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200'
           }`}
         >
           <ArrowUpDown size={15} />
@@ -94,7 +94,7 @@ export default function Home() {
 
       {favTools.length > 0 && (
         <section className="mt-8">
-          <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <h2 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
             <Star size={13} className="fill-amber-400 text-amber-400" />
             {t('Favorites')}
           </h2>
@@ -136,8 +136,8 @@ export default function Home() {
           />
         ))}
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-6 text-center">
-          <Sparkles size={22} className="text-slate-400 dark:text-slate-600" />
-          <p className="mt-3 text-sm font-medium text-slate-500">
+          <Sparkles size={22} className="text-slate-500 dark:text-slate-600" />
+          <p className="mt-3 text-sm font-medium text-slate-600 dark:text-slate-400">
             {t('More tools coming soon')}
           </p>
         </div>

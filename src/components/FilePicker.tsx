@@ -40,7 +40,7 @@ export default function FilePicker({
         <Icon size={22} />
       </span>
       <span className="text-sm font-medium">{title}</span>
-      {subtitle && <span className="text-xs text-slate-500">{subtitle}</span>}
+      {subtitle && <span className="text-xs text-slate-600 dark:text-slate-400">{subtitle}</span>}
       <input
         id={id}
         type="file"

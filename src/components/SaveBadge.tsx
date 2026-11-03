@@ -11,7 +11,7 @@ export default function SaveBadge({ state }: { state: SaveState }) {
         </>
       ) : (
         <>
-          <Check size={12} className="text-emerald-500" /> {t('Saved locally')}
+          <Check size={12} className="text-emerald-600" /> {t('Saved locally')}
         </>
       )}
     </span>

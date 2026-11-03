@@ -42,7 +42,7 @@ export default function FeatureSuggest() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 text-xs text-slate-500 underline-offset-2 transition hover:text-slate-700 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
+        className="inline-flex items-center gap-1.5 text-xs text-slate-600 underline-offset-2 transition hover:text-slate-800 hover:underline dark:text-slate-400 dark:hover:text-slate-200"
       >
         <Lightbulb size={12} />
         {t('Suggest a Feature')}
@@ -66,7 +66,7 @@ export default function FeatureSuggest() {
               {t("This utility suite is built and maintained entirely by a 76-year-old independent developer living on a homestead. I only build tools that I personally find useful or enjoy crafting, so I can't promise to build every suggestion.")}
             </p>
             {sent ? (
-              <p className="mt-4 flex items-center gap-2 rounded-lg bg-emerald-500/15 px-3 py-2.5 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+              <p className="mt-4 flex items-center gap-2 rounded-lg bg-emerald-500/15 px-3 py-2.5 text-sm font-medium text-emerald-700 dark:text-emerald-300">
                 <Check size={15} />
                 {t('Thanks — report received!')}
               </p>
@@ -89,11 +89,11 @@ export default function FeatureSuggest() {
                   aria-hidden="true"
                   className="pointer-events-none absolute -left-[9999px] h-0 w-0 opacity-0"
                 />
-                <p className="text-[11px] leading-relaxed text-slate-500">
+                <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">
                   {t('Anonymous — only a page link and browser info are attached.')}
                 </p>
                 {cooldown && (
-                  <p className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-600 dark:text-amber-400">
+                  <p className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs font-medium text-amber-800 dark:text-amber-300">
                     {t('Please wait a moment before sending another report.')}
                   </p>
                 )}
@@ -101,7 +101,7 @@ export default function FeatureSuggest() {
                   type="button"
                   onClick={() => void submit()}
                   disabled={!text.trim() || sending}
-                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-500 text-sm font-semibold text-white transition hover:bg-sky-400 disabled:opacity-40"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-sky-700 text-sm font-semibold text-white transition hover:bg-sky-600 disabled:opacity-40"
                 >
                   {sending ? t('Sending…') : t('Send report')}
                 </button>
@@ -119,7 +119,7 @@ export default function FeatureSuggest() {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="mt-2 inline-flex h-10 w-full items-center justify-center rounded-lg text-xs text-slate-500 transition hover:bg-slate-200 dark:hover:bg-slate-800"
+              className="mt-2 inline-flex h-10 w-full items-center justify-center rounded-lg text-xs text-slate-600 transition hover:bg-slate-200 dark:hover:bg-slate-800"
             >
               {t('Close')}
             </button>

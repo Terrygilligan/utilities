@@ -64,7 +64,7 @@ export default function ShareButton({
       className="inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
     >
       {feedback ? (
-        <Check size={16} className="text-emerald-600 dark:text-emerald-400" />
+        <Check size={16} className="text-emerald-700 dark:text-emerald-400" />
       ) : (
         <Share2 size={16} />
       )}

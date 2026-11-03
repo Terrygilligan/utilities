@@ -26,7 +26,7 @@ export default function Segmented<T extends string>({
           className={`rounded-md px-2.5 py-1 text-xs font-medium transition ${
             value === option.id
               ? 'bg-slate-200 text-slate-900 shadow dark:bg-slate-800 dark:text-white'
-              : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
+              : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
           }`}
         >
           {option.label}
