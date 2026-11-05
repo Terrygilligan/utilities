@@ -153,6 +153,13 @@ export const TOOLS: Tool[] = [
     icon: GitCompareArrows,
   },
   {
+    id: '/api-scanner',
+    to: '/api-scanner',
+    title: 'API Security Scanner',
+    description: 'Scan an OpenAPI/Swagger spec for auth flaws, leaks, and OWASP issues — all on-device.',
+    icon: ShieldCheck,
+  },
+  {
     id: '/expenses',
     to: '/expenses',
     title: 'Expense Tracker',
