@@ -18,6 +18,7 @@ import yaml from 'js-yaml';
 
 const HTTP_METHODS = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'];
 const MAX_REF_DEPTH = 8;
+const MAX_SPEC_BYTES = 2 * 1024 * 1024;
 
 function diag(diagnostics, level, code, message, path) {
   diagnostics.push({ level, code, message: String(message).slice(0, 300), path: path || '#' });
@@ -146,6 +147,12 @@ function normalizeSecuritySchemes(spec, resolve, isV2) {
  */
 export function parseAndNormalize(text) {
   const diagnostics = [];
+  if (typeof text === 'string' && text.length > MAX_SPEC_BYTES) {
+    diag(diagnostics, 'error', 'spec_too_large',
+      `spec is ${(text.length / 1024 / 1024).toFixed(1)} MB — the limit is 2 MB. Large generated specs should be split or filtered before scanning.`,
+      '#');
+    return { ctx: null, diagnostics };
+  }
   let doc;
   try {
     doc = JSON.parse(text);
