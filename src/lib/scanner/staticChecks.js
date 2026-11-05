@@ -211,7 +211,7 @@ export const rules = [
         const props = op.requestBody.properties || {};
         for (const [name, prop] of Object.entries(props)) {
           if (prop && prop.type === 'string'
-            && prop.maxLength === undefined && !prop.format && !prop.pattern) {
+            && prop.maxLength === undefined && !prop.format && !prop.pattern && !prop.enum) {
             out.push(f(this, op, 'Low', this.owasp,
               `Unvalidated string '${name}' in request body`,
               `${endpoint(op)} body property '${name}' is an unconstrained string — no maxLength/format/pattern.`,

@@ -48,7 +48,7 @@ export function buildReport({ ctx, findings = [], dynamic = null }) {
   // Verifiable denominator: ops actually checked (not CORS-degraded, not
   // unresolvable). A fully CORS-locked probe reports 0 verified checks —
   // score stays honest (no false 100).
-  const totalOps = ctx ? ctx.ops.length : 0;
+  const totalOps = ctx && ctx.ops ? ctx.ops.length : 0;
   const probed = dynamic ? (dynamic.probed || 0) : 0;
   const verifiableOps = dynamic
     ? Math.max(probed - 0, 0)
@@ -68,7 +68,7 @@ export function buildReport({ ctx, findings = [], dynamic = null }) {
 
   return {
     generatedAt: new Date().toISOString(),
-    api: ctx ? { title: ctx.info.title, version: ctx.info.version } : null,
+    api: ctx && ctx.info ? { title: ctx.info.title, version: ctx.info.version } : null,
     score,
     scoreBasis: degraded
       ? 'insufficient verifiable surface (CORS-locked target)'

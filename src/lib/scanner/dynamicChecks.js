@@ -67,7 +67,7 @@ export async function runDynamicChecks(target, opts = {}) {
       'The OPTIONS preflight failed: this API is not browser-readable cross-origin. That is the correct default for a server API.',
       'No action needed — this is the intended posture for a non-browser API.', true));
     const rest = (target.ops || []).slice(0, 25);
-    return { findings, probed: 1, unverifiable: rest.length * 2, remaining: rest.length };
+    return { findings, probed: 1, unverifiable: rest.length * 2, remaining: rest.length, refused: 'cors_tight' };
   }
 
   const h = (name) => preflight.headers.get(name);
