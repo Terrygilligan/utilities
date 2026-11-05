@@ -93,6 +93,7 @@ const navGroups: { label: string; items: NavItem[] }[] = [
   {
     label: 'Developer & Code',
     items: [
+      { to: '/api-scanner', label: 'API Scanner', icon: ShieldCheck },
       { to: '/playground', label: 'Regex & JSON', icon: Braces },
       { to: '/checksum', label: 'Checksums', icon: FileCheck2 },
       { to: '/svg', label: 'SVG Optimizer', icon: FileCode2 },
