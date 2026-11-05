@@ -17,6 +17,7 @@ const MediaTools = lazy(() => import('./pages/MediaTools'))
 const ChecksumTool = lazy(() => import('./pages/ChecksumTool'))
 const SvgOptimizer = lazy(() => import('./pages/SvgOptimizer'))
 const DiffChecker = lazy(() => import('./pages/DiffChecker'))
+const ApiScanner = lazy(() => import('./pages/ApiScanner'))
 const ExpenseTracker = lazy(() => import('./pages/ExpenseTracker'))
 const TextTools = lazy(() => import('./pages/TextTools'))
 const CalcTools = lazy(() => import('./pages/CalcTools'))
@@ -172,6 +173,14 @@ export default function App() {
             element={
               <Suspense fallback={<Loading />}>
                 <DiffChecker />
+              </Suspense>
+            }
+          />
+          <Route
+            path="api-scanner"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ApiScanner />
               </Suspense>
             }
           />

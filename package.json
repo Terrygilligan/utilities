@@ -16,6 +16,7 @@
     "dompurify": "^3.4.17",
     "heic2any": "^0.0.4",
     "html5-qrcode": "^2.3.8",
+    "js-yaml": "^4.3.2",
     "jsbarcode": "^3.12.3",
     "jszip": "^3.10.2",
     "lucide-react": "^0.545.0",
