@@ -1,4 +1,4 @@
-import { Eraser, Highlighter, MousePointer2, PenLine, Type, Undo2 } from 'lucide-react'
+import { Eraser, Highlighter, MousePointer2, PenLine, Stamp, Type, Undo2 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { t } from '../../utils/i18n'
 import { EDIT_COLORS, TOOL_SIZES } from './editTypes'
@@ -9,6 +9,7 @@ const tools: { id: EditTool; icon: LucideIcon; label: string }[] = [
   { id: 'pen', icon: PenLine, label: 'Pen' },
   { id: 'highlighter', icon: Highlighter, label: 'Highlighter' },
   { id: 'text', icon: Type, label: 'Text' },
+  { id: 'stamp', icon: Stamp, label: 'Signature' },
 ]
 
 const sizeLabels = ['Small', 'Medium', 'Large']
@@ -63,7 +64,11 @@ export default function EditBar({
         <>
           <span className="mx-1 hidden h-6 w-px bg-slate-300 dark:bg-slate-700 sm:block" />
 
-          <div className="flex items-center gap-1" role="group" aria-label={t('Annotation color')}>
+          <div
+            className={`flex items-center gap-1 ${tool === 'stamp' ? 'hidden' : ''}`}
+            role="group"
+            aria-label={t('Annotation color')}
+          >
             {EDIT_COLORS.map((c) => (
               <button
                 key={c}

@@ -4,7 +4,7 @@ import { Download, FileCode2, Undo2 } from 'lucide-react'
 import ShareButton from '../../components/ShareButton'
 import { saveBlob } from '../../lib/download'
 import { t } from '../../utils/i18n'
-import { ColorSwatches, downloadCanvasPng, penBtn, PEN_COLORS } from './shared'
+import { ColorSwatches, downloadCanvasPng, penBtn, PEN_COLORS, SaveAsMySignature } from './shared'
 
 const W = 1200
 const H = 480
@@ -195,6 +195,7 @@ export default function DrawPad() {
           <FileCode2 size={16} />
           {t('Download SVG')}
         </button>
+        <SaveAsMySignature canvasRef={canvasRef} disabled={!hasInk} />
         <ShareButton
           disabled={!hasInk}
           payload={() =>

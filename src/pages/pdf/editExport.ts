@@ -1,6 +1,7 @@
 import type { PDFDocument, PDFPage } from 'pdf-lib'
 import type { EditState, Pt } from './editTypes'
 import { drawAnnotation } from './AnnotationLayer'
+import { preloadSignatureImage } from '../../lib/signature'
 
 const OVERLAY_SCALE = 2
 
@@ -104,6 +105,13 @@ export async function buildEditedPdf(file: File, edit: EditState): Promise<Expor
     const page = outPages[i]
     page.setRotation(degrees((page.getRotation().angle + entry.rot) % 360))
   })
+
+  // Decode stamp images up front so drawAnnotation can look them up synchronously.
+  const dataUrls = new Set<string>()
+  for (const list of Object.values(edit.annotations)) {
+    for (const a of list) if (a.kind === 'image') dataUrls.add(a.dataUrl)
+  }
+  await Promise.all([...dataUrls].map((u) => preloadSignatureImage(u).catch(() => null)))
 
   for (let i = 0; i < kept.length; i++) {
     const list = edit.annotations[kept[i].src]

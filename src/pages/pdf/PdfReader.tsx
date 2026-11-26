@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Document, Page } from 'react-pdf'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
@@ -10,9 +11,11 @@ import {
   FileText,
   FileUp,
   ImageDown,
+  ImagePlus,
   Loader2,
   Pencil,
   PencilOff,
+  ReceiptText,
   Trash2,
   TriangleAlert,
   Upload,
@@ -31,6 +34,12 @@ import PageStrip from './PageStrip'
 import { buildEditedPdf } from './editExport'
 import { EDIT_COLORS, TOOL_SIZES, emptyEditState, isEditDirty } from './editTypes'
 import type { Annotation, EditState, EditTool } from './editTypes'
+import {
+  clearSignature,
+  loadSignature,
+  preloadSignatureImage,
+  saveSignature,
+} from '../../lib/signature'
 
 const MIN_ZOOM = 0.5
 const MAX_ZOOM = 3
@@ -50,6 +59,7 @@ interface PageViewProps {
   tool: EditTool
   color: string
   size: number
+  stampUrl: string | null
   onAdd: (a: Annotation) => void
   onDocLoad: (doc: PDFDocumentProxy) => void
   onDocError: () => void
@@ -68,6 +78,7 @@ const PageView = memo(function PageView({
   tool,
   color,
   size,
+  stampUrl,
   onAdd,
   onDocLoad,
   onDocError,
@@ -96,6 +107,7 @@ const PageView = memo(function PageView({
             tool={tool}
             color={color}
             size={size}
+            stampUrl={stampUrl}
           />
         )}
         {deleted && (
@@ -127,6 +139,13 @@ export default function PdfReader() {
   const [sizeIdx, setSizeIdx] = useState(1)
   const [saving, setSaving] = useState(false)
   const [exportWarnings, setExportWarnings] = useState<string[]>([])
+  const [signature, setSignature] = useState<string | null>(loadSignature)
+  const [hasSigFields, setHasSigFields] = useState(false)
+  const [receipt, setReceipt] = useState<Blob | null>(null)
+
+  useEffect(() => {
+    if (signature) void preloadSignatureImage(signature).catch(() => {})
+  }, [signature])
 
   const rootRef = useRef<HTMLDivElement>(null)
   const [viewerWidth, setViewerWidth] = useState(0)
@@ -159,6 +178,8 @@ export default function PdfReader() {
     setEditing(false)
     setEdit(emptyEditState(0))
     setExportWarnings([])
+    setHasSigFields(false)
+    setReceipt(null)
   }, [])
 
   const renderPagePng = useCallback(async () => {
@@ -248,15 +269,51 @@ export default function PdfReader() {
     }
   }, [file, edit])
 
+  const uploadSignature = useCallback((picked: File | undefined) => {
+    if (!picked) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      const dataUrl = typeof reader.result === 'string' ? reader.result : null
+      if (dataUrl) {
+        saveSignature(dataUrl)
+        setSignature(dataUrl)
+      }
+    }
+    reader.readAsDataURL(picked)
+  }, [])
+
+  const hasImageStamp = Object.values(edit.annotations).some((list) =>
+    list.some((a) => a.kind === 'image'),
+  )
+
   const downloadEdited = useCallback(async () => {
     setSaving(true)
     try {
       const edited = await buildEditedFile()
-      if (edited) saveBlob(edited, edited.name)
+      if (edited) {
+        saveBlob(edited, edited.name)
+        if (hasImageStamp) {
+          const digest = await crypto.subtle.digest('SHA-256', await edited.arrayBuffer())
+          const hex = [...new Uint8Array(digest)]
+            .map((b) => b.toString(16).padStart(2, '0'))
+            .join('')
+          const text = [
+            t('Utility Hub — Signing receipt'),
+            `${t('File')}: ${edited.name}`,
+            `${t('Signed (UTC)')}: ${new Date().toISOString()}`,
+            `SHA-256: ${hex}`,
+            '',
+            t(
+              'Signed with a simple electronic signature (drawn or typed image) via online-utilities.com — not a qualified or cryptographic certificate signature.',
+            ),
+          ].join('\n')
+          setReceipt(new Blob([text], { type: 'text/plain;charset=utf-8' }))
+        }
+      }
     } finally {
       setSaving(false)
     }
-  }, [buildEditedFile])
+  }, [buildEditedFile, hasImageStamp])
 
   // pdf.js widget elementId → AcroForm field name, per source page
   const widgetFieldsRef = useRef<Record<number, Map<string, { name: string; type: string }>> | null>(
@@ -269,16 +326,21 @@ export default function PdfReader() {
     let cancelled = false
     void (async () => {
       const map: Record<number, Map<string, { name: string; type: string }>> = {}
+      let sig = false
       for (let p = 1; p <= pdf.numPages; p++) {
         const page = await pdf.getPage(p)
         const annots = await page.getAnnotations()
         const m = new Map<string, { name: string; type: string }>()
         for (const a of annots) {
           if (a.fieldName && a.id) m.set(a.id, { name: a.fieldName, type: a.fieldType ?? '' })
+          if (a.fieldType === 'Sig') sig = true
         }
         map[p] = m
       }
-      if (!cancelled) widgetFieldsRef.current = map
+      if (!cancelled) {
+        widgetFieldsRef.current = map
+        setHasSigFields(sig)
+      }
     })()
     return () => {
       cancelled = true
@@ -467,6 +529,90 @@ export default function PdfReader() {
                 onUndo={undoAnnotation}
                 onClear={clearPageAnnotations}
               />
+              {editTool === 'stamp' && (
+                <div className="space-y-2">
+                  <div className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2.5 dark:border-slate-800 dark:bg-slate-900">
+                    {signature ? (
+                      <>
+                        <img
+                          src={signature}
+                          alt={t('Signature')}
+                          className="h-9 rounded-md border border-slate-200 bg-white px-2 py-1 dark:border-slate-700"
+                        />
+                        <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800">
+                          <ImagePlus size={14} />
+                          {t('Replace')}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="sr-only"
+                            onChange={(e) => {
+                              uploadSignature(e.target.files?.[0])
+                              e.target.value = ''
+                            }}
+                          />
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            clearSignature()
+                            setSignature(null)
+                          }}
+                          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-800"
+                        >
+                          <Trash2 size={14} />
+                          {t('Remove')}
+                        </button>
+                        <Link
+                          to="/signature"
+                          className="ml-auto text-xs font-medium text-sky-600 hover:underline dark:text-sky-400"
+                        >
+                          {t('Signature Maker')}
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-xs text-slate-600 dark:text-slate-400">
+                          {t('No saved signature — create one in Signature Maker, or upload a PNG.')}
+                        </span>
+                        <Link
+                          to="/signature"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500/15 px-3 py-1.5 text-xs font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400"
+                        >
+                          <Pencil size={13} />
+                          {t('Signature Maker')}
+                        </Link>
+                        <label className="inline-flex cursor-pointer items-center gap-1.5 rounded-lg bg-sky-500/15 px-3 py-1.5 text-xs font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400">
+                          <ImagePlus size={13} />
+                          {t('Upload PNG')}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="sr-only"
+                            onChange={(e) => {
+                              uploadSignature(e.target.files?.[0])
+                              e.target.value = ''
+                            }}
+                          />
+                        </label>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                    {t(
+                      'This applies a simple electronic signature — valid for most everyday documents (eIDAS/ESIGN), not a qualified certificate signature. Click the page to place it.',
+                    )}
+                  </p>
+                </div>
+              )}
+              {hasSigFields && (
+                <div className="flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
+                  <TriangleAlert size={18} className="shrink-0" />
+                  {t(
+                    'This document has digital signature fields — a visual stamp may not be accepted by the recipient.',
+                  )}
+                </div>
+              )}
             </div>
           )}
 
@@ -487,6 +633,7 @@ export default function PdfReader() {
               tool={editTool}
               color={editColor}
               size={TOOL_SIZES[editTool === 'select' ? 'pen' : editTool][sizeIdx]}
+              stampUrl={signature}
               onAdd={addAnnotation}
               onDocLoad={handleDocLoad}
               onDocError={handleDocError}
@@ -538,6 +685,16 @@ export default function PdfReader() {
                   )}
                   {saving ? t('Building…') : t('Download edited PDF')}
                 </button>
+                {receipt && (
+                  <button
+                    type="button"
+                    onClick={() => saveBlob(receipt, `${baseName(file.name)}-signing-receipt.txt`)}
+                    className="inline-flex h-10 items-center gap-2 rounded-lg bg-sky-500/15 px-4 text-sm font-medium text-sky-600 transition hover:bg-sky-500/25 dark:text-sky-400"
+                  >
+                    <ReceiptText size={16} />
+                    {t('Download signing receipt')}
+                  </button>
+                )}
                 <ShareButton
                   disabled={!dirty}
                   payload={async () => {

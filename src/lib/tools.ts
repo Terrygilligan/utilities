@@ -58,7 +58,7 @@ export const TOOLS: Tool[] = [
     id: '/pdf',
     to: '/pdf',
     title: 'PDF Reader, Editor & Converter',
-    description: 'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.',
+    description: 'Open, read, edit, sign, and convert PDF documents right on your device. Files never leave your machine.',
     icon: FileText,
   },
   {
@@ -331,7 +331,7 @@ export const TOOLS: Tool[] = [
     id: '/signature',
     to: '/signature',
     title: 'Signature Maker',
-    description: 'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.',
+    description: 'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.',
     icon: PenLine,
   },
   {

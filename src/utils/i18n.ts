@@ -78,8 +78,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'A growing collection of everyday utilities that run entirely in your browser — no uploads, no accounts, works offline once installed.':
       'Нарастваща колекция от ежедневни инструменти, които работят изцяло в браузъра ви — без качване, без акаунти, работи офлайн след инсталиране.',
     'PDF Reader, Editor & Converter': 'PDF четец, редактор и конвертор',
-    'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.':
-      'Отваряйте, четете, редактирайте и конвертирайте PDF документи на устройството си. Файловете никога не напускат машината ви.',
+    'Open, read, edit, sign, and convert PDF documents right on your device. Files never leave your machine.':
+      'Отваряйте, четете, редактирайте, подписвайте и конвертирайте PDF документи на устройството си. Файловете никога не напускат машината ви.',
     'QR Code Scanner': 'QR код скенер',
     'Point your camera at a QR code to instantly read links, Wi-Fi credentials, and more.':
       'Насочете камерата към QR код, за да прочетете връзки, Wi-Fi данни и други.',
@@ -1028,7 +1028,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Bars show how much of the image each color covers.': 'Лентите показват каква част от изображението покрива всеки цвят.',
     'Copy CSS variables': 'Копирай CSS променливи',
     'Signature Maker': 'Създаване на подпис',
-    'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.': 'Нарисувайте или напишете подписа си и го експортирайте като прозрачен PNG или SVG — готов за поставяне в PDF файлове и документи.',
+    'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.': 'Нарисувайте или напишете подписа си, експортирайте го като прозрачен PNG или SVG или го запазете на устройството, за да го поставяте в PDF файлове.',
     'Draw': 'Рисувай',
     'Type': 'Напиши',
     'Pen color': 'Цвят на писалката',
@@ -1113,6 +1113,20 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Търси инструменти',
     'Skip to content': 'Към съдържанието',
     'Tools navigation': 'Навигация по инструменти',
+    'Signature': 'Подпис',
+    'Save as my signature': 'Запази като моя подпис',
+    'No saved signature — create one in Signature Maker, or upload a PNG.': 'Няма запазен подпис — създайте в Създател на подписи или качете PNG.',
+    'Replace': 'Смени',
+    'Upload PNG': 'Качи PNG',
+    'This applies a simple electronic signature — valid for most everyday documents (eIDAS/ESIGN), not a qualified certificate signature. Click the page to place it.':
+      'Това поставя прост електронен подпис — валиден за повечето ежедневни документи (eIDAS/ESIGN), а не квалифициран сертификатен подпис. Щракнете върху страницата, за да го поставите.',
+    'This document has digital signature fields — a visual stamp may not be accepted by the recipient.': 'Този документ има полета за цифров подпис — визуалният подпис може да не бъде приет от получателя.',
+    'Utility Hub — Signing receipt': 'Utility Hub — Потвърждение за подпис',
+    'File': 'Файл',
+    'Signed (UTC)': 'Подписано (UTC)',
+    'Signed with a simple electronic signature (drawn or typed image) via online-utilities.com — not a qualified or cryptographic certificate signature.':
+      'Подписано с прост електронен подпис (нарисувано или написано изображение) чрез online-utilities.com — не е квалифициран или криптографски сертификатен подпис.',
+    'Download signing receipt': 'Изтегли потвърждението за подпис',
     'Legal Notice': 'Правна информация',
     'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
       'Всички инструменти се предоставят „както са“, без гаранция за точност, наличност или пригодност за определена цел — изрична или подразбираща се. Винаги проверявайте самостоятелно важните резултати (строителни, финансови, медицински).',
@@ -1147,8 +1161,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'A growing collection of everyday utilities that run entirely in your browser — no uploads, no accounts, works offline once installed.':
       'Una colección creciente de utilidades que funcionan totalmente en tu navegador — sin subidas, sin cuentas, funciona sin conexión una vez instalada.',
     'PDF Reader, Editor & Converter': 'Lector, editor y conversor de PDF',
-    'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.':
-      'Abre, lee, edita y convierte documentos PDF en tu dispositivo. Los archivos nunca salen de tu equipo.',
+    'Open, read, edit, sign, and convert PDF documents right on your device. Files never leave your machine.':
+      'Abre, lee, edita, firma y convierte documentos PDF en tu dispositivo. Los archivos nunca salen de tu equipo.',
     'QR Code Scanner': 'Escáner de códigos QR',
     'Point your camera at a QR code to instantly read links, Wi-Fi credentials, and more.':
       'Apunta tu cámara a un código QR para leer enlaces, credenciales Wi-Fi y más al instante.',
@@ -2097,7 +2111,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Bars show how much of the image each color covers.': 'Las barras muestran cuánto de la imagen cubre cada color.',
     'Copy CSS variables': 'Copiar variables CSS',
     'Signature Maker': 'Creador de firmas',
-    'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.': 'Dibuja o escribe tu firma y expórtala como PNG o SVG transparente — lista para colocar en PDFs y documentos.',
+    'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.': 'Dibuja o escribe tu firma, expórtala como PNG o SVG transparente o guárdala en este dispositivo para estamparla en PDFs.',
     'Draw': 'Dibujar',
     'Type': 'Escribir',
     'Pen color': 'Color del trazo',
@@ -2182,6 +2196,20 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Buscar herramientas',
     'Skip to content': 'Saltar al contenido',
     'Tools navigation': 'Navegación de herramientas',
+    'Signature': 'Firma',
+    'Save as my signature': 'Guardar como mi firma',
+    'No saved signature — create one in Signature Maker, or upload a PNG.': 'No hay firma guardada — crea una en el Creador de firmas o sube un PNG.',
+    'Replace': 'Reemplazar',
+    'Upload PNG': 'Subir PNG',
+    'This applies a simple electronic signature — valid for most everyday documents (eIDAS/ESIGN), not a qualified certificate signature. Click the page to place it.':
+      'Esto aplica una firma electrónica simple — válida para la mayoría de documentos cotidianos (eIDAS/ESIGN), no una firma de certificado cualificado. Haz clic en la página para colocarla.',
+    'This document has digital signature fields — a visual stamp may not be accepted by the recipient.': 'Este documento tiene campos de firma digital — es posible que el destinatario no acepte un sello visual.',
+    'Utility Hub — Signing receipt': 'Utility Hub — Recibo de firma',
+    'File': 'Archivo',
+    'Signed (UTC)': 'Firmado (UTC)',
+    'Signed with a simple electronic signature (drawn or typed image) via online-utilities.com — not a qualified or cryptographic certificate signature.':
+      'Firmado con una firma electrónica simple (imagen dibujada o escrita) a través de online-utilities.com — no es una firma de certificado cualificado ni criptográfica.',
+    'Download signing receipt': 'Descargar recibo de firma',
     'Legal Notice': 'Aviso legal',
     'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
       'Todas las herramientas se proporcionan "tal cual", sin garantía de exactitud, disponibilidad o idoneidad para un fin concreto — expresa o implícita. Verifica siempre de forma independiente los resultados importantes (estructurales, financieros, médicos).',
@@ -2216,8 +2244,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'A growing collection of everyday utilities that run entirely in your browser — no uploads, no accounts, works offline once installed.':
       'Une collection grandissante d’utilitaires qui fonctionnent entièrement dans votre navigateur — aucun envoi, aucun compte, fonctionne hors ligne une fois installée.',
     'PDF Reader, Editor & Converter': 'Lecteur, éditeur et convertisseur PDF',
-    'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.':
-      'Ouvrez, lisez, modifiez et convertissez des documents PDF sur votre appareil. Vos fichiers ne quittent jamais votre machine.',
+    'Open, read, edit, sign, and convert PDF documents right on your device. Files never leave your machine.':
+      'Ouvrez, lisez, modifiez, signez et convertissez des documents PDF sur votre appareil. Vos fichiers ne quittent jamais votre machine.',
     'QR Code Scanner': 'Scanner de codes QR',
     'Point your camera at a QR code to instantly read links, Wi-Fi credentials, and more.':
       'Pointez votre caméra sur un code QR pour lire instantanément des liens, identifiants Wi-Fi et plus.',
@@ -3167,7 +3195,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Bars show how much of the image each color covers.': 'Les barres indiquent la part de l’image couverte par chaque couleur.',
     'Copy CSS variables': 'Copier les variables CSS',
     'Signature Maker': 'Créateur de signature',
-    'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.': 'Dessinez ou tapez votre signature et exportez-la en PNG ou SVG transparent — prête à insérer dans des PDF et documents.',
+    'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.': 'Dessinez ou tapez votre signature, exportez-la en PNG ou SVG transparent, ou enregistrez-la sur cet appareil pour l’apposer dans des PDF.',
     'Draw': 'Dessiner',
     'Type': 'Taper',
     'Pen color': 'Couleur du stylo',
@@ -3252,6 +3280,20 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Rechercher des outils',
     'Skip to content': 'Aller au contenu',
     'Tools navigation': 'Navigation des outils',
+    'Signature': 'Signature',
+    'Save as my signature': 'Enregistrer comme ma signature',
+    'No saved signature — create one in Signature Maker, or upload a PNG.': 'Aucune signature enregistrée — créez-en une dans le Créateur de signature ou importez un PNG.',
+    'Replace': 'Remplacer',
+    'Upload PNG': 'Importer un PNG',
+    'This applies a simple electronic signature — valid for most everyday documents (eIDAS/ESIGN), not a qualified certificate signature. Click the page to place it.':
+      'Ceci appose une signature électronique simple — valable pour la plupart des documents courants (eIDAS/ESIGN), pas une signature qualifiée par certificat. Cliquez sur la page pour la placer.',
+    'This document has digital signature fields — a visual stamp may not be accepted by the recipient.': 'Ce document contient des champs de signature numérique — un tampon visuel pourrait ne pas être accepté par le destinataire.',
+    'Utility Hub — Signing receipt': 'Utility Hub — Reçu de signature',
+    'File': 'Fichier',
+    'Signed (UTC)': 'Signé (UTC)',
+    'Signed with a simple electronic signature (drawn or typed image) via online-utilities.com — not a qualified or cryptographic certificate signature.':
+      'Signé avec une signature électronique simple (image dessinée ou tapée) via online-utilities.com — ce n’est pas une signature qualifiée ou cryptographique par certificat.',
+    'Download signing receipt': 'Télécharger le reçu de signature',
     'Legal Notice': 'Mentions légales',
     'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
       'Tous les outils sont fournis « tels quels », sans garantie d’exactitude, de disponibilité ou d’adéquation à un usage particulier — expresse ou implicite. Vérifiez toujours indépendamment les résultats importants (structurels, financiers, médicaux).',
@@ -3286,8 +3328,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'A growing collection of everyday utilities that run entirely in your browser — no uploads, no accounts, works offline once installed.':
       'Eine wachsende Sammlung alltäglicher Werkzeuge, die komplett in deinem Browser laufen — keine Uploads, keine Konten, nach der Installation offline nutzbar.',
     'PDF Reader, Editor & Converter': 'PDF-Reader, -Editor & -Konverter',
-    'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.':
-      'PDF-Dokumente direkt auf deinem Gerät öffnen, lesen, bearbeiten und konvertieren. Dateien verlassen dein Gerät nie.',
+    'Open, read, edit, sign, and convert PDF documents right on your device. Files never leave your machine.':
+      'PDF-Dokumente direkt auf deinem Gerät öffnen, lesen, bearbeiten, signieren und konvertieren. Dateien verlassen dein Gerät nie.',
     'QR Code Scanner': 'QR-Code-Scanner',
     'Point your camera at a QR code to instantly read links, Wi-Fi credentials, and more.':
       'Richte die Kamera auf einen QR-Code, um Links, WLAN-Daten und mehr sofort zu lesen.',
@@ -4237,7 +4279,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Bars show how much of the image each color covers.': 'Die Balken zeigen, wie viel des Bildes jede Farbe abdeckt.',
     'Copy CSS variables': 'CSS-Variablen kopieren',
     'Signature Maker': 'Unterschrift erstellen',
-    'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.': 'Zeichne oder tippe deine Unterschrift und exportiere sie als transparentes PNG oder SVG — bereit zum Einfügen in PDFs und Dokumente.',
+    'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.': 'Zeichnen oder tippen Sie Ihre Unterschrift, exportieren Sie sie als transparentes PNG oder SVG oder speichern Sie sie auf diesem Gerät zum Stempeln in PDFs.',
     'Draw': 'Zeichnen',
     'Type': 'Tippen',
     'Pen color': 'Stiftfarbe',
@@ -4322,6 +4364,20 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Tools suchen',
     'Skip to content': 'Zum Inhalt',
     'Tools navigation': 'Werkzeugnavigation',
+    'Signature': 'Unterschrift',
+    'Save as my signature': 'Als meine Unterschrift speichern',
+    'No saved signature — create one in Signature Maker, or upload a PNG.': 'Keine gespeicherte Unterschrift — erstellen Sie eine im Unterschrifts-Generator oder laden Sie ein PNG hoch.',
+    'Replace': 'Ersetzen',
+    'Upload PNG': 'PNG hochladen',
+    'This applies a simple electronic signature — valid for most everyday documents (eIDAS/ESIGN), not a qualified certificate signature. Click the page to place it.':
+      'Dies setzt eine einfache elektronische Signatur — gültig für die meisten alltäglichen Dokumente (eIDAS/ESIGN), keine qualifizierte Zertifikatssignatur. Klicken Sie auf die Seite, um sie zu platzieren.',
+    'This document has digital signature fields — a visual stamp may not be accepted by the recipient.': 'Dieses Dokument enthält digitale Signaturfelder — ein visueller Stempel wird vom Empfänger möglicherweise nicht akzeptiert.',
+    'Utility Hub — Signing receipt': 'Utility Hub — Signaturbeleg',
+    'File': 'Datei',
+    'Signed (UTC)': 'Signiert (UTC)',
+    'Signed with a simple electronic signature (drawn or typed image) via online-utilities.com — not a qualified or cryptographic certificate signature.':
+      'Signiert mit einer einfachen elektronischen Signatur (gezeichnetes oder getipptes Bild) über online-utilities.com — keine qualifizierte oder kryptografische Zertifikatssignatur.',
+    'Download signing receipt': 'Signaturbeleg herunterladen',
     'Legal Notice': 'Rechtlicher Hinweis',
     'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
       'Alle Werkzeuge werden „wie besehen“ bereitgestellt, ohne Garantie auf Genauigkeit, Verfügbarkeit oder Eignung für einen bestimmten Zweck — ausdrücklich oder stillschweigend. Prüfen Sie wichtige Ergebnisse (statisch, finanziell, medizinisch) immer selbst nach.',
@@ -4356,8 +4412,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'A growing collection of everyday utilities that run entirely in your browser — no uploads, no accounts, works offline once installed.':
       'Een groeiende verzameling dagelijkse hulpprogramma’s die volledig in je browser draaien — geen uploads, geen accounts, werkt offline na installatie.',
     'PDF Reader, Editor & Converter': 'PDF-lezer, -editor & -converter',
-    'Open, read, edit, and convert PDF documents right on your device. Files never leave your machine.':
-      'Open, lees, bewerk en converteer PDF-documenten op je apparaat. Bestanden verlaten je machine nooit.',
+    'Open, read, edit, sign, and convert PDF documents right on your device. Files never leave your machine.':
+      'Open, lees, bewerk, onderteken en converteer PDF-documenten op je apparaat. Bestanden verlaten je machine nooit.',
     'QR Code Scanner': 'QR-code scanner',
     'Point your camera at a QR code to instantly read links, Wi-Fi credentials, and more.':
       'Richt je camera op een QR-code om direct links, wifi-gegevens en meer te lezen.',
@@ -5306,7 +5362,7 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Bars show how much of the image each color covers.': 'De balken tonen hoeveel van de afbeelding elke kleur bedekt.',
     'Copy CSS variables': 'CSS-variabelen kopiëren',
     'Signature Maker': 'Handtekening maken',
-    'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.': 'Teken of typ je handtekening en exporteer die als transparante PNG of SVG — klaar om in pdf’s en documenten te plaatsen.',
+    'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.': 'Teken of typ je handtekening, exporteer die als transparante PNG of SVG, of sla hem op dit apparaat op om in pdf’s te stempelen.',
     'Draw': 'Tekenen',
     'Type': 'Typen',
     'Pen color': 'Penkleur',
@@ -5391,6 +5447,20 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Zoek tools',
     'Skip to content': 'Naar inhoud',
     'Tools navigation': 'Toolnavigatie',
+    'Signature': 'Handtekening',
+    'Save as my signature': 'Opslaan als mijn handtekening',
+    'No saved signature — create one in Signature Maker, or upload a PNG.': 'Geen opgeslagen handtekening — maak er een in Handtekening-maker of upload een PNG.',
+    'Replace': 'Vervangen',
+    'Upload PNG': 'PNG uploaden',
+    'This applies a simple electronic signature — valid for most everyday documents (eIDAS/ESIGN), not a qualified certificate signature. Click the page to place it.':
+      'Dit plaatst een eenvoudige elektronische handtekening — geldig voor de meeste dagelijkse documenten (eIDAS/ESIGN), geen gekwalificeerde certificaathandtekening. Klik op de pagina om hem te plaatsen.',
+    'This document has digital signature fields — a visual stamp may not be accepted by the recipient.': 'Dit document bevat digitale handtekeningvelden — een visuele stempel wordt mogelijk niet door de ontvanger geaccepteerd.',
+    'Utility Hub — Signing receipt': 'Utility Hub — Ondertekeningsbewijs',
+    'File': 'Bestand',
+    'Signed (UTC)': 'Ondertekend (UTC)',
+    'Signed with a simple electronic signature (drawn or typed image) via online-utilities.com — not a qualified or cryptographic certificate signature.':
+      'Ondertekend met een eenvoudige elektronische handtekening (getekende of getypte afbeelding) via online-utilities.com — geen gekwalificeerde of cryptografische certificaathandtekening.',
+    'Download signing receipt': 'Ondertekeningsbewijs downloaden',
     'Legal Notice': 'Juridische kennisgeving',
     'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
       'Alle tools worden geleverd "zoals ze zijn", zonder garantie op nauwkeurigheid, beschikbaarheid of geschiktheid voor een bepaald doel — expliciet of impliciet. Controleer belangrijke resultaten (constructief, financieel, medisch) altijd zelfstandig.',

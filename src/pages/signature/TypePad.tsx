@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Download } from 'lucide-react'
 import ShareButton from '../../components/ShareButton'
 import { t } from '../../utils/i18n'
-import { ColorSwatches, downloadCanvasPng, penBtn, PEN_COLORS } from './shared'
+import { ColorSwatches, downloadCanvasPng, penBtn, PEN_COLORS, SaveAsMySignature } from './shared'
 
 const FONTS = [
   {
@@ -122,6 +122,7 @@ export default function TypePad() {
           <Download size={16} />
           {t('Download PNG')}
         </button>
+        <SaveAsMySignature canvasRef={canvasRef} disabled={!hasText} />
         <ShareButton
           disabled={!hasText}
           payload={() =>

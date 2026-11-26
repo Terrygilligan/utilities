@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Annotation, EditTool, Pt } from './editTypes'
 import { HIGHLIGHTER_ALPHA } from './editTypes'
+import { getSignatureImage } from '../../lib/signature'
 import { t } from '../../utils/i18n'
 
 export function drawAnnotation(
@@ -26,6 +27,16 @@ export function drawAnnotation(
       ctx.lineTo(q.x, q.y)
     }
     ctx.stroke()
+  } else if (a.kind === 'image') {
+    const img = getSignatureImage(a.dataUrl)
+    if (!img || img.naturalWidth === 0) {
+      ctx.restore()
+      return
+    }
+    const at = project(a.at)
+    const w = a.wFrac * basisW
+    const h = w * (img.naturalHeight / img.naturalWidth)
+    ctx.drawImage(img, at.x, at.y, w, h)
   } else {
     const at = project(a.at)
     ctx.translate(at.x, at.y)
@@ -44,9 +55,10 @@ interface Props {
   tool: EditTool
   color: string
   size: number
+  stampUrl: string | null
 }
 
-export default function AnnotationLayer({ annotations, onAdd, tool, color, size }: Props) {
+export default function AnnotationLayer({ annotations, onAdd, tool, color, size, stampUrl }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [box, setBox] = useState({ w: 0, h: 0 })
   const draftRef = useRef<Annotation | null>(null)
@@ -95,6 +107,10 @@ export default function AnnotationLayer({ annotations, onAdd, tool, color, size 
     if (tool === 'select') return
     event.preventDefault()
     const p = norm(event)
+    if (tool === 'stamp') {
+      if (stampUrl) onAdd({ kind: 'image', at: p, wFrac: size, dataUrl: stampUrl })
+      return
+    }
     if (tool === 'text') {
       draftOpenRef.current = true
       setTextDraft(p)

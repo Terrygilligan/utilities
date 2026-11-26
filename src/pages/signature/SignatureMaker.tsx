@@ -31,7 +31,7 @@ export default function SignatureMaker() {
       <h1 className="text-2xl font-bold tracking-tight">{t('Signature Maker')}</h1>
       <p className="mt-2 max-w-xl text-sm text-slate-600 dark:text-slate-400">
         {t(
-          'Draw or type your signature and export it as a transparent PNG or SVG — ready to drop into PDFs and documents.',
+          'Draw or type your signature, export it as a transparent PNG or SVG, or save it on this device to stamp into PDFs.',
         )}
       </p>
 

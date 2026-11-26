@@ -12,6 +12,7 @@ export interface Pt {
 export type Annotation =
   | { kind: 'stroke'; color: string; size: number; alpha: number; points: Pt[] }
   | { kind: 'text'; color: string; size: number; at: Pt; text: string }
+  | { kind: 'image'; at: Pt; wFrac: number; dataUrl: string }
 
 export interface EditState {
   pages: PageEntry[]
@@ -19,7 +20,7 @@ export interface EditState {
   formValues: Record<string, string>
 }
 
-export type EditTool = 'select' | 'pen' | 'highlighter' | 'text'
+export type EditTool = 'select' | 'pen' | 'highlighter' | 'text' | 'stamp'
 
 export const emptyEditState = (numPages: number): EditState => ({
   pages: Array.from({ length: numPages }, (_, i) => ({
@@ -36,10 +37,11 @@ export const EDIT_COLORS = ['#1e293b', '#dc2626', '#2563eb', '#16a34a', '#eab308
 export const HIGHLIGHTER_ALPHA = 0.35
 
 // Sizes are fractions of the displayed page width, so marks scale with the page.
-export const TOOL_SIZES: Record<'pen' | 'highlighter' | 'text', number[]> = {
+export const TOOL_SIZES: Record<'pen' | 'highlighter' | 'text' | 'stamp', number[]> = {
   pen: [0.003, 0.006, 0.012],
   highlighter: [0.02, 0.035, 0.055],
   text: [0.02, 0.032, 0.05],
+  stamp: [0.15, 0.25, 0.4],
 }
 
 export const isEditDirty = (edit: EditState): boolean =>
