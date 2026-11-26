@@ -485,7 +485,7 @@ export default function Layout() {
             <InstallButton />
             <BackupPanel />
             <p className="mt-3">
-              {t('Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities')}
+              {t('Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities')}
             </p>
             <div className="mt-3 flex items-center justify-center gap-4">
               <BugReport />

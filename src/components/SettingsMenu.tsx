@@ -1,16 +1,24 @@
 import { useState } from 'react'
 import { Settings, X } from 'lucide-react'
 import { setToursEnabled, toursEnabled } from '../lib/updates'
+import { setStatsOptedOut, statsOptedOut } from '../lib/webstats'
 import { t } from '../utils/i18n'
 
 export default function SettingsMenu() {
   const [open, setOpen] = useState(false)
   const [announcements, setAnnouncements] = useState(toursEnabled)
+  const [inStats, setInStats] = useState(() => !statsOptedOut())
 
   const toggle = () => {
     const next = !announcements
     setAnnouncements(next)
     setToursEnabled(next)
+  }
+
+  const toggleStats = () => {
+    const next = !inStats
+    setInStats(next)
+    setStatsOptedOut(!next)
   }
 
   return (
@@ -59,6 +67,30 @@ export default function SettingsMenu() {
                 <span
                   className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
                     announcements ? 'translate-x-5' : ''
+                  }`}
+                />
+              </button>
+            </div>
+            <div className="mt-2 flex items-center justify-between gap-4 rounded-xl border border-slate-200 px-4 py-3 dark:border-slate-700">
+              <span className="text-sm text-slate-700 dark:text-slate-300">
+                {t('Include this device in anonymous stats')}
+                <span className="block text-[11px] text-slate-500 dark:text-slate-400">
+                  {t('Applies after the page reloads.')}
+                </span>
+              </span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={inStats}
+                aria-label={t('Include this device in anonymous stats')}
+                onClick={toggleStats}
+                className={`relative h-6 w-11 shrink-0 rounded-full transition ${
+                  inStats ? 'bg-sky-500' : 'bg-slate-300 dark:bg-slate-700'
+                }`}
+              >
+                <span
+                  className={`absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                    inStats ? 'translate-x-5' : ''
                   }`}
                 />
               </button>

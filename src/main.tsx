@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
+import { initWebStats } from './lib/webstats.ts'
 import { LANG_EVENT } from './utils/i18n.ts'
 
 const root = createRoot(document.getElementById('root')!)
@@ -14,3 +15,5 @@ const render = () =>
 render()
 
 window.addEventListener(LANG_EVENT, render)
+
+initWebStats()

@@ -120,8 +120,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Скоро още инструменти',
     'Open tool': 'Отвори инструмента',
     'Buy me a coffee': 'Купете ми кафе',
-    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
-      'Вашите файлове и данни никога не напускат устройството ви · Без проследяване · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Вашите файлове и данни никога не напускат устройството ви · Само анонимна статистика · TOG Utilities',
     'Installable PWA — works offline': 'Инсталируем PWA — работи офлайн',
     'Add to Home Screen': 'Добави към началния екран',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -1113,6 +1113,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Търси инструменти',
     'Skip to content': 'Към съдържанието',
     'Tools navigation': 'Навигация по инструменти',
+    'Include this device in anonymous stats': 'Включи това устройство в анонимната статистика',
+    'Applies after the page reloads.': 'Прилага се след презареждане на страницата.',
     'Signature': 'Подпис',
     'Save as my signature': 'Запази като моя подпис',
     'No saved signature — create one in Signature Maker, or upload a PNG.': 'Няма запазен подпис — създайте в Създател на подписи или качете PNG.',
@@ -1203,8 +1205,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Pronto más herramientas',
     'Open tool': 'Abrir herramienta',
     'Buy me a coffee': 'Invítame a un café',
-    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
-      'Tus archivos y datos nunca salen de tu dispositivo · Sin rastreo · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Tus archivos y datos nunca salen de tu dispositivo · Solo estadísticas anónimas · TOG Utilities',
     'Installable PWA — works offline': 'PWA instalable — funciona sin conexión',
     'Add to Home Screen': 'Añadir a pantalla de inicio',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -2196,6 +2198,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Buscar herramientas',
     'Skip to content': 'Saltar al contenido',
     'Tools navigation': 'Navegación de herramientas',
+    'Include this device in anonymous stats': 'Incluir este dispositivo en las estadísticas anónimas',
+    'Applies after the page reloads.': 'Se aplica tras recargar la página.',
     'Signature': 'Firma',
     'Save as my signature': 'Guardar como mi firma',
     'No saved signature — create one in Signature Maker, or upload a PNG.': 'No hay firma guardada — crea una en el Creador de firmas o sube un PNG.',
@@ -2286,8 +2290,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'D’autres outils arrivent bientôt',
     'Open tool': 'Ouvrir l’outil',
     'Buy me a coffee': 'Offrez-moi un café',
-    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
-      'Vos fichiers et données ne quittent jamais votre appareil · Aucun pistage · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Vos fichiers et données ne quittent jamais votre appareil · Statistiques anonymes uniquement · TOG Utilities',
     'Installable PWA — works offline': 'PWA installable — fonctionne hors ligne',
     'Add to Home Screen': 'Ajouter à l’écran d’accueil',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -3280,6 +3284,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Rechercher des outils',
     'Skip to content': 'Aller au contenu',
     'Tools navigation': 'Navigation des outils',
+    'Include this device in anonymous stats': 'Inclure cet appareil dans les statistiques anonymes',
+    'Applies after the page reloads.': 'S’applique après le rechargement de la page.',
     'Signature': 'Signature',
     'Save as my signature': 'Enregistrer comme ma signature',
     'No saved signature — create one in Signature Maker, or upload a PNG.': 'Aucune signature enregistrée — créez-en une dans le Créateur de signature ou importez un PNG.',
@@ -3370,8 +3376,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Bald mehr Tools',
     'Open tool': 'Tool öffnen',
     'Buy me a coffee': 'Spendier mir einen Kaffee',
-    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
-      'Ihre Dateien und Daten verlassen Ihr Gerät nie · Kein Tracking · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Ihre Dateien und Daten verlassen Ihr Gerät nie · Nur anonyme Statistiken · TOG Utilities',
     'Installable PWA — works offline': 'Installierbare PWA — funktioniert offline',
     'Add to Home Screen': 'Zum Startbildschirm hinzufügen',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -4364,6 +4370,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Tools suchen',
     'Skip to content': 'Zum Inhalt',
     'Tools navigation': 'Werkzeugnavigation',
+    'Include this device in anonymous stats': 'Dieses Gerät in anonyme Statistiken einschließen',
+    'Applies after the page reloads.': 'Gilt nach dem Neuladen der Seite.',
     'Signature': 'Unterschrift',
     'Save as my signature': 'Als meine Unterschrift speichern',
     'No saved signature — create one in Signature Maker, or upload a PNG.': 'Keine gespeicherte Unterschrift — erstellen Sie eine im Unterschrifts-Generator oder laden Sie ein PNG hoch.',
@@ -4454,8 +4462,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Binnenkort meer tools',
     'Open tool': 'Tool openen',
     'Buy me a coffee': 'Trakteer me op een koffie',
-    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
-      'Je bestanden en gegevens verlaten je apparaat nooit · Geen tracking · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
+      'Je bestanden en gegevens verlaten je apparaat nooit · Alleen anonieme statistieken · TOG Utilities',
     'Installable PWA — works offline': 'Installeerbare PWA — werkt offline',
     'Add to Home Screen': 'Toevoegen aan beginscherm',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -5447,6 +5455,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Zoek tools',
     'Skip to content': 'Naar inhoud',
     'Tools navigation': 'Toolnavigatie',
+    'Include this device in anonymous stats': 'Dit apparaat meenemen in anonieme statistieken',
+    'Applies after the page reloads.': 'Geldt na het herladen van de pagina.',
     'Signature': 'Handtekening',
     'Save as my signature': 'Opslaan als mijn handtekening',
     'No saved signature — create one in Signature Maker, or upload a PNG.': 'Geen opgeslagen handtekening — maak er een in Handtekening-maker of upload een PNG.',
