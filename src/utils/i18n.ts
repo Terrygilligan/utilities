@@ -120,8 +120,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Скоро още инструменти',
     'Open tool': 'Отвори инструмента',
     'Buy me a coffee': 'Купете ми кафе',
-    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
-      'Вашите файлове и данни никога не напускат устройството ви · Само анонимна статистика за ползване · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
+      'Вашите файлове и данни никога не напускат устройството ви · Без проследяване · TOG Utilities',
     'Installable PWA — works offline': 'Инсталируем PWA — работи офлайн',
     'Add to Home Screen': 'Добави към началния екран',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -1113,6 +1113,12 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Търси инструменти',
     'Skip to content': 'Към съдържанието',
     'Tools navigation': 'Навигация по инструменти',
+    'Legal Notice': 'Правна информация',
+    'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
+      'Всички инструменти се предоставят „както са“, без гаранция за точност, наличност или пригодност за определена цел — изрична или подразбираща се. Винаги проверявайте самостоятелно важните резултати (строителни, финансови, медицински).',
+    'Provided "as-is"': 'Предоставя се „както е“',
+    'All tools are free and provided "as is" — please verify important results (structural, financial, medical) independently before relying on them.':
+      'Всички инструменти са безплатни и се предоставят „както са“ — моля, проверявайте самостоятелно важните резултати (строителни, финансови, медицински), преди да разчитате на тях.',
   },
   es: {
     'All Tools': 'Todas las herramientas',
@@ -1183,8 +1189,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Pronto más herramientas',
     'Open tool': 'Abrir herramienta',
     'Buy me a coffee': 'Invítame a un café',
-    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
-      'Tus archivos y datos nunca salen de tu dispositivo · Solo estadísticas de uso anónimas · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
+      'Tus archivos y datos nunca salen de tu dispositivo · Sin rastreo · TOG Utilities',
     'Installable PWA — works offline': 'PWA instalable — funciona sin conexión',
     'Add to Home Screen': 'Añadir a pantalla de inicio',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -2176,6 +2182,12 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Buscar herramientas',
     'Skip to content': 'Saltar al contenido',
     'Tools navigation': 'Navegación de herramientas',
+    'Legal Notice': 'Aviso legal',
+    'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
+      'Todas las herramientas se proporcionan "tal cual", sin garantía de exactitud, disponibilidad o idoneidad para un fin concreto — expresa o implícita. Verifica siempre de forma independiente los resultados importantes (estructurales, financieros, médicos).',
+    'Provided "as-is"': 'Se proporcionan "tal cual"',
+    'All tools are free and provided "as is" — please verify important results (structural, financial, medical) independently before relying on them.':
+      'Todas las herramientas son gratuitas y se proporcionan "tal cual" — verifica de forma independiente los resultados importantes (estructurales, financieros, médicos) antes de confiar en ellos.',
   },
   fr: {
     'All Tools': 'Tous les outils',
@@ -2246,8 +2258,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'D’autres outils arrivent bientôt',
     'Open tool': 'Ouvrir l’outil',
     'Buy me a coffee': 'Offrez-moi un café',
-    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
-      'Vos fichiers et données ne quittent jamais votre appareil · Statistiques d’usage anonymes uniquement · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
+      'Vos fichiers et données ne quittent jamais votre appareil · Aucun pistage · TOG Utilities',
     'Installable PWA — works offline': 'PWA installable — fonctionne hors ligne',
     'Add to Home Screen': 'Ajouter à l’écran d’accueil',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -3240,6 +3252,12 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Rechercher des outils',
     'Skip to content': 'Aller au contenu',
     'Tools navigation': 'Navigation des outils',
+    'Legal Notice': 'Mentions légales',
+    'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
+      'Tous les outils sont fournis « tels quels », sans garantie d’exactitude, de disponibilité ou d’adéquation à un usage particulier — expresse ou implicite. Vérifiez toujours indépendamment les résultats importants (structurels, financiers, médicaux).',
+    'Provided "as-is"': 'Fournis « tels quels »',
+    'All tools are free and provided "as is" — please verify important results (structural, financial, medical) independently before relying on them.':
+      'Tous les outils sont gratuits et fournis « tels quels » — veuillez vérifier indépendamment les résultats importants (structurels, financiers, médicaux) avant de vous y fier.',
   },
   de: {
     'All Tools': 'Alle Tools',
@@ -3310,8 +3328,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Bald mehr Tools',
     'Open tool': 'Tool öffnen',
     'Buy me a coffee': 'Spendier mir einen Kaffee',
-    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
-      'Ihre Dateien und Daten verlassen Ihr Gerät nie · Nur anonyme Nutzungsstatistiken · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
+      'Ihre Dateien und Daten verlassen Ihr Gerät nie · Kein Tracking · TOG Utilities',
     'Installable PWA — works offline': 'Installierbare PWA — funktioniert offline',
     'Add to Home Screen': 'Zum Startbildschirm hinzufügen',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -4304,6 +4322,12 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Tools suchen',
     'Skip to content': 'Zum Inhalt',
     'Tools navigation': 'Werkzeugnavigation',
+    'Legal Notice': 'Rechtlicher Hinweis',
+    'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
+      'Alle Werkzeuge werden „wie besehen“ bereitgestellt, ohne Garantie auf Genauigkeit, Verfügbarkeit oder Eignung für einen bestimmten Zweck — ausdrücklich oder stillschweigend. Prüfen Sie wichtige Ergebnisse (statisch, finanziell, medizinisch) immer selbst nach.',
+    'Provided "as-is"': 'Bereitstellung „wie besehen“',
+    'All tools are free and provided "as is" — please verify important results (structural, financial, medical) independently before relying on them.':
+      'Alle Werkzeuge sind kostenlos und werden „wie besehen“ bereitgestellt — prüfen Sie wichtige Ergebnisse (statisch, finanziell, medizinisch) bitte selbst, bevor Sie sich darauf verlassen.',
   },
   nl: {
     'All Tools': 'Alle tools',
@@ -4374,8 +4398,8 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'More tools coming soon': 'Binnenkort meer tools',
     'Open tool': 'Tool openen',
     'Buy me a coffee': 'Trakteer me op een koffie',
-    'Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities':
-      'Je bestanden en gegevens verlaten je apparaat nooit · Alleen anonieme gebruiksstatistieken · TOG Utilities',
+    'Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities':
+      'Je bestanden en gegevens verlaten je apparaat nooit · Geen tracking · TOG Utilities',
     'Installable PWA — works offline': 'Installeerbare PWA — werkt offline',
     'Add to Home Screen': 'Toevoegen aan beginscherm',
     'On mobile: browser menu → "Add to Home Screen". On desktop: install icon in the address bar.':
@@ -5367,6 +5391,12 @@ const dicts: Record<Exclude<Lang, 'en'>, Dict> = {
     'Search tools': 'Zoek tools',
     'Skip to content': 'Naar inhoud',
     'Tools navigation': 'Toolnavigatie',
+    'Legal Notice': 'Juridische kennisgeving',
+    'All tools are provided "as is", with no guarantee of accuracy, availability, or fitness for a particular purpose — implied or otherwise. Always verify important results (structural, financial, medical) independently.':
+      'Alle tools worden geleverd "zoals ze zijn", zonder garantie op nauwkeurigheid, beschikbaarheid of geschiktheid voor een bepaald doel — expliciet of impliciet. Controleer belangrijke resultaten (constructief, financieel, medisch) altijd zelfstandig.',
+    'Provided "as-is"': 'Geleverd "zoals ze zijn"',
+    'All tools are free and provided "as is" — please verify important results (structural, financial, medical) independently before relying on them.':
+      'Alle tools zijn gratis en worden geleverd "zoals ze zijn" — controleer belangrijke resultaten (constructief, financieel, medisch) zelfstandig voordat u erop vertrouwt.',
   },
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Lightbulb, ShieldCheck, Star, X } from 'lucide-react'
+import { Lightbulb, Scale, ShieldCheck, Star, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { setLastSeenVersion, setToursEnabled } from '../lib/updates'
 import { t } from '../utils/i18n'
@@ -25,6 +25,11 @@ const STEPS: Step[] = [
     icon: ShieldCheck,
     title: 'Private by design',
     body: 'Look for the "Saved locally" badge — everything you enter stays on this device, in your browser.',
+  },
+  {
+    icon: Scale,
+    title: 'Provided "as-is"',
+    body: 'All tools are free and provided "as is" — please verify important results (structural, financial, medical) independently before relying on them.',
   },
 ]
 

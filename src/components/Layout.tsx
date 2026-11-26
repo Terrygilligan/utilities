@@ -6,6 +6,7 @@ import InstallButton from './InstallButton'
 import BackupPanel from './BackupPanel'
 import BugReport from './BugReport'
 import FeatureSuggest from './FeatureSuggest'
+import LegalNotice from './LegalNotice'
 import SettingsMenu from './SettingsMenu'
 import ToolRating from './ToolRating'
 import CurrencySelect from './CurrencySelect'
@@ -484,11 +485,12 @@ export default function Layout() {
             <InstallButton />
             <BackupPanel />
             <p className="mt-3">
-              {t('Your Files & Data Never Leave Your Device · Anonymous Usage Stats Only · TOG Utilities')}
+              {t('Your Files & Data Never Leave Your Device · No Tracking · TOG Utilities')}
             </p>
             <div className="mt-3 flex items-center justify-center gap-4">
               <BugReport />
               <FeatureSuggest />
+              <LegalNotice />
               <a
                 href="https://games-hub-online.web.app/"
                 target="_blank"
